@@ -326,6 +326,19 @@ public class ItemCreator {
     }
 
     @ParametersAreNonnullByDefault
+    public ItemCreator setBooleanNBT(String key, boolean value) {
+        NBTItem item = new NBTItem(itemStack);
+        item.setBoolean(key, value);
+        itemStack = item.getItem();
+        return this;
+    }
+
+    @Nullable
+    public Boolean getBooleanNBT(String key) {
+        return new NBTItem(itemStack).getBoolean(key);
+    }
+
+    @ParametersAreNonnullByDefault
     public ItemCreator assignRandomIDtoItem(String key) {
         int id = new Random().nextInt(Integer.MAX_VALUE);
         setIntNBT(key, id);

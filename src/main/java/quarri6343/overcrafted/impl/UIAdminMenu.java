@@ -7,7 +7,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -50,8 +49,7 @@ public class UIAdminMenu {
         chest.setCustomName("注文箱");
         
         for (int i = 0; i < 9; i++) {
-            chest.getSnapshotInventory().setItem(i, DishHandler.encodeRandom()); //placeholder
+            chest.getInventory().setItem(i, DishHandler.encodeRandomOrder()); //placeholder
         }
-        chest.update(true, true);
     }
 }
