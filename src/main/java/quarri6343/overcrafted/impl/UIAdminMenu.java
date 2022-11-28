@@ -12,6 +12,7 @@ import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import quarri6343.overcrafted.common.DishHandler;
 import quarri6343.overcrafted.utils.ItemCreator;
 
 /**
@@ -39,12 +40,18 @@ public class UIAdminMenu {
 
         gui.open(player);
     }
-    
+
+    /**
+     * 皿が適当に入ったチェストを設置する
+     */
     public static void placeDishChest(InventoryClickEvent event){
         event.getWhoClicked().getWorld().setType(event.getWhoClicked().getLocation(), Material.CHEST);
         Chest chest = (Chest) event.getWhoClicked().getWorld().getBlockAt(event.getWhoClicked().getLocation()).getState();
         chest.setCustomName("注文箱");
-        chest.getSnapshotInventory().setItem(0, new ItemStack(Material.PAPER)); //placeholder
+        
+        for (int i = 0; i < 9; i++) {
+            chest.getSnapshotInventory().setItem(i, DishHandler.encodeRandom()); //placeholder
+        }
         chest.update(true, true);
     }
 }

@@ -1,5 +1,6 @@
 package quarri6343.overcrafted.utils;
 
+import de.tr7zw.nbtapi.NBTItem;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.block.data.BlockData;
@@ -16,6 +17,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.annotation.ParametersAreNullableByDefault;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * このクラスの新しいインスタンスを作ることでアイテムの実体を1から作成することができる<br>
@@ -294,6 +296,39 @@ public class ItemCreator {
         Damageable damagable = ((Damageable) itemStack.getItemMeta());
         damagable.setDamage(damagable.getDamage() + damage);
         itemStack.setItemMeta(damagable);
+        return this;
+    }
+
+    @ParametersAreNonnullByDefault
+    public ItemCreator setIntNBT(String key, int value) {
+        NBTItem item = new NBTItem(itemStack);
+        item.setInteger(key, value);
+        itemStack = item.getItem();
+        return this;
+    }
+
+    @Nullable
+    public Integer getIntNBT(String key) {
+        return new NBTItem(itemStack).getInteger(key);
+    }
+
+    @ParametersAreNonnullByDefault
+    public ItemCreator setStrNBT(String key, String value) {
+        NBTItem item = new NBTItem(itemStack);
+        item.setString(key, value);
+        itemStack = item.getItem();
+        return this;
+    }
+
+    @Nullable
+    public String getStrNBT(String key) {
+        return new NBTItem(itemStack).getString(key);
+    }
+
+    @ParametersAreNonnullByDefault
+    public ItemCreator assignRandomIDtoItem(String key) {
+        int id = new Random().nextInt(Integer.MAX_VALUE);
+        setIntNBT(key, id);
         return this;
     }
 }

@@ -1,7 +1,11 @@
 package quarri6343.overcrafted.utils;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.SimplePluginManager;
 
 import javax.annotation.Nullable;
@@ -28,5 +32,26 @@ public class OvercraftedUtils {
         }
 
         return null;
+    }
+
+    /**
+     * アイテムの名称(ローカライズ済み)と個数をテキストコンポーネントに変換する
+     * @param item アイテム
+     * @return テキスト
+     */
+    public static Component getItemInfoasText(ItemStack item) {
+        if (item.getItemMeta().hasDisplayName()){
+            return Component.text()
+                    .color(NamedTextColor.WHITE)
+                    .decoration(TextDecoration.ITALIC, false)
+                    .content(item.getItemMeta().getDisplayName() + " x" + item.getAmount()).build();
+        }
+        else {
+            return Component.translatable()
+                    .color(NamedTextColor.WHITE)
+                    .decoration(TextDecoration.ITALIC, false)
+                    .append(Component.text().content(" x" + item.getAmount()).build())
+                    .key(item.getType().translationKey()).build();
+        }
     }
 }
