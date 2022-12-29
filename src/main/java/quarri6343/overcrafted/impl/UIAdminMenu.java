@@ -58,6 +58,7 @@ public class UIAdminMenu {
         OrderBox orderBox = getData().orderBox;
         orderBox.location = event.getWhoClicked().getLocation();
         orderBox.place();
+        orderBox.addRandomDish();
         event.getWhoClicked().sendMessage(Component.text("注文箱を" + locationBlockPostoString(event.getWhoClicked().getLocation()) + "で登録しました"));
     }
 

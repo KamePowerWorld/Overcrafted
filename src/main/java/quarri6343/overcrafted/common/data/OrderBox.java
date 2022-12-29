@@ -2,7 +2,6 @@ package quarri6343.overcrafted.common.data;
 
 import com.google.common.base.Objects;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -35,10 +34,6 @@ public class OrderBox {
         Chest chest = (Chest) location.getWorld().getBlockAt(location).getState();
         chest.customName(boxName);
         chest.update();
-
-        for (int i = 0; i < 9; i++) {
-            chest.getInventory().setItem(i, DishHandler.encodeRandomOrder()); //placeholder
-        }
     }
 
     /**
@@ -66,5 +61,27 @@ public class OrderBox {
 
         Chest chest = (Chest) block.getState();
         return Objects.equal(chest.customName(), boxName);
+    }
+
+    /**
+     * 注文箱にランダムな注文が載った皿を追加する
+     */
+    public void addRandomDish(){
+        if(!isPlaced())
+            place();
+        
+        Chest chest = (Chest) location.getWorld().getBlockAt(location).getState();
+        chest.getInventory().addItem(DishHandler.encodeRandomOrder());
+    }
+
+    /**
+     * 注文箱にランダムな注文が載った汚れた皿を追加する
+     */
+    public void addRandomDirtyDish(){
+        if(!isPlaced())
+            place();
+
+        Chest chest = (Chest) location.getWorld().getBlockAt(location).getState();
+        chest.getInventory().addItem(DishHandler.encodeRandomOrderOnDirtyDish());
     }
 }

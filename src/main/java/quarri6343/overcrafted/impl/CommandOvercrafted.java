@@ -23,7 +23,7 @@ public class CommandOvercrafted extends CommandBase {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @Nullable String[] arguments) {
-        ((Player) sender).getInventory().addItem(new ItemCreator(Material.STICK).setName(Component.text(PlayerEventHandler.menuItemName)).create());
+        ((Player) sender).getInventory().addItem(new ItemCreator(Material.STICK).setName(PlayerEventHandler.menuItemName).create());
         return true;
     }
 }
