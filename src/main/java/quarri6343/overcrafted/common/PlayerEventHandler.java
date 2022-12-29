@@ -4,11 +4,13 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.block.Container;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
+import quarri6343.overcrafted.common.data.OrderBox;
 import quarri6343.overcrafted.impl.UIAdminMenu;
 import quarri6343.overcrafted.utils.OvercraftedUtils;
 
@@ -92,6 +94,23 @@ public class PlayerEventHandler implements Listener {
             }else{
                 event.getPlayer().sendMessage(OvercraftedUtils.getItemInfoasText(dishMenu.getProduct()).append(Component.text(" が入ったブロックを皿を持って右クリックしよう")));
             }
+        }
+    }
+
+    @org.bukkit.event.EventHandler
+    public void onPlayerBreakBlock(BlockBreakEvent event) {
+        processOrderBoxDestruction(event);
+    }
+
+    /**
+     * もし設置されている注文箱が壊された時、注文箱に処理を委譲する
+     * @param event
+     */
+    private void processOrderBoxDestruction(BlockBreakEvent event){
+        OrderBox orderBox = Overcrafted.getInstance().getData().orderBox;
+        if(event.getBlock().equals(orderBox.location.getBlock()) && orderBox.isPlaced()){
+            event.setCancelled(true);
+            orderBox.destroy();
         }
     }
 }
