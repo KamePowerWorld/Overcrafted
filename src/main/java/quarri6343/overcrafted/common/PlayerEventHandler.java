@@ -101,7 +101,8 @@ public class PlayerEventHandler implements Listener {
     private void trySubmitOrder(PlayerInteractEvent event, DishMenu menu) {
         if (event.getClickedBlock() != null && event.getClickedBlock().getType() == Material.RED_BED) {
             event.getPlayer().setItemInHand(new ItemStack(Material.AIR));
-
+            ScoreBoardHandler.addScore(event.getPlayer());
+            
             OrderBox orderBox = Overcrafted.getInstance().getData().orderBox;
             orderBox.addRandomDirtyDish();
         } else {
