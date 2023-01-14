@@ -35,7 +35,7 @@ public class AdminMenuRow2 {
         return Overcrafted.getInstance().getLogic();
     }
 
-    public static void addElements(PaginatedGui gui, Player player){
+    public static void addElements(PaginatedGui gui, Player player) {
         ItemStack forceJoinItem = new ItemCreator(Material.GREEN_BANNER).setName(Component.text("選択中のチームにプレイヤーを強制加入させる"))
                 .setLore(joinTeamButtonGuide).create();
         GuiItem forceJoinButton = new GuiItem(forceJoinItem, event -> {
@@ -94,6 +94,7 @@ public class AdminMenuRow2 {
 
     /**
      * チーム設定をリセットするボタンの挙動
+     *
      * @param event
      */
     private static void onResetTeamSettingsButton(InventoryClickEvent event) {
@@ -116,6 +117,7 @@ public class AdminMenuRow2 {
 
     /**
      * チーム加入地点を設定するボタンの挙動
+     *
      * @param isLocation1 チーム加入地点1かどうか
      */
     private static void onSetJoinLocationButton(InventoryClickEvent event, boolean isLocation1) {

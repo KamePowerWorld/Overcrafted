@@ -14,13 +14,13 @@ public class GameEndRunnable extends BukkitRunnable {
         this.additionalAction = additionalAction;
         this.isScheduled = isScheduled;
     }
-    
+
     @Override
     public void run() {
         GlobalTeamHandler.teleportTeamToLobby();
         GlobalTeamHandler.resetTeams();
         additionalAction.run();
-        if(isScheduled)
+        if (isScheduled)
             cancel();
     }
 }

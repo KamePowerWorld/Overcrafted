@@ -23,11 +23,11 @@ public class GameRunnable extends BukkitRunnable {
     @Override
     public void run() {
         count++;
-        
-        if(count % 20 == 0){
+
+        if (count % 20 == 0) {
             ScoreBoardHandler.setTime(OCData.gameLength - count / 20);
         }
-        
+
         if (count >= OCData.gameLength * 20) {
             onGameSuccess.accept(getData().teams.getTeam(0));
             cancel();

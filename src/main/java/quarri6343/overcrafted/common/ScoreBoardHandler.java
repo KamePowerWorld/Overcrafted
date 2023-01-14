@@ -28,14 +28,14 @@ public class ScoreBoardHandler {
     /**
      * スコアボードを作成する
      */
-    public static void initialize(){
+    public static void initialize() {
         objective = getBoard().getObjective(objectiveName);
-        if(objective == null)
+        if (objective == null)
             objective = getBoard().registerNewObjective(objectiveName, "dummy", mainObjectiveDisplayName);
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         setTime(OCData.gameLength);
-        
+
         for (int i = 0; i < getData().teams.getTeamsLength(); i++) {
             OCTeam team = getData().teams.getTeam(i);
 
@@ -46,28 +46,29 @@ public class ScoreBoardHandler {
 
     /**
      * スコアを追加する
+     *
      * @param team
      */
-    public static void addScore(OCTeam team){
-        if(objective == null)
+    public static void addScore(OCTeam team) {
+        if (objective == null)
             initialize();
-        
+
         Score score = objective.getScore(team.name);
         score.setScore(score.getScore() + 1);
     }
-    
-    public static void setTime(int time){
-        if(objective == null)
+
+    public static void setTime(int time) {
+        if (objective == null)
             initialize();
-        
+
         objective.getScore(remainingTime).setScore(time);
     }
 
     /**
      * スコアボードを削除する
      */
-    public static void destroy(){
-        if(objective == null)
+    public static void destroy() {
+        if (objective == null)
             return;
 
         objective.unregister();

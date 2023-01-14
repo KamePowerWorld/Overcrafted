@@ -35,9 +35,11 @@ public class PlayerEventHandler implements Listener {
     private static OCData getData() {
         return Overcrafted.getInstance().getData();
     }
-    
-    private static OCLogic getLogic() { return Overcrafted.getInstance().getLogic(); }
-    
+
+    private static OCLogic getLogic() {
+        return Overcrafted.getInstance().getLogic();
+    }
+
     @org.bukkit.event.EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         processHandheldItem(event);
@@ -80,9 +82,9 @@ public class PlayerEventHandler implements Listener {
      * @param event
      */
     private void processHandheldDish(PlayerInteractEvent event) {
-        if(getLogic().gameStatus == OCLogic.GameStatus.INACTIVE)
+        if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE)
             return;
-        
+
         event.setCancelled(true);
 
         if (event.getItem().getAmount() != 1) {
@@ -96,7 +98,7 @@ public class PlayerEventHandler implements Listener {
             return;
         }
 
-        if (DishHandler.isDirty(event.getItem())){
+        if (DishHandler.isDirty(event.getItem())) {
             tryWashDish(event, dishMenu);
             return;
         }
@@ -117,11 +119,11 @@ public class PlayerEventHandler implements Listener {
     private void trySubmitOrder(PlayerInteractEvent event, DishMenu menu) {
         if (event.getClickedBlock() != null && event.getClickedBlock().getType() == Material.RED_BED) {
             OCTeam team = getData().teams.getTeambyPlayer(event.getPlayer());
-            if(team == null){
+            if (team == null) {
                 event.getPlayer().sendMessage(Component.text("あなたはチームに所属していません"));
                 return;
             }
-            
+
             event.getPlayer().setItemInHand(new ItemStack(Material.AIR));
             ScoreBoardHandler.addScore(team);
             team.orderBox.addRandomDirtyDish();
@@ -146,35 +148,35 @@ public class PlayerEventHandler implements Listener {
             return;
         }
 
-        if(event.getClickedBlock() != null && (event.getClickedBlock().getType() == Material.CAULDRON || event.getClickedBlock().getType() == Material.WATER_CAULDRON))
+        if (event.getClickedBlock() != null && (event.getClickedBlock().getType() == Material.CAULDRON || event.getClickedBlock().getType() == Material.WATER_CAULDRON))
             return;
-        
+
         event.getPlayer().sendMessage(OvercraftedUtils.getItemInfoasText(dishMenu.getProduct()).append(Component.text(" が入ったブロックを皿を持って右クリックしよう")));
     }
 
     /**
      * プレイヤーが手に持っている汚い皿を洗うことを試みる
+     *
      * @param event
      * @param dishMenu
      */
-    private void tryWashDish(PlayerInteractEvent event, DishMenu dishMenu){
-        if(getLogic().gameStatus == OCLogic.GameStatus.INACTIVE)
+    private void tryWashDish(PlayerInteractEvent event, DishMenu dishMenu) {
+        if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE)
             return;
-        
-        if(event.getClickedBlock() == null || !Objects.equal(event.getClickedBlock().getType(), Material.WATER_CAULDRON)){
+
+        if (event.getClickedBlock() == null || !Objects.equal(event.getClickedBlock().getType(), Material.WATER_CAULDRON)) {
             event.getPlayer().sendMessage(Component.text("水の入った大釜を右クリックして洗おう"));
             return;
         }
 
         Levelled cauldronData = (Levelled) event.getClickedBlock().getBlockData();
-        if(cauldronData.getLevel() == cauldronData.getMinimumLevel()){
+        if (cauldronData.getLevel() == cauldronData.getMinimumLevel()) {
             event.getClickedBlock().getWorld().setType(event.getClickedBlock().getLocation(), Material.CAULDRON);
-        }
-        else{
+        } else {
             cauldronData.setLevel(cauldronData.getLevel() - 1);
             event.getClickedBlock().setBlockData(cauldronData);
         }
-        
+
         event.getPlayer().setItemInHand(DishHandler.encodeOrder(dishMenu));
         event.getClickedBlock().getState().update();
     }
@@ -203,36 +205,38 @@ public class PlayerEventHandler implements Listener {
     }
 
     @org.bukkit.event.EventHandler
-    public void onPlayerDeath(PlayerDeathEvent event){
+    public void onPlayerDeath(PlayerDeathEvent event) {
         removeInvalidItem(event);
     }
 
     /**
      * プレイヤーが死んだときインベントリに入っている無効アイテムがドロップしないようにする
+     *
      * @param event
      */
-    private void removeInvalidItem(PlayerDeathEvent event){
-        if(getLogic().gameStatus == OCLogic.GameStatus.INACTIVE)
+    private void removeInvalidItem(PlayerDeathEvent event) {
+        if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE)
             return;
-        
+
         event.getDrops().removeIf(itemStack -> itemStack.getType().equals(OCData.invalidItem.getType()));
     }
 
     @org.bukkit.event.EventHandler
-    public void onPlayerRespawn(PlayerRespawnEvent event){
+    public void onPlayerRespawn(PlayerRespawnEvent event) {
         resetPlayerStatus(event);
     }
 
     /**
      * プレイヤーがリスポーンした時状態をリセットする
+     *
      * @param event
      */
-    private void resetPlayerStatus(PlayerRespawnEvent event){
-        if(getLogic().gameStatus == OCLogic.GameStatus.INACTIVE)
+    private void resetPlayerStatus(PlayerRespawnEvent event) {
+        if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE)
             return;
 
         OCTeam team = getData().teams.getTeambyPlayer(event.getPlayer());
-        if(team == null)
+        if (team == null)
             return;
         team.setUpGameEnvforPlayer(event.getPlayer());
     }
@@ -244,6 +248,7 @@ public class PlayerEventHandler implements Listener {
 
     /**
      * スロットをロックしているアイテムのドロップを阻止する
+     *
      * @param event
      */
     private void blockInvalidSlotDrop(PlayerDropItemEvent event) {

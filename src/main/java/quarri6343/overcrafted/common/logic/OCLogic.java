@@ -76,10 +76,10 @@ public class OCLogic {
         gameRunnable = new GameRunnable(urTeam -> endGame(null, urTeam, GameResult.SUCCESS, true)).runTaskTimer(Overcrafted.getInstance(), 0, 1);
     }
 
-    public void endGame(){
+    public void endGame() {
         endGame(null, null, GameResult.FAIL, false);
     }
-    
+
     /**
      * ゲームを終了する
      *
@@ -101,7 +101,7 @@ public class OCLogic {
             gameRunnable.cancel();
         if (gameEndRunnable != null)
             gameEndRunnable.cancel();
-        
+
         if (gameResult == GameResult.SUCCESS) {
             displayGameSuccessTitle(victoryTeam);
         } else if (gameResult == GameResult.FAIL) {

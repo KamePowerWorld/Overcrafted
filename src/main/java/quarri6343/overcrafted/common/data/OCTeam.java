@@ -50,12 +50,13 @@ public class OCTeam {
 
     /**
      * チームに所属しているプレイヤーの環境をゲーム開始に適した状態に変更する
+     *
      * @param player チームに所属しているプレイヤー
      */
-    public void setUpGameEnvforPlayer(Player player){
-        if(!containsPlayer(player))
+    public void setUpGameEnvforPlayer(Player player) {
+        if (!containsPlayer(player))
             return;
-        
+
         player.teleport(startLocation);
         player.setGameMode(GameMode.ADVENTURE);
         player.getInventory().setContents(new ItemStack[]{});
@@ -63,7 +64,7 @@ public class OCTeam {
         player.setFoodLevel(20);
 
         for (int i = 0; i < player.getInventory().getSize(); i++) {
-            if(i > 0 && i < 36)
+            if (i > 0 && i < 36)
                 player.getInventory().setItem(i, OCData.invalidItem);
         }
     }

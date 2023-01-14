@@ -24,7 +24,7 @@ public class OCData {
      * ゲームの長さ
      */
     public static final int gameLength = 180;
-    
+
     /**
      * ゲームのリザルトシーンの長さ
      */

@@ -11,7 +11,7 @@ public enum DishMenu {
     FURNACE(new ItemStack(Material.FURNACE)),
     IRON(new ItemStack(Material.IRON_INGOT, 4)),
     MINECART(new ItemStack(Material.MINECART));
-    
+
     private final ItemStack product;
 
     DishMenu(ItemStack product) {

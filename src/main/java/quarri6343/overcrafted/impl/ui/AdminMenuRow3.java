@@ -86,7 +86,7 @@ public class AdminMenuRow3 {
 
         return getLocDesc(team.orderBox.location);
     }
-    
+
     /**
      * 現在立っている場所で注文箱を登録する
      *

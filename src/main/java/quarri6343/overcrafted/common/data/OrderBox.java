@@ -18,18 +18,18 @@ public class OrderBox {
      * 注文箱のワールド内での場所
      */
     public Location location = null;
-    
+
     private static final Component boxName = Component.text("注文箱");
-    
+
     /**
      * 注文箱を設置
      */
-    public void place(){
-        if(location == null){
+    public void place() {
+        if (location == null) {
             Overcrafted.getInstance().getLogger().severe("存在しない座標に注文箱は置けません！");
             return;
         }
-        
+
         location.getWorld().setType(location, Material.CHEST);
         Chest chest = (Chest) location.getWorld().getBlockAt(location).getState();
         chest.customName(boxName);
@@ -39,24 +39,24 @@ public class OrderBox {
     /**
      * 設置されている注文箱を中身ごと破壊
      */
-    public void destroy(){
-        if(location == null){
+    public void destroy() {
+        if (location == null) {
             Overcrafted.getInstance().getLogger().severe("存在しない座標の注文箱は壊せません！");
             return;
         }
-        
+
         location.getWorld().setType(location, Material.AIR);
     }
 
     /**
      * 注文箱が設置されているかどうか
      */
-    public boolean isPlaced(){
-        if(location == null)
+    public boolean isPlaced() {
+        if (location == null)
             return false;
-        
+
         Block block = location.getWorld().getBlockAt(location);
-        if(block.getType() != Material.CHEST)
+        if (block.getType() != Material.CHEST)
             return false;
 
         Chest chest = (Chest) block.getState();
@@ -66,10 +66,10 @@ public class OrderBox {
     /**
      * 注文箱にランダムな注文が載った皿を追加する
      */
-    public void addRandomDish(){
-        if(!isPlaced())
+    public void addRandomDish() {
+        if (!isPlaced())
             place();
-        
+
         Chest chest = (Chest) location.getWorld().getBlockAt(location).getState();
         chest.getInventory().addItem(DishHandler.encodeRandomOrder());
     }
@@ -77,8 +77,8 @@ public class OrderBox {
     /**
      * 注文箱にランダムな注文が載った汚れた皿を追加する
      */
-    public void addRandomDirtyDish(){
-        if(!isPlaced())
+    public void addRandomDirtyDish() {
+        if (!isPlaced())
             place();
 
         Chest chest = (Chest) location.getWorld().getBlockAt(location).getState();

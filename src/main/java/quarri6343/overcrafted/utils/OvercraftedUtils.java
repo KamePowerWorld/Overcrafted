@@ -40,17 +40,17 @@ public class OvercraftedUtils {
 
     /**
      * アイテムの名称(ローカライズ済み)と個数をテキストコンポーネントに変換する
+     *
      * @param item アイテム
      * @return テキスト
      */
     public static Component getItemInfoasText(ItemStack item) {
-        if (item.getItemMeta().hasDisplayName()){
+        if (item.getItemMeta().hasDisplayName()) {
             return Component.text()
                     .color(NamedTextColor.WHITE)
                     .decoration(TextDecoration.ITALIC, false)
                     .content(item.getItemMeta().getDisplayName() + " x" + item.getAmount()).build();
-        }
-        else {
+        } else {
             return Component.translatable()
                     .color(NamedTextColor.WHITE)
                     .decoration(TextDecoration.ITALIC, false)

@@ -13,7 +13,7 @@ import java.io.File;
  * コンフィグファイルを読み書きする
  */
 public class ConfigHandler {
-    
+
     public ConfigHandler() {
     }
 
@@ -61,7 +61,7 @@ public class ConfigHandler {
      */
     @ParametersAreNonnullByDefault
     private void loadMisc(FileConfiguration config) {
-        
+
     }
 
     /**
@@ -99,7 +99,7 @@ public class ConfigHandler {
 
     /**
      * その他データをコンフィグに保存する
-     * 
+     *
      * @param config
      */
     @ParametersAreNonnullByDefault
