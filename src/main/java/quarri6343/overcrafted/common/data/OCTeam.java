@@ -5,8 +5,10 @@ import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import quarri6343.overcrafted.utils.ItemCreator;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -55,10 +57,15 @@ public class OCTeam {
             return;
         
         player.teleport(startLocation);
-        player.setGameMode(GameMode.SURVIVAL);
+        player.setGameMode(GameMode.ADVENTURE);
         player.getInventory().setContents(new ItemStack[]{});
         player.setSaturation(5f);
         player.setFoodLevel(20);
+
+        for (int i = 0; i < player.getInventory().getSize(); i++) {
+            if(i > 0 && i < 36)
+                player.getInventory().setItem(i, OCData.invalidItem);
+        }
     }
 
     public void setStartLocation(Location location) {

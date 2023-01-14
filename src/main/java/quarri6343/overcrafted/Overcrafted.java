@@ -2,6 +2,7 @@ package quarri6343.overcrafted;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import quarri6343.overcrafted.common.ConfigHandler;
+import quarri6343.overcrafted.common.InventoryEventHandler;
 import quarri6343.overcrafted.common.PlayerEventHandler;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.logic.OCLogic;
@@ -35,6 +36,7 @@ public final class Overcrafted extends JavaPlugin {
         logic = new OCLogic();
         new CommandOvercrafted();
         new PlayerEventHandler();
+        new InventoryEventHandler();
     }
 
     @Override
