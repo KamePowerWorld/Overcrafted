@@ -31,6 +31,4 @@ public class OCData {
     public static final int checkInventoryInterval = 20;
 
     public final OCTeams teams = new OCTeams();
-    
-    public OrderBox orderBox = new OrderBox();
 }

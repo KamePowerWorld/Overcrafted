@@ -12,6 +12,8 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
+import quarri6343.overcrafted.common.data.OCData;
+import quarri6343.overcrafted.common.data.OCTeam;
 import quarri6343.overcrafted.common.data.OrderBox;
 import quarri6343.overcrafted.impl.ui.UIAdminMenu;
 import quarri6343.overcrafted.utils.OvercraftedUtils;
@@ -24,6 +26,10 @@ public class PlayerEventHandler implements Listener {
         Overcrafted.getInstance().getServer().getPluginManager().registerEvents(this, Overcrafted.getInstance());
     }
 
+    private static OCData getData() {
+        return Overcrafted.getInstance().getData();
+    }
+    
     @org.bukkit.event.EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         processHandheldItem(event);
@@ -99,11 +105,15 @@ public class PlayerEventHandler implements Listener {
      */
     private void trySubmitOrder(PlayerInteractEvent event, DishMenu menu) {
         if (event.getClickedBlock() != null && event.getClickedBlock().getType() == Material.RED_BED) {
-            event.getPlayer().setItemInHand(new ItemStack(Material.AIR));
-//            ScoreBoardHandler.addScore(event.getPlayer());
+            OCTeam team = getData().teams.getTeambyPlayer(event.getPlayer());
+            if(team == null){
+                event.getPlayer().sendMessage(Component.text("あなたはチームに所属していません"));
+                return;
+            }
             
-            OrderBox orderBox = Overcrafted.getInstance().getData().orderBox;
-            orderBox.addRandomDirtyDish();
+            event.getPlayer().setItemInHand(new ItemStack(Material.AIR));
+            ScoreBoardHandler.addScore(team);
+            team.orderBox.addRandomDirtyDish();
         } else {
             event.getPlayer().sendMessage(Component.text("赤いベッドを右クリックして納品しよう"));
         }
@@ -166,10 +176,15 @@ public class PlayerEventHandler implements Listener {
      * @param event
      */
     private void processOrderBoxDestruction(BlockBreakEvent event) {
-        OrderBox orderBox = Overcrafted.getInstance().getData().orderBox;
-        if (event.getBlock().equals(orderBox.location.getBlock()) && orderBox.isPlaced()) {
-            event.setCancelled(true);
-            orderBox.destroy();
+        for (int i = 0; i < getData().teams.getTeamsLength(); i++) {
+            OCTeam team = getData().teams.getTeam(i);
+
+            OrderBox orderBox = team.orderBox;
+            if (event.getBlock().equals(orderBox.location.getBlock()) && orderBox.isPlaced()) {
+                event.setCancelled(true);
+                orderBox.destroy();
+                return;
+            }
         }
     }
 }

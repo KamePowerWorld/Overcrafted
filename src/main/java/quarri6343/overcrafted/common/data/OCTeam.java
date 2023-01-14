@@ -25,6 +25,8 @@ public class OCTeam {
     public Location joinLocation1;
     public Location joinLocation2;
 
+    public OrderBox orderBox = new OrderBox();
+
     private final List<OCPlayer> players = new ArrayList<>();
 
     public OCTeam(String name, String color) {
