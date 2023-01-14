@@ -11,10 +11,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.Cauldron;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.common.data.OrderBox;
-import quarri6343.overcrafted.impl.UIAdminMenu;
+import quarri6343.overcrafted.impl.ui.UIAdminMenu;
 import quarri6343.overcrafted.utils.OvercraftedUtils;
 
 public class PlayerEventHandler implements Listener {
@@ -101,7 +100,7 @@ public class PlayerEventHandler implements Listener {
     private void trySubmitOrder(PlayerInteractEvent event, DishMenu menu) {
         if (event.getClickedBlock() != null && event.getClickedBlock().getType() == Material.RED_BED) {
             event.getPlayer().setItemInHand(new ItemStack(Material.AIR));
-            ScoreBoardHandler.addScore(event.getPlayer());
+//            ScoreBoardHandler.addScore(event.getPlayer());
             
             OrderBox orderBox = Overcrafted.getInstance().getData().orderBox;
             orderBox.addRandomDirtyDish();

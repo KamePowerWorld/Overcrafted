@@ -1,4 +1,4 @@
-package quarri6343.overcrafted.impl;
+package quarri6343.overcrafted.impl.command;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
