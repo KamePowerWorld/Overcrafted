@@ -10,6 +10,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.player.PlayerAttemptPickupItemEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -85,6 +86,12 @@ public class PlayerEventHandler implements Listener {
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE)
             return;
 
+        OCTeam team = getData().teams.getTeambyPlayer(event.getPlayer());
+        if (team == null) {
+            event.getPlayer().sendMessage(Component.text("あなたはチームに所属していないため、料理することができません"));
+            return;
+        }
+
         event.setCancelled(true);
 
         if (event.getItem().getAmount() != 1) {
@@ -104,7 +111,7 @@ public class PlayerEventHandler implements Listener {
         }
 
         if (DishHandler.isOrderCompleted(event.getItem())) {
-            trySubmitOrder(event, dishMenu);
+            trySubmitOrder(event, team);
         } else {
             tryCompleteOrder(event, dishMenu);
         }
@@ -114,15 +121,10 @@ public class PlayerEventHandler implements Listener {
      * プレイヤーが手に持っている皿をカウンターに提出することを試みる
      *
      * @param event
-     * @param menu
+     * @param team
      */
-    private void trySubmitOrder(PlayerInteractEvent event, DishMenu menu) {
+    private void trySubmitOrder(PlayerInteractEvent event, OCTeam team) {
         if (event.getClickedBlock() != null && event.getClickedBlock().getType() == Material.RED_BED) {
-            OCTeam team = getData().teams.getTeambyPlayer(event.getPlayer());
-            if (team == null) {
-                event.getPlayer().sendMessage(Component.text("あなたはチームに所属していません"));
-                return;
-            }
 
             event.getPlayer().setItemInHand(new ItemStack(Material.AIR));
             ScoreBoardHandler.addScore(team);
@@ -217,7 +219,11 @@ public class PlayerEventHandler implements Listener {
     private void removeInvalidItem(PlayerDeathEvent event) {
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE)
             return;
-
+        
+        OCTeam team = getData().teams.getTeambyPlayer(event.getPlayer());
+        if (team == null)
+            return;
+        
         event.getDrops().removeIf(itemStack -> itemStack.getType().equals(OCData.invalidItem.getType()));
     }
 
@@ -238,6 +244,7 @@ public class PlayerEventHandler implements Listener {
         OCTeam team = getData().teams.getTeambyPlayer(event.getPlayer());
         if (team == null)
             return;
+        
         team.setUpGameEnvforPlayer(event.getPlayer());
     }
 
@@ -255,8 +262,43 @@ public class PlayerEventHandler implements Listener {
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE
                 || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
             return;
+        
+        OCTeam team = getData().teams.getTeambyPlayer(event.getPlayer());
+        if (team == null)
+            return;
 
         if (event.getItemDrop().getItemStack().getType() == OCData.invalidItem.getType())
             event.setCancelled(true);
+    }
+
+    @org.bukkit.event.EventHandler
+    public void onPlayerPickUp(PlayerAttemptPickupItemEvent event) {
+        blockPickingUpExcessiveItems(event);
+    }
+
+    /**
+     * プレイヤーがアイテムを1個より多く持たないように拾う量を調整する
+     */
+    private void blockPickingUpExcessiveItems(PlayerAttemptPickupItemEvent event){
+        if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE
+                || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
+            return;
+
+        OCTeam team = getData().teams.getTeambyPlayer(event.getPlayer());
+        if (team == null)
+            return;
+        
+        if(event.getPlayer().getInventory().getItem(0) != null){
+            event.setCancelled(true);
+            return;
+        }
+        else if(event.getItem().getItemStack().getAmount() > 1){
+            ItemStack itemOnGround = event.getItem().getItemStack();
+            itemOnGround.setAmount(itemOnGround.getAmount() - 1);
+            event.getItem().setItemStack(itemOnGround);
+            event.setCancelled(true);
+            itemOnGround.setAmount(1);
+            event.getPlayer().getInventory().addItem(itemOnGround);
+        }
     }
 }

@@ -2,7 +2,9 @@ package quarri6343.overcrafted.common;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCTeam;
@@ -127,6 +129,36 @@ public class GlobalTeamHandler {
                 if (OvercraftedUtils.isPlayerInArea(onlinePlayer, team.joinLocation1, team.joinLocation2)) {
                     addPlayerToTeam(onlinePlayer, team);
                     break;
+                }
+            }
+        }
+    }
+
+    /**
+     * チーム中のプレイヤーがアイテムを2つ以上持っていた場合、余剰分をドロップさせる
+     */
+    public static void dropExcessiveItems() {
+        for (int i = 0; i < getData().teams.getTeamsLength(); i++) {
+            OCTeam team = getData().teams.getTeam(i);
+            for (int j = 0; j < team.getPlayersSize(); j++) {
+                Player player = team.getPlayer(j);
+
+                ItemStack mainHandItem = player.getInventory().getItem(0);
+                if (mainHandItem != null && mainHandItem.getAmount() > 1) {
+                    try{
+                        mainHandItem.setAmount(mainHandItem.getAmount() - 1);
+                        player.getWorld().dropItemNaturally(player.getLocation(), mainHandItem);
+                    }
+                    finally {
+                        mainHandItem.setAmount(1);
+                        player.getInventory().setItem(0, mainHandItem);
+                    }
+                }
+
+                ItemStack offHandItem = player.getInventory().getItemInOffHand();
+                if (offHandItem.getAmount() > 0){
+                    player.getInventory().setItemInOffHand(null);
+                    player.getWorld().dropItemNaturally(player.getLocation(), offHandItem);
                 }
             }
         }

@@ -1,5 +1,6 @@
 package quarri6343.overcrafted.common;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -8,6 +9,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.common.data.OCData;
+import quarri6343.overcrafted.common.data.OCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
 
 public class InventoryEventHandler implements Listener {
@@ -16,6 +18,10 @@ public class InventoryEventHandler implements Listener {
         Overcrafted.getInstance().getServer().getPluginManager().registerEvents(this, Overcrafted.getInstance());
     }
 
+    private static OCData getData() {
+        return Overcrafted.getInstance().getData();
+    }
+    
     private static OCLogic getLogic() {
         return Overcrafted.getInstance().getLogic();
     }
@@ -35,6 +41,13 @@ public class InventoryEventHandler implements Listener {
                 || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
             return;
 
+        if(!(event.getWhoClicked() instanceof Player))
+            return;
+        
+        OCTeam team = getData().teams.getTeambyPlayer((Player) event.getWhoClicked());
+        if (team == null)
+            return;
+        
         if (event.getClick().equals(ClickType.NUMBER_KEY)) { //handle number key click
             if (event.getHotbarButton() == 0) {
                 return;
@@ -60,7 +73,7 @@ public class InventoryEventHandler implements Listener {
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE
                 || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
             return;
-
+        
         if (event.getSource().getType() != InventoryType.PLAYER && event.getDestination().getType() != InventoryType.PLAYER)
             return;
 
