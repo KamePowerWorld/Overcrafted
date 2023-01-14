@@ -29,10 +29,15 @@ public class OCLogic {
 
     public GameStatus gameStatus = GameStatus.INACTIVE;
     public World gameWorld = null;
+    private BukkitTask gameInactiveRunnable;
     private BukkitTask gameBeginRunnable;
     private BukkitTask gameRunnable;
     private BukkitTask gameEndRunnable;
 
+    public OCLogic(){
+        gameInactiveRunnable = new GameInactiveRunnable().runTaskTimer(Overcrafted.getInstance(), 0 ,1);
+    }
+    
     /**
      * ゲームを開始する
      *
@@ -51,6 +56,8 @@ public class OCLogic {
             return;
         }
 
+        if(gameInactiveRunnable != null)
+            gameInactiveRunnable.cancel();
         gameWorld = gameMaster.getWorld();
         gameStatus = GameStatus.BEGINNING;
         gameBeginRunnable = new GameBeginRunnable(this::onGameBegin).runTaskTimer(Overcrafted.getInstance(), 0, 1);
@@ -110,7 +117,11 @@ public class OCLogic {
 
         gameStatus = GameStatus.ENDING;
         if (hasResultScene)
-            gameEndRunnable = new GameEndRunnable(() -> gameStatus = GameStatus.INACTIVE, true).runTaskTimer(Overcrafted.getInstance(), gameResultSceneLength, 1);
+            gameEndRunnable = new GameEndRunnable(() -> {
+                gameStatus = GameStatus.INACTIVE;
+                gameInactiveRunnable = new GameInactiveRunnable().runTaskTimer(Overcrafted.getInstance(), 0 ,1);
+                }, true)
+                    .runTaskTimer(Overcrafted.getInstance(), gameResultSceneLength, 1);
         else
             new GameEndRunnable(() -> gameStatus = GameStatus.INACTIVE, false).run();
     }

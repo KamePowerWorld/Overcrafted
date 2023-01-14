@@ -16,7 +16,9 @@ public class MCTeams {
         Team team = getBoard().getTeam(urTeam.name);
         if (team == null)
             team = createMinecraftTeam(urTeam);
-        team.addPlayer(player);
+        
+        if(!team.hasPlayer(player))
+            team.addPlayer(player);
     }
 
     /**

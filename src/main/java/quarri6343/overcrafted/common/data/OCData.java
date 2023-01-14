@@ -16,6 +16,11 @@ public class OCData {
     public String adminSelectedTeam = "";
 
     /**
+     * ゲーム開始前に自動的にプレイヤーをチームに割り当てる周期
+     */
+    public static final int assignTeamLength = 20;
+    
+    /**
      * ゲームが始まるまでのカウントダウンの長さ
      */
     public static final int gameBeginCountdownLength = 100;

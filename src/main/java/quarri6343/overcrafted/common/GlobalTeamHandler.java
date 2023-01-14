@@ -115,7 +115,6 @@ public class GlobalTeamHandler {
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             for (int i = 0; i < getData().teams.getTeamsLength(); i++) {
                 if (getData().teams.getTeam(i).containsPlayer(onlinePlayer)) {
-                    onlinePlayer.sendMessage("既にチーム" + getData().teams.getTeam(i).name + "に加入しています！");
                     return;
                 }
             }

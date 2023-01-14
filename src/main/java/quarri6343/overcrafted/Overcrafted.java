@@ -6,6 +6,8 @@ import quarri6343.overcrafted.common.InventoryEventHandler;
 import quarri6343.overcrafted.common.PlayerEventHandler;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.logic.OCLogic;
+import quarri6343.overcrafted.impl.command.CommandForceJoin;
+import quarri6343.overcrafted.impl.command.CommandForceLeave;
 import quarri6343.overcrafted.impl.command.CommandOvercrafted;
 
 public final class Overcrafted extends JavaPlugin {
@@ -35,6 +37,8 @@ public final class Overcrafted extends JavaPlugin {
         config.loadConfig();
         logic = new OCLogic();
         new CommandOvercrafted();
+        new CommandForceJoin();
+        new CommandForceLeave();
         new PlayerEventHandler();
         new InventoryEventHandler();
     }

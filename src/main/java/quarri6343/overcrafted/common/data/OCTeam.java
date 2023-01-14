@@ -74,7 +74,8 @@ public class OCTeam {
     }
 
     public void addPlayer(Player player) {
-        players.add(new OCPlayer(player));
+        if(!containsPlayer(player))
+            players.add(new OCPlayer(player));
     }
 
     public Player getPlayer(int index) {
