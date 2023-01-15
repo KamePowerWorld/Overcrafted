@@ -26,15 +26,15 @@ public class GameRunnable extends BukkitRunnable {
         count++;
 
         if (count % 20 == 0) {
-            ScoreBoardHandler.setTime(OCData.gameLength - count / 20);
+            ScoreBoardHandler.refresh(OCData.gameLength - count / 20);
         }
 
         if (count >= OCData.gameLength * 20) {
             onGameSuccess.accept(ScoreBoardHandler.getHighestScoreTeam());
             cancel();
         }
-        
-        if(count % OCData.checkInventoryInterval == 0){
+
+        if (count % OCData.checkInventoryInterval == 0) {
             GlobalTeamHandler.dropExcessiveItems();
         }
     }
