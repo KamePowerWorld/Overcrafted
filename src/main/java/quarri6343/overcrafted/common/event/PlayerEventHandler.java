@@ -5,10 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerAttemptPickupItemEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
@@ -177,6 +174,20 @@ public class PlayerEventHandler implements Listener {
             event.setCancelled(true);
             itemOnGround.setAmount(1);
             event.getPlayer().getInventory().addItem(itemOnGround);
+        }
+    }
+
+    @org.bukkit.event.EventHandler
+    public void onPlayerSwapHandItems(PlayerSwapHandItemsEvent event) {
+        blockSwapHandItem(event);
+    }
+
+    /**
+     * ゲーム中メインハンドとオフハンドを入れ替えることを禁止する
+     */
+    private void blockSwapHandItem(PlayerSwapHandItemsEvent event){
+        if(getLogic().gameStatus != OCLogic.GameStatus.INACTIVE){
+            event.setCancelled(true);
         }
     }
 }
