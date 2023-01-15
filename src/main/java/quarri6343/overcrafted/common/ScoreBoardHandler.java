@@ -35,6 +35,9 @@ public class ScoreBoardHandler {
      * スコアボードを作成する
      */
     public static void initialize() {
+        objective = getBoard().getObjective(objectiveName);
+        destroy();
+        
         for (int i = 0; i < getData().teams.getTeamsLength(); i++) {
             OCTeam team = getData().teams.getTeam(i);
             scores.put(team, 0);
