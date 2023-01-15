@@ -41,6 +41,11 @@ public class OCData {
     public static final int checkInventoryInterval = 20;
 
     /**
+     * ゲームが始まった時注文箱に入っている注文の数
+     */
+    public static final int dishesOnStart = 5;
+
+    /**
      * インベントリを埋める無効アイテム
      */
     public static final ItemStack invalidItem = new ItemCreator(Material.RED_STAINED_GLASS_PANE).setName(Component.text("")).create();

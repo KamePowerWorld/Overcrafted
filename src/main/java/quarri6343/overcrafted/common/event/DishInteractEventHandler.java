@@ -10,7 +10,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.common.DishHandler;
-import quarri6343.overcrafted.common.DishMenu;
+import quarri6343.overcrafted.common.data.DishMenu;
 import quarri6343.overcrafted.common.ScoreBoardHandler;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCTeam;
@@ -68,7 +68,7 @@ public class DishInteractEventHandler implements IPlayerInteractEventHandler {
         }
 
         if (DishHandler.isOrderCompleted(event.getItem())) {
-            trySubmitOrder(event, team);
+            trySubmitOrder(event, team, dishMenu);
         } else {
             tryCompleteOrder(event, dishMenu);
         }
@@ -81,11 +81,11 @@ public class DishInteractEventHandler implements IPlayerInteractEventHandler {
      * @param event
      * @param team
      */
-    private void trySubmitOrder(PlayerInteractEvent event, OCTeam team) {
+    private void trySubmitOrder(PlayerInteractEvent event, OCTeam team, DishMenu menu) {
         if (event.getClickedBlock() != null && event.getClickedBlock().getType() == Material.RED_BED) {
 
             event.getPlayer().setItemInHand(new ItemStack(Material.AIR));
-            ScoreBoardHandler.addScore(team);
+            ScoreBoardHandler.addScore(team, menu.getScore());
             team.orderBox.addItem(DishHandler.encodeRandomOrderOnDirtyDish());
         } else {
             event.getPlayer().sendMessage(Component.text("赤いベッドを右クリックして納品しよう"));

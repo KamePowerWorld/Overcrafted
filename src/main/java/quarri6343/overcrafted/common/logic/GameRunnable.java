@@ -30,7 +30,7 @@ public class GameRunnable extends BukkitRunnable {
         }
 
         if (count >= OCData.gameLength * 20) {
-            onGameSuccess.accept(getData().teams.getTeam(0));
+            onGameSuccess.accept(ScoreBoardHandler.getHighestScoreTeam());
             cancel();
         }
         

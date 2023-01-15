@@ -109,7 +109,6 @@ public class AdminMenuRow3 {
         OrderBox orderBox = team.orderBox;
         orderBox.location = event.getWhoClicked().getLocation();
         orderBox.place();
-        orderBox.addItem(DishHandler.encodeRandomOrder());
         event.getWhoClicked().sendMessage(Component.text("注文箱を" + locationBlockPostoString(event.getWhoClicked().getLocation()) + "で登録しました"));
         UIAdminMenu.openUI((Player) event.getWhoClicked());
     }

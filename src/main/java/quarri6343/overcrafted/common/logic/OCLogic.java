@@ -13,6 +13,7 @@ import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import quarri6343.overcrafted.Overcrafted;
+import quarri6343.overcrafted.common.DishHandler;
 import quarri6343.overcrafted.common.GlobalTeamHandler;
 import quarri6343.overcrafted.common.ScoreBoardHandler;
 import quarri6343.overcrafted.common.data.OCData;
@@ -48,8 +49,9 @@ public class OCLogic {
             gameMaster.sendMessage("ゲームが進行中です！");
             return;
         }
-
-        GlobalTeamHandler.assignPlayersInJoinArea();
+        
+        if(!GlobalTeamHandler.areTeamsValid(gameMaster))
+            return;
 
         if(gameInactiveRunnable != null)
             gameInactiveRunnable.cancel();
@@ -69,6 +71,10 @@ public class OCLogic {
 
             for (int j = 0; j < team.getPlayersSize(); j++) {
                 team.setUpGameEnvforPlayer(team.getPlayer(j));
+                
+                for (int k = 0; k < OCData.dishesOnStart; k++) {
+                    team.orderBox.addItem(DishHandler.encodeRandomOrder());
+                }
             }
         }
         Bukkit.getOnlinePlayers().forEach(player -> player.showTitle(Title.title(Component.text("ゲームスタート"), Component.empty())));
@@ -124,11 +130,12 @@ public class OCLogic {
     /**
      * ゲームが成功したというタイトルを表示する
      *
-     * @param victoryTeam 勝利したチーム
+     * @param victoryTeam 勝利したチーム。もしnullだった場合引き分けになる
      */
     private void displayGameSuccessTitle(OCTeam victoryTeam) {
         if (victoryTeam == null) {
-            Overcrafted.getInstance().getLogger().severe("勝利したチームが不明です!");
+            Bukkit.getOnlinePlayers().forEach(player ->
+                    player.showTitle(Title.title(Component.text("引き分け"), Component.text(""))));
             return;
         }
 

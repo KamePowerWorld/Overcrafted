@@ -5,7 +5,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import quarri6343.overcrafted.Overcrafted;
+import quarri6343.overcrafted.common.data.DishMenu;
 import quarri6343.overcrafted.utils.ItemCreator;
 import quarri6343.overcrafted.utils.OvercraftedUtils;
 
@@ -52,7 +52,8 @@ public class DishHandler {
      */
     public static ItemStack encodeOrder(DishMenu productStack) {
         return new ItemCreator(Material.PAPER).setName(dishItemName)
-                .setLore(OvercraftedUtils.getItemInfoasText(productStack.getProduct()))
+                .addLore(OvercraftedUtils.getItemInfoasText(productStack.getProduct()))
+                .addLore(Component.text("スコア: " + productStack.getScore()).decoration(TextDecoration.ITALIC, false))
                 .setBooleanNBT(dishNBTID, true)
                 .setIntNBT(menuNBTID, productStack.ordinal()).create();
     }
@@ -65,7 +66,8 @@ public class DishHandler {
      */
     public static ItemStack encodeOrderAsCompleted(DishMenu productStack) {
         return new ItemCreator(Material.PAPER).setName(dishItemName)
-                .setLore(Component.text("注文された品が載っている").color(NamedTextColor.GREEN).decoration(TextDecoration.ITALIC, false))
+                .addLore(Component.text("注文された品が載っている").color(NamedTextColor.GREEN).decoration(TextDecoration.ITALIC, false))
+                .addLore(Component.text("スコア: " + productStack.getScore()).decoration(TextDecoration.ITALIC, false))
                 .setBooleanNBT(dishNBTID, true)
                 .setIntNBT(menuNBTID, productStack.ordinal())
                 .setBooleanNBT(completeNBTID, true).create();

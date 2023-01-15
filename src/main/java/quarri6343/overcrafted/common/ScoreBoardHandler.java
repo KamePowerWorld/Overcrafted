@@ -15,7 +15,6 @@ import quarri6343.overcrafted.common.data.OCTeam;
 
 /**
  * スコアボードハンドラ
- * TODO:チーム単位でのスコア管理に変更する
  */
 public class ScoreBoardHandler {
 
@@ -49,12 +48,52 @@ public class ScoreBoardHandler {
      *
      * @param team
      */
-    public static void addScore(OCTeam team) {
+    public static void addScore(OCTeam team, int value) {
         if (objective == null)
             initialize();
 
         Score score = objective.getScore(team.name);
-        score.setScore(score.getScore() + 1);
+        score.setScore(score.getScore() + value);
+    }
+
+    /**
+     * スコアを取得する
+     * 
+     * @param team
+     * @return
+     */
+    public static int getScore(OCTeam team){
+        if (objective == null)
+            initialize();
+
+        Score score = objective.getScore(team.name);
+        return score.getScore();
+    }
+
+    /**
+     * 最もスコアの高いチームを取得する
+     * @return 最もスコアの高いチーム、もしチームが存在しないまたは複数存在した場合null
+     */
+    public static OCTeam getHighestScoreTeam(){
+        int highestScore = 0;
+        OCTeam highestTeam = null;
+        boolean draw = false;
+        
+        for (int i = 0; i < getData().teams.getTeamsLength(); i++) {
+            OCTeam team = getData().teams.getTeam(i);
+            int score = objective.getScore(team.name).getScore();
+            
+            if(score > highestScore){
+                highestTeam = team;
+                highestScore = score;
+                draw = false;
+            }
+            else if (score == highestScore){
+                draw = true;
+            }
+        }
+        
+        return draw ? null : highestTeam;
     }
 
     public static void setTime(int time) {
