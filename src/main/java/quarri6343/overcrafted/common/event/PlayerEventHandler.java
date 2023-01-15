@@ -1,6 +1,7 @@
 package quarri6343.overcrafted.common.event;
 
 import net.kyori.adventure.text.Component;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -9,6 +10,7 @@ import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
+import quarri6343.overcrafted.common.GlobalTeamHandler;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCTeam;
 import quarri6343.overcrafted.common.data.OrderBox;
@@ -126,6 +128,7 @@ public class PlayerEventHandler implements Listener {
     @org.bukkit.event.EventHandler
     public void onPlayerDrop(PlayerDropItemEvent event) {
         blockInvalidSlotDrop(event);
+        throwItems(event);
     }
 
     /**
@@ -134,6 +137,9 @@ public class PlayerEventHandler implements Listener {
      * @param event
      */
     private void blockInvalidSlotDrop(PlayerDropItemEvent event) {
+        if(event.isCancelled())
+            return;
+        
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE
                 || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
             return;
@@ -144,6 +150,30 @@ public class PlayerEventHandler implements Listener {
 
         if (event.getItemDrop().getItemStack().getType() == OCData.invalidItem.getType())
             event.setCancelled(true);
+    }
+
+    /**
+     * スニークしていない時アイテムを投げる
+     * https://github.com/KamePowerWorld/ThrowItemPluginからの流用
+     * @param event
+     */
+    private void throwItems(PlayerDropItemEvent event){
+        if(event.isCancelled())
+            return;
+        
+        if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE
+                || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
+            return;
+
+        OCTeam team = getData().teams.getTeambyPlayer(event.getPlayer());
+        if (team == null)
+            return;
+        
+        if (!event.getPlayer().isSneaking()) {
+            Location pLoc = event.getPlayer().getEyeLocation();
+            event.getItemDrop().setVelocity(pLoc.getDirection());
+        }
+        event.getItemDrop().setPickupDelay(10);
     }
 
     @org.bukkit.event.EventHandler
@@ -189,5 +219,10 @@ public class PlayerEventHandler implements Listener {
         if(getLogic().gameStatus != OCLogic.GameStatus.INACTIVE){
             event.setCancelled(true);
         }
+    }
+    
+    @org.bukkit.event.EventHandler
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        GlobalTeamHandler.removePlayerFromTeam(event.getPlayer(), true);
     }
 }

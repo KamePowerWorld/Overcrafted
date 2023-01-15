@@ -28,7 +28,7 @@ public class TrashCanInteractEventHandler implements IPlayerInteractEventHandler
     
     @Override
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if (!event.getClickedBlock().getType().equals(Material.DROPPER))
+        if (event.getClickedBlock() == null || !event.getClickedBlock().getType().equals(Material.DROPPER))
             return;
 
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE)
