@@ -51,11 +51,6 @@ public class OCLogic {
 
         GlobalTeamHandler.assignPlayersInJoinArea();
 
-        if (!GlobalTeamHandler.areTeamsValid(gameMaster)) {
-            GlobalTeamHandler.resetTeams();
-            return;
-        }
-
         if(gameInactiveRunnable != null)
             gameInactiveRunnable.cancel();
         gameWorld = gameMaster.getWorld();

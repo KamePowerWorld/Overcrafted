@@ -30,14 +30,14 @@ public class GlobalTeamHandler {
     /**
      * プレイヤーをUR, MC両方のチームから退出させる
      */
-    public static void removePlayerFromTeam(Player player) {
+    public static void removePlayerFromTeam(Player player, boolean restoreStats) {
         OCTeam team = getData().teams.getTeambyPlayer(player);
         if (team != null) {
-            team.removePlayer(player);
+            team.removePlayer(player, restoreStats);
         }
         MCTeams.removePlayerFromMCTeam(player);
 
-        if (countAllPlayers() == 0) {
+        if (getLogic().gameStatus == OCLogic.GameStatus.ACTIVE && countAllPlayers() == 0) {
             getLogic().endGame(null, null, OCLogic.GameResult.FAIL, true);
         }
     }
@@ -58,9 +58,9 @@ public class GlobalTeamHandler {
         }
     }
 
-    public static void resetTeams() {
+    public static void resetTeams(boolean restoreStats) {
         MCTeams.deleteMinecraftTeams();
-        getData().teams.disbandTeams();
+        getData().teams.disbandTeams(restoreStats);
     }
 
     /**

@@ -52,7 +52,7 @@ public class CommandForceLeave extends CommandBase {
             return true;
         }
 
-        GlobalTeamHandler.removePlayerFromTeam(player);
+        GlobalTeamHandler.removePlayerFromTeam(player, true);
         sender.sendMessage(arguments[0] + "をチーム" + team.name + "から離脱させました");
         return true;
     }

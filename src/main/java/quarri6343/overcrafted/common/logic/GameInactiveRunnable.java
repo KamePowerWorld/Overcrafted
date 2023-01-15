@@ -58,7 +58,7 @@ public class GameInactiveRunnable extends BukkitRunnable {
 
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             if(!assignedPlayers.contains(onlinePlayer)){
-                removePlayerFromTeam(onlinePlayer);
+                removePlayerFromTeam(onlinePlayer, false);
             }
         }
     }

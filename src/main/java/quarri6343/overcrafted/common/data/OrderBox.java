@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
+import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.common.DishHandler;
 
@@ -64,24 +65,13 @@ public class OrderBox {
     }
 
     /**
-     * 注文箱にランダムな注文が載った皿を追加する
+     * 注文箱に任意のアイテムを追加する
      */
-    public void addRandomDish() {
+    public void addItem(ItemStack itemStack){
         if (!isPlaced())
             place();
-
+        
         Chest chest = (Chest) location.getWorld().getBlockAt(location).getState();
-        chest.getInventory().addItem(DishHandler.encodeRandomOrder());
-    }
-
-    /**
-     * 注文箱にランダムな注文が載った汚れた皿を追加する
-     */
-    public void addRandomDirtyDish() {
-        if (!isPlaced())
-            place();
-
-        Chest chest = (Chest) location.getWorld().getBlockAt(location).getState();
-        chest.getInventory().addItem(DishHandler.encodeRandomOrderOnDirtyDish());
+        chest.getInventory().addItem(itemStack);
     }
 }

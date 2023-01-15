@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
+import quarri6343.overcrafted.common.DishHandler;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCTeam;
 import quarri6343.overcrafted.common.data.OrderBox;
@@ -108,7 +109,7 @@ public class AdminMenuRow3 {
         OrderBox orderBox = team.orderBox;
         orderBox.location = event.getWhoClicked().getLocation();
         orderBox.place();
-        orderBox.addRandomDish();
+        orderBox.addItem(DishHandler.encodeRandomOrder());
         event.getWhoClicked().sendMessage(Component.text("注文箱を" + locationBlockPostoString(event.getWhoClicked().getLocation()) + "で登録しました"));
         UIAdminMenu.openUI((Player) event.getWhoClicked());
     }

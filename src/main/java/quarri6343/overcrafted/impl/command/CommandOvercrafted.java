@@ -1,13 +1,13 @@
 package quarri6343.overcrafted.impl.command;
 
-import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import quarri6343.overcrafted.api.CommandBase;
-import quarri6343.overcrafted.common.PlayerEventHandler;
+import quarri6343.overcrafted.common.event.AdminMenuInteractEventHandler;
+import quarri6343.overcrafted.common.event.PlayerEventHandler;
 import quarri6343.overcrafted.utils.ItemCreator;
 
 /**
@@ -23,7 +23,7 @@ public class CommandOvercrafted extends CommandBase {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @Nullable String[] arguments) {
-        ((Player) sender).getInventory().addItem(new ItemCreator(Material.STICK).setName(PlayerEventHandler.menuItemName).create());
+        ((Player) sender).getInventory().addItem(new ItemCreator(Material.STICK).setName(AdminMenuInteractEventHandler.menuItemName).create());
         return true;
     }
 }

@@ -54,6 +54,9 @@ public class MCTeams {
             return;
 
         team.removePlayer(player);
+        
+        if(team.getPlayers().size() == 0)
+            team.unregister();
     }
 
     private static Scoreboard getBoard() {

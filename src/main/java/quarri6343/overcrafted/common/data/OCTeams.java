@@ -106,9 +106,9 @@ public class OCTeams {
     /**
      * チームのプレイヤーを解散させる
      */
-    public void disbandTeams() {
+    public void disbandTeams(boolean restoreStats) {
         for (int i = 0; i < getTeamsLength(); i++) {
-            getTeam(i).removeAllPlayer();
+            getTeam(i).removeAllPlayer(restoreStats);
         }
     }
 }

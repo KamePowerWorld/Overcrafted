@@ -50,7 +50,7 @@ public class CommandForceJoin extends CommandBase {
         }
 
         if (getData().teams.getTeambyPlayer(player) != null) {
-            GlobalTeamHandler.removePlayerFromTeam(player);
+            GlobalTeamHandler.removePlayerFromTeam(player, true);
             sender.sendMessage(arguments[0] + "が既にチームに入っていたので離脱させました");
         }
 

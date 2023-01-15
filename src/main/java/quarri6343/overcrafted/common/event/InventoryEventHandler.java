@@ -1,4 +1,4 @@
-package quarri6343.overcrafted.common;
+package quarri6343.overcrafted.common.event;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;

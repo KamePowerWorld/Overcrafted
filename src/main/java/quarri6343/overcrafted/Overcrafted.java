@@ -2,8 +2,7 @@ package quarri6343.overcrafted;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import quarri6343.overcrafted.common.ConfigHandler;
-import quarri6343.overcrafted.common.InventoryEventHandler;
-import quarri6343.overcrafted.common.PlayerEventHandler;
+import quarri6343.overcrafted.common.event.*;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.logic.OCLogic;
 import quarri6343.overcrafted.impl.command.CommandForceJoin;
@@ -16,6 +15,8 @@ public final class Overcrafted extends JavaPlugin {
     private OCLogic logic;
     
     private ConfigHandler config;
+    
+    private PlayerEventHandler playerEventHandler;
 
     /**
      * シングルトンで管理されているこのクラスのインスタンス
@@ -39,8 +40,11 @@ public final class Overcrafted extends JavaPlugin {
         new CommandOvercrafted();
         new CommandForceJoin();
         new CommandForceLeave();
-        new PlayerEventHandler();
+        playerEventHandler = new PlayerEventHandler();
         new InventoryEventHandler();
+        new AdminMenuInteractEventHandler();
+        new DishInteractEventHandler();
+        new TrashCanInteractEventHandler();
     }
 
     @Override
@@ -56,4 +60,5 @@ public final class Overcrafted extends JavaPlugin {
         return data;
     }
     public OCLogic getLogic() {return logic; }
+    public PlayerEventHandler getPlayerEventHandler(){return playerEventHandler;}
 }

@@ -82,19 +82,22 @@ public class OCTeam {
         return players.get(index).entity;
     }
 
-    public void removePlayer(Player player) {
+    public void removePlayer(Player player, boolean restoreStats) {
         OCPlayer playerToRemove = players.stream().filter(urPlayer -> urPlayer.entity.equals(player)).findFirst().orElse(null);
         if (playerToRemove == null) {
             return;
         }
 
-        playerToRemove.restoreStats();
+        if(restoreStats)
+            playerToRemove.restoreStats();
         players.remove(playerToRemove);
     }
 
-    public void removeAllPlayer() {
-        for (OCPlayer player : players) {
-            player.restoreStats();
+    public void removeAllPlayer(boolean restoreStats) {
+        if(restoreStats){
+            for (OCPlayer player : players) {
+                player.restoreStats();
+            }
         }
         players.clear();
     }
