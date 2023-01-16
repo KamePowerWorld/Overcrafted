@@ -21,9 +21,6 @@ public class AdminMenuInteractEventHandler implements IPlayerInteractEventHandle
 
     @Override
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if(event.isCancelled())
-            return;
-        
         if (!(event.getItem() != null && event.getItem().getType().equals(Material.STICK)
                 && Objects.equal(event.getItem().getItemMeta().displayName(), menuItemName)))
             return;

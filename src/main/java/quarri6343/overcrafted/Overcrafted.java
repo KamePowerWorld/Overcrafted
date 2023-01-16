@@ -37,14 +37,17 @@ public final class Overcrafted extends JavaPlugin {
         config = new ConfigHandler();
         config.loadConfig();
         logic = new OCLogic();
+        
         new CommandOvercrafted();
         new CommandForceJoin();
         new CommandForceLeave();
+        
         playerEventHandler = new PlayerEventHandler();
         new InventoryEventHandler();
         new AdminMenuInteractEventHandler();
         new DishInteractEventHandler();
         new TrashCanInteractEventHandler();
+        new SupplierInteractEventHandler();
     }
 
     @Override
