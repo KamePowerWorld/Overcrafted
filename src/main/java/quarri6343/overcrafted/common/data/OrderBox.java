@@ -72,13 +72,27 @@ public class OrderBox {
     }
 
     /**
-     * 注文箱に任意のアイテムを追加する
+     * 注文箱の最初に空いているスロットに任意のアイテムを追加する
+     * @param itemStack 追加したいアイテム
+     * @return アイテムの追加に成功したかどうか
      */
-    public void addItem(ItemStack itemStack) {
+    public boolean addItem(ItemStack itemStack) {
         if (!isPlaced())
             place();
 
+        if (itemStack.getAmount() > 1)
+            Overcrafted.getInstance().getLogger().severe("注文箱に入れられるアイテムのスタックサイズは1までです");
+
         Chest chest = (Chest) location.getWorld().getBlockAt(location).getState();
-        chest.getInventory().addItem(itemStack);
+        ItemStack[] contents = chest.getInventory().getContents();
+        for (int i = 0; i < contents.length; i++) {
+            if (contents[i] == null) {
+                contents[i] = itemStack;
+                chest.getInventory().setContents(contents);
+                return true;
+            }
+        }
+
+        return false;
     }
 }

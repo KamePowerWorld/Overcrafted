@@ -28,6 +28,9 @@ public class TrashCanInteractEventHandler implements IPlayerInteractEventHandler
     
     @Override
     public void onPlayerInteract(PlayerInteractEvent event) {
+        if(event.isCancelled())
+            return;
+        
         if (event.getClickedBlock() == null || !event.getClickedBlock().getType().equals(Material.DROPPER))
             return;
 
@@ -52,12 +55,12 @@ public class TrashCanInteractEventHandler implements IPlayerInteractEventHandler
         }
 
         if(DishHandler.isDish(event.getPlayer().getItemInHand())){
-            try{
-                team.orderBox.addItem(event.getPlayer().getItemInHand());
-            }
-            finally {
+            if(team.orderBox.addItem(event.getPlayer().getItemInHand())){
                 event.getPlayer().setItemInHand(null);
-                event.getPlayer().sendMessage(Component.text("ゴミ箱に持っているアイテムを捨てた！"));
+                event.getPlayer().sendMessage(Component.text("ゴミ箱に持っている皿を捨てた！"));
+            }
+            else{
+                event.getPlayer().sendMessage(Component.text("注文箱が一杯で皿を捨てられなかった！"));
             }
             return;
         }

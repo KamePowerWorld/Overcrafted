@@ -36,6 +36,9 @@ public class DishInteractEventHandler implements IPlayerInteractEventHandler {
 
     @Override
     public void onPlayerInteract(PlayerInteractEvent event) {
+        if(event.isCancelled())
+            return;
+        
         if (!(event.getItem() != null && event.getItem().getType().equals(Material.PAPER)
                 && DishHandler.isDish(event.getItem())))
             return;
@@ -83,10 +86,14 @@ public class DishInteractEventHandler implements IPlayerInteractEventHandler {
      */
     private void trySubmitOrder(PlayerInteractEvent event, OCTeam team, DishMenu menu) {
         if (event.getClickedBlock() != null && event.getClickedBlock().getType() == Material.RED_BED) {
+            if(team.orderBox.addItem(DishHandler.encodeRandomOrderOnDirtyDish())){
+                event.getPlayer().setItemInHand(new ItemStack(Material.AIR));
+                ScoreBoardHandler.addScore(team, menu.getScore());
+            }
+            else{
+                event.getPlayer().sendMessage(Component.text("注文箱が一杯だ!"));
+            }
 
-            event.getPlayer().setItemInHand(new ItemStack(Material.AIR));
-            ScoreBoardHandler.addScore(team, menu.getScore());
-            team.orderBox.addItem(DishHandler.encodeRandomOrderOnDirtyDish());
         } else {
             event.getPlayer().sendMessage(Component.text("赤いベッドを右クリックして納品しよう"));
         }

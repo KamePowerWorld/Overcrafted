@@ -16,27 +16,27 @@ public class OCData {
     public String adminSelectedTeam = "";
 
     /**
-     * ゲーム開始前に自動的にプレイヤーをチームに割り当てる周期
+     * ゲーム開始前に自動的にプレイヤーをチームに割り当てる周期(tick)
      */
     public static final int assignTeamLength = 20;
     
     /**
-     * ゲームが始まるまでのカウントダウンの長さ
+     * ゲームが始まるまでのカウントダウンの長さ(tick)
      */
     public static final int gameBeginCountdownLength = 100;
 
     /**
-     * ゲームの長さ
+     * ゲームの長さ(秒)
      */
     public static final int gameLength = 180;
 
     /**
-     * ゲームのリザルトシーンの長さ
+     * ゲームのリザルトシーンの長さ(tick)
      */
     public static final int gameResultSceneLength = 100;
 
     /**
-     * ゲームがプレイヤーのインベントリを確認する周期
+     * ゲームがプレイヤーのインベントリを確認する周期(tick)
      */
     public static final int checkInventoryInterval = 20;
 
@@ -45,6 +45,11 @@ public class OCData {
      */
     public static final int dishesOnStart = 5;
 
+    /**
+     * プレイヤーが投げたアイテムを他のプレイヤーが拾えるまでの時間(tick)
+     */
+    public static final int thrownItemsPickupDelay = 60;
+    
     /**
      * インベントリを埋める無効アイテム
      */
