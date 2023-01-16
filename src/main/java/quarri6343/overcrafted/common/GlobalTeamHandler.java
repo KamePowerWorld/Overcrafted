@@ -1,10 +1,7 @@
 package quarri6343.overcrafted.common;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCTeam;
@@ -37,24 +34,17 @@ public class GlobalTeamHandler {
         }
         MCTeams.removePlayerFromMCTeam(player);
 
-        if (getLogic().gameStatus == OCLogic.GameStatus.ACTIVE && countAllPlayers() == 0) {
+        if (getLogic().gameStatus == OCLogic.GameStatus.ACTIVE && getData().teams.countAllPlayers() == 0) {
             getLogic().endGame(null, null, OCLogic.GameResult.FAIL, true);
         }
     }
 
     /**
-     * チームメンバーをチームに加入した位置にテレポートさせる
+     * 全てのプレイヤーをUR, MC両方のチームから退出させる
      */
-    public static void teleportTeamToLobby() {
-        for (int i = 0; i < getData().teams.getTeamsLength(); i++) {
-            OCTeam team = getData().teams.getTeam(i);
-            if (team.joinLocation1 == null || team.joinLocation2 == null)
-                continue;
-
-            Location centerLocation = OvercraftedUtils.getCenterLocation(team.joinLocation1, team.joinLocation2);
-            for (int j = 0; j < team.getPlayersSize(); j++) {
-                team.getPlayer(j).teleport(centerLocation);
-            }
+    public static void removeAllPlayerFromTeam(OCTeam team, boolean restoreStats) {
+        for (int i = 0; i < team.getPlayersSize(); i++) {
+            removePlayerFromTeam(team.getPlayer(i), restoreStats);
         }
     }
 
@@ -83,33 +73,19 @@ public class GlobalTeamHandler {
                     gameMaster.sendMessage("チーム" + team.name + "の開始地点を設定してください");
                     return false;
                 }
-                if(team.orderBox.location == null){
+                if (team.orderBox.location == null) {
                     gameMaster.sendMessage("チーム" + team.name + "の注文箱の地点を設定してください");
                     return false;
                 }
             }
         }
 
-        if (countAllPlayers() == 0) {
+        if (getData().teams.countAllPlayers() == 0) {
             gameMaster.sendMessage("誰もチームに参加していません!");
             return false;
         }
 
         return true;
-    }
-
-    /**
-     * チームに参加している全てのプレイヤーをカウントする
-     *
-     * @return 全てのチームのプレイヤー数の合計
-     */
-    public static int countAllPlayers() {
-        int playerCount = 0;
-        for (int i = 0; i < getData().teams.getTeamsLength(); i++) {
-            playerCount += getData().teams.getTeam(i).getPlayersSize();
-        }
-
-        return playerCount;
     }
 
     /**
@@ -132,36 +108,6 @@ public class GlobalTeamHandler {
                 if (OvercraftedUtils.isPlayerInArea(onlinePlayer, team.joinLocation1, team.joinLocation2)) {
                     addPlayerToTeam(onlinePlayer, team);
                     break;
-                }
-            }
-        }
-    }
-
-    /**
-     * チーム中のプレイヤーがアイテムを2つ以上持っていた場合、余剰分をドロップさせる
-     */
-    public static void dropExcessiveItems() {
-        for (int i = 0; i < getData().teams.getTeamsLength(); i++) {
-            OCTeam team = getData().teams.getTeam(i);
-            for (int j = 0; j < team.getPlayersSize(); j++) {
-                Player player = team.getPlayer(j);
-
-                ItemStack mainHandItem = player.getInventory().getItem(0);
-                if (mainHandItem != null && mainHandItem.getAmount() > 1) {
-                    try{
-                        mainHandItem.setAmount(mainHandItem.getAmount() - 1);
-                        player.getWorld().dropItemNaturally(player.getLocation(), mainHandItem);
-                    }
-                    finally {
-                        mainHandItem.setAmount(1);
-                        player.getInventory().setItem(0, mainHandItem);
-                    }
-                }
-
-                ItemStack offHandItem = player.getInventory().getItemInOffHand();
-                if (offHandItem.getAmount() > 0){
-                    player.getInventory().setItemInOffHand(null);
-                    player.getWorld().dropItemNaturally(player.getLocation(), offHandItem);
                 }
             }
         }

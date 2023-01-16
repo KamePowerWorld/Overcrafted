@@ -5,12 +5,10 @@ import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import quarri6343.overcrafted.utils.ItemCreator;
+import quarri6343.overcrafted.utils.OvercraftedUtils;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +25,7 @@ public class OCTeam {
     public Location joinLocation1;
     public Location joinLocation2;
 
-    public OrderBox orderBox = new OrderBox();
+    public final OrderBox orderBox = new OrderBox();
 
     private final List<OCPlayer> players = new ArrayList<>();
 
@@ -47,7 +45,7 @@ public class OCTeam {
     public Location getStartLocation() {
         return startLocation;
     }
-
+    
     /**
      * チームに所属しているプレイヤーの環境をゲーム開始に適した状態に変更する
      *
@@ -74,29 +72,29 @@ public class OCTeam {
     }
 
     public void addPlayer(Player player) {
-        if(containsPlayer(player))
+        if (containsPlayer(player))
             removePlayer(player, false);
 
         players.add(new OCPlayer(player));
     }
 
     public Player getPlayer(int index) {
-        return players.get(index).entity;
+        return players.get(index).getEntity();
     }
 
     public void removePlayer(Player player, boolean restoreStats) {
-        OCPlayer playerToRemove = players.stream().filter(urPlayer -> urPlayer.entity.equals(player)).findFirst().orElse(null);
+        OCPlayer playerToRemove = players.stream().filter(urPlayer -> urPlayer.getEntity().equals(player)).findFirst().orElse(null);
         if (playerToRemove == null) {
             return;
         }
 
-        if(restoreStats)
+        if (restoreStats)
             playerToRemove.restoreStats();
         players.remove(playerToRemove);
     }
 
     public void removeAllPlayer(boolean restoreStats) {
-        if(restoreStats){
+        if (restoreStats) {
             for (OCPlayer player : players) {
                 player.restoreStats();
             }
@@ -109,10 +107,24 @@ public class OCTeam {
     }
 
     public boolean containsPlayer(Player player) {
-        return players.stream().filter(urPlayer -> urPlayer.entity.equals(player)).findFirst().orElse(null) != null;
+        return players.stream().filter(urPlayer -> urPlayer.getEntity().equals(player)).findFirst().orElse(null) != null;
     }
 
     public List<TextComponent> playerNamesToText() {
-        return players.stream().map(player1 -> Component.text(player1.entity.getName()).color(NamedTextColor.YELLOW)).toList();
+        return players.stream().map(player1 -> Component.text(player1.getEntity().getName()).color(NamedTextColor.YELLOW)).toList();
+    }
+
+    public void clearExcessiveItemsFromAllPlayers() {
+        players.forEach(OCPlayer::dropExcessiveItems);
+    }
+
+    public void teleportPlayerToLobby() {
+        if (joinLocation1 == null || joinLocation2 == null)
+            return;
+
+        Location centerLocation = OvercraftedUtils.getCenterLocation(joinLocation1, joinLocation2);
+        for (int j = 0; j < getPlayersSize(); j++) {
+            getPlayer(j).teleport(centerLocation);
+        }
     }
 }

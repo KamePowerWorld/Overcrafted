@@ -1,7 +1,5 @@
 package quarri6343.overcrafted.common.data;
 
-import com.google.common.base.Objects;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -109,6 +107,47 @@ public class OCTeams {
     public void disbandTeams(boolean restoreStats) {
         for (int i = 0; i < getTeamsLength(); i++) {
             getTeam(i).removeAllPlayer(restoreStats);
+        }
+    }
+
+    /**
+     * チームに参加している全てのプレイヤーをカウントする
+     *
+     * @return 全てのチームのプレイヤー数の合計
+     */
+    public int countAllPlayers() {
+        int playerCount = 0;
+        for (int i = 0; i < getTeamsLength(); i++) {
+            playerCount += getTeam(i).getPlayersSize();
+        }
+
+        return playerCount;
+    }
+
+    /**
+     * 全てのチームの注文箱の中身を消去する
+     */
+    public void clearOrderBox() {
+        for (int i = 0; i < getTeamsLength(); i++) {
+            getTeam(i).orderBox.clear();
+        }
+    }
+
+    /**
+     * 全てのチームのプレイヤーが持ちすぎているアイテムをドロップさせる
+     */
+    public void clearExcessiveItemsFromAllTeam() {
+        for (int i = 0; i < getTeamsLength(); i++) {
+            getTeam(i).clearExcessiveItemsFromAllPlayers();
+        }
+    }
+
+    /**
+     * 全てのチームメンバーをチームに加入した位置にテレポートさせる
+     */
+    public void teleportTeamToLobby() {
+        for (int i = 0; i < getTeamsLength(); i++) {
+            getTeam(i).teleportPlayerToLobby();
         }
     }
 }

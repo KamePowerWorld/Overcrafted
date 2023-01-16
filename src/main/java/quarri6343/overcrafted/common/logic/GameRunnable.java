@@ -35,7 +35,7 @@ public class GameRunnable extends BukkitRunnable {
         }
 
         if (count % OCData.checkInventoryInterval == 0) {
-            GlobalTeamHandler.dropExcessiveItems();
+            getData().teams.clearExcessiveItemsFromAllTeam();
         }
     }
 

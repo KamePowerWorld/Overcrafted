@@ -117,9 +117,7 @@ public class AdminMenuRow1 {
         if (team == null)
             return;
 
-        for (int i = 0; i < team.getPlayersSize(); i ++){
-            GlobalTeamHandler.removePlayerFromTeam(team.getPlayer(i), false);
-        }
+        GlobalTeamHandler.removeAllPlayerFromTeam(team, false);
         getData().teams.removeTeam(getData().adminSelectedTeam);
         event.getWhoClicked().sendMessage(Component.text("チーム" + getData().adminSelectedTeam + "を削除しました").color(NamedTextColor.WHITE));
         getData().adminSelectedTeam = "";

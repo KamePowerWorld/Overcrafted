@@ -8,7 +8,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
-import quarri6343.overcrafted.common.DishHandler;
 
 /**
  * 注文箱
@@ -35,6 +34,14 @@ public class OrderBox {
         Chest chest = (Chest) location.getWorld().getBlockAt(location).getState();
         chest.customName(boxName);
         chest.update();
+    }
+
+    /**
+     * 注文箱の中身を消去する
+     */
+    public void clear() {
+        Chest chest = (Chest) location.getWorld().getBlockAt(location).getState();
+        chest.getInventory().clear();
     }
 
     /**
@@ -67,10 +74,10 @@ public class OrderBox {
     /**
      * 注文箱に任意のアイテムを追加する
      */
-    public void addItem(ItemStack itemStack){
+    public void addItem(ItemStack itemStack) {
         if (!isPlaced())
             place();
-        
+
         Chest chest = (Chest) location.getWorld().getBlockAt(location).getState();
         chest.getInventory().addItem(itemStack);
     }
