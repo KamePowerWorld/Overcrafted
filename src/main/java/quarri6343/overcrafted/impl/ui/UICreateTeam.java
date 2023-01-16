@@ -7,6 +7,8 @@ import org.bukkit.entity.Player;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.common.data.OCData;
 
+import java.util.List;
+
 /**
  * 管理者がチームを作成するときのGUI
  */
@@ -25,7 +27,7 @@ public class UICreateTeam {
     /**
      * チーム名が入力された時の挙動
      */
-    private static AnvilGUI.Response onTeamNameInputted(Player player, String text) {
+    private static List<AnvilGUI.ResponseAction> onTeamNameInputted(Player player, String text) {
         OCData data = Overcrafted.getInstance().getData();
         if (data.teams.getTeambyName(text) != null) {
             player.sendMessage(Component.text("その名前のチームは既に存在します").color(NamedTextColor.RED));
@@ -47,7 +49,7 @@ public class UICreateTeam {
     /**
      * チームカラーが入力された時の挙動
      */
-    private static AnvilGUI.Response onTeamColorInputted(Player player, String text) {
+    private static List<AnvilGUI.ResponseAction> onTeamColorInputted(Player player, String text) {
         if (NamedTextColor.NAMES.value(text) == null) {
             player.sendMessage(Component.text("チームカラーが不正です。redやgreenのように半角小文字で指定してください").color(NamedTextColor.RED));
             return AnvilGUI.Response.close();
