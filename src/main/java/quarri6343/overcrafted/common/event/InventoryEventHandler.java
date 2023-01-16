@@ -97,6 +97,10 @@ public class InventoryEventHandler implements Listener {
             }
 
             if (currentItem.getAmount() > 1) {
+                if(event.getClickedInventory().getType() == InventoryType.WORKBENCH && event.getSlot() == 0){
+                    return;
+                }
+                
                 event.setCancelled(true);
                 return;
             }
@@ -113,6 +117,24 @@ public class InventoryEventHandler implements Listener {
             ItemStack cursorItem = event.getCursor();
             if (cursorItem == null || cursorItem.getType() == Material.AIR) {
                 if (currentItem != null && currentItem.getAmount() > 1) {
+                    if(event.getClickedInventory().getType() == InventoryType.WORKBENCH && event.getSlot() == 0){
+                        event.setCancelled(true);
+                        
+                        ItemStack clickedItem = event.getClickedInventory().getItem(0);
+                        if(clickedItem == null || clickedItem.getType() == Material.AIR)
+                            return;
+                        
+                        if(event.getView().getBottomInventory().firstEmpty() != -1){
+                            try{
+                                event.getView().getBottomInventory().addItem(clickedItem);
+                            }
+                            finally {
+                                event.getClickedInventory().clear();
+                            }
+                        }
+                        return;
+                    }
+                    
                     event.setCancelled(true);
 
                     if (event.getView().getBottomInventory().firstEmpty() != -1) {
