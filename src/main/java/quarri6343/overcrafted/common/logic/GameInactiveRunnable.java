@@ -51,7 +51,6 @@ public class GameInactiveRunnable extends BukkitRunnable {
                 if (OvercraftedUtils.isPlayerInArea(onlinePlayer, team.joinLocation1, team.joinLocation2)) {
                     addPlayerToTeam(onlinePlayer, team);
                     assignedPlayers.add(onlinePlayer);
-                    break;
                 }
             }
         }

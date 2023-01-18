@@ -48,7 +48,7 @@ public class OCData {
     /**
      * プレイヤーが投げたアイテムを他のプレイヤーが拾えるまでの時間(tick)
      */
-    public static final int thrownItemsPickupDelay = 60;
+    public static final int thrownItemsPickupDelay = 20;
     
     /**
      * インベントリを埋める無効アイテム

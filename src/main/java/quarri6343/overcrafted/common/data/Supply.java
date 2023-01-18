@@ -10,7 +10,8 @@ import quarri6343.overcrafted.Overcrafted;
 public enum Supply {
     WOOD(new ItemStack(Material.OAK_WOOD, 1)),
     COBBLESTONE(new ItemStack(Material.COBBLESTONE, 1)),
-    IRON_ORE(new ItemStack(Material.IRON_ORE, 1));
+    IRON_ORE(new ItemStack(Material.IRON_ORE, 1)),
+    BUCKET(new ItemStack(Material.BUCKET, 1));
 
     /**
      * 素材アイテム

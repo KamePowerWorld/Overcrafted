@@ -106,8 +106,12 @@ public class InventoryEventHandler implements Listener {
             }
 
             if (event.getClickedInventory().getType() == InventoryType.PLAYER) {
-                if (event.getView().getTopInventory().containsAtLeast(currentItem, 1))
+                int firstEmpty = event.getView().getTopInventory().firstEmpty();
+                if (firstEmpty != -1){
                     event.setCancelled(true);
+                    event.getView().getTopInventory().setItem(firstEmpty, currentItem);
+                    event.setCurrentItem(null);
+                }
             } else {
                 if (event.getView().getBottomInventory().containsAtLeast(currentItem, 1))
                     event.setCancelled(true);
