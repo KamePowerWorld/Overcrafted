@@ -344,4 +344,11 @@ public class ItemCreator {
         setIntNBT(key, id);
         return this;
     }
+    
+    public ItemCreator setCustomModelData(int id){
+        ItemMeta meta = itemStack.getItemMeta();
+        meta.setCustomModelData(id);
+        itemStack.setItemMeta(meta);
+        return this;
+    }
 }

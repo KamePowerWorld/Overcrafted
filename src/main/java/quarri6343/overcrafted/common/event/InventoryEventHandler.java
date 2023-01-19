@@ -150,6 +150,9 @@ public class InventoryEventHandler implements Listener {
                 }
                 return;
             }
+            
+            if(currentItem == null || currentItem.getType() == Material.AIR)
+                return;
 
             if (cursorItem.getType() == currentItem.getType())
                 event.setCancelled(true);
@@ -170,6 +173,9 @@ public class InventoryEventHandler implements Listener {
                 return;
             }
 
+            if(currentItem == null || currentItem.getType() == Material.AIR)
+                return;
+            
             if (cursorItem.getType() == currentItem.getType())
                 event.setCancelled(true);
         }

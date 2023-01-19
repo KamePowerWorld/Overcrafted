@@ -19,7 +19,8 @@ public class DishHandler {
     private static final String dirtyNBTID = "isDirty";
     private static final Component dishItemName = Component.text("皿").decoration(TextDecoration.ITALIC, false);
     private static final Component dirtyDishItemName = Component.text("汚い皿").color(NamedTextColor.DARK_PURPLE).decoration(TextDecoration.ITALIC, false);
-
+    private static final int customModelData = 1;
+    
     /**
      * アイテムが皿であるかどうか
      *
@@ -55,7 +56,8 @@ public class DishHandler {
                 .addLore(OvercraftedUtils.getItemInfoasText(productStack.getProduct()))
                 .addLore(Component.text("スコア: " + productStack.getScore()).decoration(TextDecoration.ITALIC, false))
                 .setBooleanNBT(dishNBTID, true)
-                .setIntNBT(menuNBTID, productStack.ordinal()).create();
+                .setIntNBT(menuNBTID, productStack.ordinal())
+                .setCustomModelData(customModelData).create();
     }
 
     /**
@@ -70,7 +72,8 @@ public class DishHandler {
                 .addLore(Component.text("スコア: " + productStack.getScore()).decoration(TextDecoration.ITALIC, false))
                 .setBooleanNBT(dishNBTID, true)
                 .setIntNBT(menuNBTID, productStack.ordinal())
-                .setBooleanNBT(completeNBTID, true).create();
+                .setBooleanNBT(completeNBTID, true)
+                .setCustomModelData(customModelData).create();
     }
 
     /**
@@ -131,7 +134,8 @@ public class DishHandler {
                 .setLore(Component.text("汚すぎて何が書かれているか読み取れない!").color(NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false))
                 .setBooleanNBT(dishNBTID, true)
                 .setIntNBT(menuNBTID, productStack.ordinal())
-                .setBooleanNBT(dirtyNBTID, true).create();
+                .setBooleanNBT(dirtyNBTID, true)
+                .setCustomModelData(customModelData).create();
     }
 
     /**

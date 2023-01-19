@@ -2,7 +2,6 @@ package quarri6343.overcrafted.common.event;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -35,6 +34,21 @@ public class PlayerEventHandler implements Listener {
         return Overcrafted.getInstance().getLogic();
     }
 
+    @org.bukkit.event.EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        setResourcePack(event);
+    }
+
+    /**
+     * プレイヤーにリソースパックをダウンロードさせる
+     * @param event
+     */
+    private void setResourcePack(PlayerJoinEvent event){
+        if(OCData.resourcePackHash != null){
+            event.getPlayer().setResourcePack(OCData.resourcePackURL, OCData.resourcePackHash, true, Component.text("リソースパックを適用しないと遊べません"));
+        }
+    }
+    
     /**
      * playerInteractが発生した時に呼び出されたいハンドラを登録する
      * @param playerInteractEventHandler
