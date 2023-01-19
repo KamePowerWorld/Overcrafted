@@ -2,6 +2,7 @@ package quarri6343.overcrafted.common.logic;
 
 import org.bukkit.scheduler.BukkitRunnable;
 import quarri6343.overcrafted.Overcrafted;
+import quarri6343.overcrafted.common.BossBarHandler;
 import quarri6343.overcrafted.common.GlobalTeamHandler;
 import quarri6343.overcrafted.common.data.OCData;
 
@@ -25,6 +26,8 @@ public class GameEndRunnable extends BukkitRunnable {
         additionalAction.run();
         if (isScheduled)
             cancel();
+
+        BossBarHandler.destroy();
     }
 
     private static OCData getData() {

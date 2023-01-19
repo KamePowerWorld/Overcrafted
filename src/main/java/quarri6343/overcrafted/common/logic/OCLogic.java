@@ -13,6 +13,7 @@ import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import quarri6343.overcrafted.Overcrafted;
+import quarri6343.overcrafted.common.BossBarHandler;
 import quarri6343.overcrafted.common.DishHandler;
 import quarri6343.overcrafted.common.GlobalTeamHandler;
 import quarri6343.overcrafted.common.ScoreBoardHandler;
@@ -78,6 +79,7 @@ public class OCLogic {
             }
         }
         Bukkit.getOnlinePlayers().forEach(player -> player.showTitle(Title.title(Component.text("ゲームスタート"), Component.empty())));
+        BossBarHandler.initiate();
 
         gameStatus = GameStatus.ACTIVE;
         ScoreBoardHandler.initialize();
