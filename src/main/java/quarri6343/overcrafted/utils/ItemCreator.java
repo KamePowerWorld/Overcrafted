@@ -351,4 +351,9 @@ public class ItemCreator {
         itemStack.setItemMeta(meta);
         return this;
     }
+    
+    public int getCustomModelData(){
+        ItemMeta meta = itemStack.getItemMeta();
+        return meta.getCustomModelData();
+    }
 }

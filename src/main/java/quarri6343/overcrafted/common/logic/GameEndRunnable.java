@@ -2,9 +2,9 @@ package quarri6343.overcrafted.common.logic;
 
 import org.bukkit.scheduler.BukkitRunnable;
 import quarri6343.overcrafted.Overcrafted;
-import quarri6343.overcrafted.common.BossBarHandler;
 import quarri6343.overcrafted.common.GlobalTeamHandler;
 import quarri6343.overcrafted.common.data.OCData;
+import quarri6343.overcrafted.common.order.OrderHandler;
 
 /**
  * ゲーム終了後時間を空けて行いたい処理
@@ -22,12 +22,11 @@ public class GameEndRunnable extends BukkitRunnable {
     public void run() {
         getData().teams.teleportTeamToLobby();
         getData().teams.clearOrderBox();
+        OrderHandler.clearOrders();
         GlobalTeamHandler.resetTeams(true);
         additionalAction.run();
         if (isScheduled)
             cancel();
-
-        BossBarHandler.destroy();
     }
 
     private static OCData getData() {

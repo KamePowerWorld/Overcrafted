@@ -1,4 +1,4 @@
-package quarri6343.overcrafted.common;
+package quarri6343.overcrafted.common.order;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;

@@ -9,13 +9,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
-import quarri6343.overcrafted.common.DishHandler;
-import quarri6343.overcrafted.common.data.DishMenu;
-import quarri6343.overcrafted.common.ScoreBoardHandler;
+import quarri6343.overcrafted.common.order.OrderHandler;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
-import quarri6343.overcrafted.utils.OvercraftedUtils;
 
 /**
  * 手持ちの皿を識別してそれに応じたイベントを起こす
@@ -39,8 +36,7 @@ public class DishInteractEventHandler implements IPlayerInteractEventHandler {
         if(event.isCancelled())
             return;
         
-        if (!(event.getItem() != null && event.getItem().getType().equals(Material.PAPER)
-                && DishHandler.isDish(event.getItem())))
+        if (!(event.getItem() != null && OrderHandler.isDish(event.getItem())))
             return;
 
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE)
@@ -48,7 +44,7 @@ public class DishInteractEventHandler implements IPlayerInteractEventHandler {
 
         OCTeam team = getData().teams.getTeambyPlayer(event.getPlayer());
         if (team == null) {
-            event.getPlayer().sendMessage(Component.text("あなたはチームに所属していないため、料理することができません"));
+            event.getPlayer().sendMessage(Component.text("あなたはチームに所属していないため、皿を扱うことができません"));
             return;
         }
 
@@ -59,41 +55,32 @@ public class DishInteractEventHandler implements IPlayerInteractEventHandler {
             return;
         }
 
-        DishMenu dishMenu = DishHandler.decodeOrder(event.getItem());
-        if (dishMenu == null) {
-            event.getPlayer().sendMessage(Component.text("この皿には何も注文票が載っていない..."));
+        if (OrderHandler.isDirty(event.getItem())) {
+            tryWashDish(event);
             return;
         }
 
-        if (DishHandler.isDirty(event.getItem())) {
-            tryWashDish(event, dishMenu);
-            return;
-        }
-
-        if (DishHandler.isOrderCompleted(event.getItem())) {
-            trySubmitOrder(event, team, dishMenu);
+        Material material = OrderHandler.decodeOrder(event.getItem());
+        if (material != null) {
+            trySubmitOrder(event, team);
         } else {
-            tryCompleteOrder(event, dishMenu);
+            tryPutItemOnDish(event);
         }
     }
 
 
     /**
      * プレイヤーが手に持っている皿をカウンターに提出することを試みる
-     *
-     * @param event
-     * @param team
      */
-    private void trySubmitOrder(PlayerInteractEvent event, OCTeam team, DishMenu menu) {
+    private void trySubmitOrder(PlayerInteractEvent event, OCTeam team) {
+        Material material = OrderHandler.decodeOrder(event.getItem());
         if (event.getClickedBlock() != null && event.getClickedBlock().getType() == Material.RED_BED) {
-            if(team.orderBox.addItem(DishHandler.encodeRandomOrderOnDirtyDish())){
-                event.getPlayer().setItemInHand(new ItemStack(Material.AIR));
-                ScoreBoardHandler.addScore(team, menu.getScore());
+            if(OrderHandler.trySatisfyOrder(team, material)){
+                event.getPlayer().setItemInHand(OrderHandler.getDirtyDish());
             }
             else{
-                event.getPlayer().sendMessage(Component.text("注文箱が一杯だ!"));
+                event.getPlayer().sendMessage(Component.text("皿に載っているアイテムは誰も注文していないようだ..."));
             }
-
         } else {
             event.getPlayer().sendMessage(Component.text("赤いベッドを右クリックして納品しよう"));
         }
@@ -103,14 +90,19 @@ public class DishInteractEventHandler implements IPlayerInteractEventHandler {
      * プレイヤーが手に持っている皿の注文を満たすことを試みる
      *
      * @param event
-     * @param dishMenu
      */
-    private void tryCompleteOrder(PlayerInteractEvent event, DishMenu dishMenu) {
+    private void tryPutItemOnDish(PlayerInteractEvent event) {
         if (event.getClickedBlock() != null && event.getClickedBlock().getState() instanceof Container) {
             Inventory inventory = ((Container) event.getClickedBlock().getState()).getInventory();
-            if (inventory.containsAtLeast(dishMenu.getProduct(), dishMenu.getProduct().getAmount())) {
-                inventory.removeItemAnySlot(dishMenu.getProduct());
-                event.getPlayer().setItemInHand(DishHandler.encodeOrderAsCompleted(dishMenu));
+            for (int i = 0; i < inventory.getSize(); i++) {
+                if(inventory.getItem(i) == null)
+                    continue;
+                
+                ItemStack newDish = OrderHandler.tryEncodeOrderOnDish(inventory.getItem(i).getType());
+                if(newDish != null){
+                    inventory.setItem(i, null);
+                    event.getPlayer().setItemInHand(newDish);
+                }
             }
             return;
         }
@@ -118,16 +110,15 @@ public class DishInteractEventHandler implements IPlayerInteractEventHandler {
         if (event.getClickedBlock() != null && (event.getClickedBlock().getType() == Material.CAULDRON || event.getClickedBlock().getType() == Material.WATER_CAULDRON))
             return;
 
-        event.getPlayer().sendMessage(OvercraftedUtils.getItemInfoasText(dishMenu.getProduct()).append(Component.text(" が入ったブロックを皿を持って右クリックしよう")));
+        event.getPlayer().sendMessage(Component.text(" 納品したいアイテムが入ったブロックを皿を持って右クリックしよう"));
     }
 
     /**
      * プレイヤーが手に持っている汚い皿を洗うことを試みる
      *
      * @param event
-     * @param dishMenu
      */
-    private void tryWashDish(PlayerInteractEvent event, DishMenu dishMenu) {
+    private void tryWashDish(PlayerInteractEvent event) {
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE)
             return;
 
@@ -144,7 +135,7 @@ public class DishInteractEventHandler implements IPlayerInteractEventHandler {
             event.getClickedBlock().setBlockData(cauldronData);
         }
 
-        event.getPlayer().setItemInHand(DishHandler.encodeOrder(dishMenu));
+        event.getPlayer().setItemInHand(OrderHandler.getDish());
         event.getClickedBlock().getState().update();
     }
 }

@@ -4,7 +4,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
 import quarri6343.overcrafted.Overcrafted;
-import quarri6343.overcrafted.common.DishHandler;
+import quarri6343.overcrafted.common.order.OrderHandler;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
@@ -54,7 +54,7 @@ public class TrashCanInteractEventHandler implements IPlayerInteractEventHandler
             return;
         }
 
-        if(DishHandler.isDish(event.getPlayer().getItemInHand())){
+        if(OrderHandler.isDish(event.getPlayer().getItemInHand())){
             if(team.orderBox.addItem(event.getPlayer().getItemInHand())){
                 event.getPlayer().setItemInHand(null);
                 event.getPlayer().sendMessage(Component.text("ゴミ箱に持っている皿を捨てた！"));

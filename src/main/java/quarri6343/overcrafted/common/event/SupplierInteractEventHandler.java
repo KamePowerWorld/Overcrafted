@@ -1,11 +1,8 @@
 package quarri6343.overcrafted.common.event;
 
-import com.google.common.base.Suppliers;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
 import quarri6343.overcrafted.Overcrafted;
-import quarri6343.overcrafted.common.DishHandler;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;

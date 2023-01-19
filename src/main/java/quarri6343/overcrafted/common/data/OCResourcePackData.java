@@ -2,7 +2,6 @@ package quarri6343.overcrafted.common.data;
 
 import net.kyori.adventure.key.Key;
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 
 public class OCResourcePackData {
     
@@ -49,27 +48,26 @@ public class OCResourcePackData {
     }
 
     /**
-     * リソースパックで設定されたカスタムアイテムとオリジナルアイテムとcustomModelDataとの対応表
+     * リソースパックで設定されたカスタムの皿(Materialはpaper)と皿に載っているアイテムとcustomModelDataとの対応表
      */
-    public enum customModel{
-        DISH(Material.PAPER, 1),
-        DISH_DIRTY(Material.PAPER, 2),
-        DISH_FURNACE(Material.PAPER, 3),
-        DISH_IRON_INGOT(Material.PAPER, 4),
-        DISH_MINECART(Material.PAPER, 5),
-        DISH_TORCH(Material.PAPER, 6);
-        
+    public enum CustomDishModel {
+        DISH(null, 1),
+        DISH_DIRTY(null, 2),
+        DISH_FURNACE(Material.FURNACE, 3),
+        DISH_IRON_INGOT(Material.IRON_INGOT, 4),
+        DISH_MINECART(Material.MINECART, 5),
+        DISH_TORCH(Material.TORCH, 6);
 
-        private final Material material;
+        private final Material materialOnDish;
         private final int data;
 
-        customModel(Material material, int data){
-            this.material = material;
+        CustomDishModel(Material material, int data){
+            this.materialOnDish = material;
             this.data = data;
         }
 
-        public Material getMaterial() {
-            return material;
+        public Material getMaterialOnDish() {
+            return materialOnDish;
         }
         
         public int getData(){

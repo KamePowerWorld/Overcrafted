@@ -6,17 +6,13 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import quarri6343.overcrafted.Overcrafted;
-import quarri6343.overcrafted.common.BossBarHandler;
-import quarri6343.overcrafted.common.DishHandler;
+import quarri6343.overcrafted.common.order.OrderHandler;
 import quarri6343.overcrafted.common.GlobalTeamHandler;
-import quarri6343.overcrafted.common.ScoreBoardHandler;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCTeam;
 
@@ -72,17 +68,12 @@ public class OCLogic {
 
             for (int j = 0; j < team.getPlayersSize(); j++) {
                 team.setUpGameEnvforPlayer(team.getPlayer(j));
-                
-                for (int k = 0; k < OCData.dishesOnStart; k++) {
-                    team.orderBox.addItem(DishHandler.encodeRandomOrder());
-                }
             }
         }
         Bukkit.getOnlinePlayers().forEach(player -> player.showTitle(Title.title(Component.text("ゲームスタート"), Component.empty())));
-        BossBarHandler.initiate();
-
+        OrderHandler.generateRandomOrders();
+        
         gameStatus = GameStatus.ACTIVE;
-        ScoreBoardHandler.initialize();
         gameRunnable = new GameRunnable(urTeam -> endGame(null, urTeam, GameResult.SUCCESS, true)).runTaskTimer(Overcrafted.getInstance(), 0, 1);
     }
 
@@ -103,7 +94,6 @@ public class OCLogic {
                 sender.sendMessage("ゲームが始まっていません！");
             return;
         }
-        ScoreBoardHandler.destroy();
 
         if (gameBeginRunnable != null)
             gameBeginRunnable.cancel();

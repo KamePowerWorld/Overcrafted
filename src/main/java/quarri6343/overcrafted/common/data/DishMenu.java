@@ -8,15 +8,15 @@ import quarri6343.overcrafted.common.data.OCResourcePackData.MenuFont;
  * 注文票に載せるメニューのリスト
  */
 public enum DishMenu {
-    TORCH(new ItemStack(Material.TORCH), 5, MenuFont.TORCH.get_char()),
-    FURNACE(new ItemStack(Material.FURNACE), 5, MenuFont.FURNACE.get_char()),
-    IRON(new ItemStack(Material.IRON_INGOT), 3, MenuFont.IRON.get_char()),
-    MINECART(new ItemStack(Material.MINECART), 15, MenuFont.MINECART.get_char());
+    TORCH(Material.TORCH, 5, MenuFont.TORCH.get_char()),
+    FURNACE(Material.FURNACE, 5, MenuFont.FURNACE.get_char()),
+    IRON(Material.IRON_INGOT, 3, MenuFont.IRON.get_char()),
+    MINECART(Material.MINECART, 15, MenuFont.MINECART.get_char());
 
     /**
      * メニュー
      */
-    private final ItemStack product;
+    private final Material product;
 
     /**
      * メニューを納品した時に得られるスコア
@@ -28,13 +28,13 @@ public enum DishMenu {
      */
     private final String iconUniCode;
 
-    DishMenu(ItemStack product, int score, String iconUniCode) {
+    DishMenu(Material product, int score, String iconUniCode) {
         this.product = product;
         this.score = score;
         this.iconUniCode = iconUniCode;
     }
 
-    public ItemStack getProduct() {
+    public Material getProduct() {
         return product;
     }
 
