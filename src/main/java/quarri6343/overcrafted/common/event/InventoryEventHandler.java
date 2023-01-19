@@ -81,104 +81,123 @@ public class InventoryEventHandler implements Listener {
 
         if (event.getClick().equals(ClickType.DOUBLE_CLICK)) {
             event.setCancelled(true);
-        } else if (event.getClick().equals(ClickType.NUMBER_KEY)) { //handle number key click
-            ItemStack slotItem = event.getView().getTopInventory().getItem(event.getHotbarButton());
-            if ((slotItem == null || slotItem.getType() == Material.AIR)) {
+            return;
+        }
+        
+        if (event.getClick().equals(ClickType.NUMBER_KEY)) {
+            blockNumberKeyClick(event);
+        } else if (event.getClick().equals(ClickType.SHIFT_LEFT) || event.getClick().equals(ClickType.SHIFT_RIGHT)) {
+            blockShiftKeyClick(event);
+        } else if (!(event.getClickedInventory().getType() == InventoryType.PLAYER)) {
+            blockTargetInventoryClick(event);
+        } else {
+            blockPlayerInventoryClick(event);
+        }
+        
+    }
+    
+    private void blockNumberKeyClick(InventoryClickEvent event){
+        ItemStack slotItem = event.getView().getTopInventory().getItem(event.getHotbarButton());
+        if ((slotItem == null || slotItem.getType() == Material.AIR)) {
+            return;
+        }
+
+        if (slotItem.getAmount() > 1)
+            event.setCancelled(true);
+    }
+    
+    private void blockShiftKeyClick(InventoryClickEvent event){
+        ItemStack currentItem = event.getCurrentItem();
+        if (currentItem == null || currentItem.getType() == Material.AIR) {
+            return;
+        }
+
+        if (currentItem.getAmount() > 1) {
+            if(event.getClickedInventory().getType() == InventoryType.WORKBENCH && event.getSlot() == 0){
                 return;
             }
 
-            if (slotItem.getAmount() > 1)
+            event.setCancelled(true);
+            return;
+        }
+
+        if (event.getClickedInventory().getType() == InventoryType.PLAYER) {
+            int firstEmpty = event.getView().getTopInventory().firstEmpty();
+            if (firstEmpty != -1){
                 event.setCancelled(true);
-        } else if (event.getClick().equals(ClickType.SHIFT_LEFT) || event.getClick().equals(ClickType.SHIFT_RIGHT)) { //handle shift key click
-
-            ItemStack currentItem = event.getCurrentItem();
-            if (currentItem == null || currentItem.getType() == Material.AIR) {
-                return;
+                event.getView().getTopInventory().setItem(firstEmpty, currentItem);
+                event.setCurrentItem(null);
             }
-
-            if (currentItem.getAmount() > 1) {
-                if(event.getClickedInventory().getType() == InventoryType.WORKBENCH && event.getSlot() == 0){
-                    return;
-                }
-                
-                event.setCancelled(true);
-                return;
-            }
-
-            if (event.getClickedInventory().getType() == InventoryType.PLAYER) {
-                int firstEmpty = event.getView().getTopInventory().firstEmpty();
-                if (firstEmpty != -1){
-                    event.setCancelled(true);
-                    event.getView().getTopInventory().setItem(firstEmpty, currentItem);
-                    event.setCurrentItem(null);
-                }
-            } else {
-                if (event.getView().getBottomInventory().containsAtLeast(currentItem, 1))
-                    event.setCancelled(true);
-            }
-        } else if (!(event.getClickedInventory().getType() == InventoryType.PLAYER)) { //handle target inventory click
-            ItemStack currentItem = event.getCurrentItem();
-            ItemStack cursorItem = event.getCursor();
-            if (cursorItem == null || cursorItem.getType() == Material.AIR) {
-                if (currentItem != null && currentItem.getAmount() > 1) {
-                    if(event.getClickedInventory().getType() == InventoryType.WORKBENCH && event.getSlot() == 0){
-                        event.setCancelled(true);
-                        
-                        ItemStack clickedItem = event.getClickedInventory().getItem(0);
-                        if(clickedItem == null || clickedItem.getType() == Material.AIR)
-                            return;
-                        
-                        if(event.getView().getBottomInventory().firstEmpty() != -1){
-                            try{
-                                event.getView().getBottomInventory().addItem(clickedItem);
-                            }
-                            finally {
-                                event.getClickedInventory().clear();
-                            }
-                        }
-                        return;
-                    }
-                    
-                    event.setCancelled(true);
-
-                    if (event.getView().getBottomInventory().firstEmpty() != -1) {
-                        currentItem.setAmount(currentItem.getAmount() - 1);
-                        ItemStack itemToAdd = currentItem.clone();
-                        itemToAdd.setAmount(1);
-                        event.getView().getBottomInventory().addItem(itemToAdd);
-                    }
-                }
-                return;
-            }
-            
-            if(currentItem == null || currentItem.getType() == Material.AIR)
-                return;
-
-            if (cursorItem.getType() == currentItem.getType())
-                event.setCancelled(true);
-        } else { //handle player inventory click
-            ItemStack currentItem = event.getCurrentItem();
-            ItemStack cursorItem = event.getCursor();
-            if (cursorItem == null || cursorItem.getType() == Material.AIR) {
-                if (currentItem != null && currentItem.getAmount() > 1) {
-                    event.setCancelled(true);
-
-                    if (event.getView().getTopInventory().firstEmpty() != -1) {
-                        currentItem.setAmount(currentItem.getAmount() - 1);
-                        ItemStack itemToAdd = currentItem.clone();
-                        itemToAdd.setAmount(1);
-                        event.getView().getTopInventory().addItem(itemToAdd);
-                    }
-                }
-                return;
-            }
-
-            if(currentItem == null || currentItem.getType() == Material.AIR)
-                return;
-            
-            if (cursorItem.getType() == currentItem.getType())
+        } else {
+            if (event.getView().getBottomInventory().containsAtLeast(currentItem, 1))
                 event.setCancelled(true);
         }
+    }
+    
+    private void blockTargetInventoryClick(InventoryClickEvent event){
+        ItemStack currentItem = event.getCurrentItem();
+        ItemStack cursorItem = event.getCursor();
+        if (cursorItem == null || cursorItem.getType() == Material.AIR) {
+            if (currentItem != null && currentItem.getAmount() > 1) {
+                if(event.getClickedInventory().getType() == InventoryType.WORKBENCH && event.getSlot() == 0){
+                    event.setCancelled(true);
+
+                    ItemStack clickedItem = event.getClickedInventory().getItem(0);
+                    if(clickedItem == null || clickedItem.getType() == Material.AIR)
+                        return;
+
+                    if(event.getView().getBottomInventory().firstEmpty() != -1){
+                        try{
+                            event.getView().getBottomInventory().addItem(clickedItem);
+                        }
+                        finally {
+                            event.getClickedInventory().clear();
+                        }
+                    }
+                    return;
+                }
+
+                event.setCancelled(true);
+
+                if (event.getView().getBottomInventory().firstEmpty() != -1) {
+                    currentItem.setAmount(currentItem.getAmount() - 1);
+                    ItemStack itemToAdd = currentItem.clone();
+                    itemToAdd.setAmount(1);
+                    event.getView().getBottomInventory().addItem(itemToAdd);
+                }
+            }
+            return;
+        }
+
+        if(currentItem == null || currentItem.getType() == Material.AIR)
+            return;
+
+        if (cursorItem.getType() == currentItem.getType())
+            event.setCancelled(true);
+    }
+    
+    private void blockPlayerInventoryClick(InventoryClickEvent event){
+        ItemStack currentItem = event.getCurrentItem();
+        ItemStack cursorItem = event.getCursor();
+        if (cursorItem == null || cursorItem.getType() == Material.AIR) {
+            if (currentItem != null && currentItem.getAmount() > 1) {
+                event.setCancelled(true);
+
+                if (event.getView().getTopInventory().firstEmpty() != -1) {
+                    currentItem.setAmount(currentItem.getAmount() - 1);
+                    ItemStack itemToAdd = currentItem.clone();
+                    itemToAdd.setAmount(1);
+                    event.getView().getTopInventory().addItem(itemToAdd);
+                }
+            }
+            return;
+        }
+
+        if(currentItem == null || currentItem.getType() == Material.AIR)
+            return;
+
+        if (cursorItem.getType() == currentItem.getType())
+            event.setCancelled(true);
     }
 
     @org.bukkit.event.EventHandler
