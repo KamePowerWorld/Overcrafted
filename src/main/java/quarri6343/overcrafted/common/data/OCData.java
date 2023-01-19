@@ -9,18 +9,6 @@ import quarri6343.overcrafted.utils.ItemCreator;
  * 必要なデータを全て保存するクラス
  */
 public class OCData {
-
-    /**
-     * リソースパックのurl
-     */
-    public static final String resourcePackURL = "https://drive.google.com/uc?export=download&id=1_ryjm_tb5HVxHwi28Rp3TPk7QSMOSepr";
-    
-    public static final String resourcePackPath = "plugins/overcrafted_resourcepack.zip";
-
-    /**
-     * リソースパックのハッシュ
-     */
-    public static String resourcePackHash;
     
     /**
      * ゲーム管理者が現在選択しているクラスの名前

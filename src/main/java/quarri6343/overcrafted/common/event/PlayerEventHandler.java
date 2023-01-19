@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.common.GlobalTeamHandler;
 import quarri6343.overcrafted.common.data.OCData;
+import quarri6343.overcrafted.common.data.OCResourcePackData;
 import quarri6343.overcrafted.common.data.OCTeam;
 import quarri6343.overcrafted.common.data.OrderBox;
 import quarri6343.overcrafted.common.logic.OCLogic;
@@ -44,8 +45,8 @@ public class PlayerEventHandler implements Listener {
      * @param event
      */
     private void setResourcePack(PlayerJoinEvent event){
-        if(OCData.resourcePackHash != null){
-            event.getPlayer().setResourcePack(OCData.resourcePackURL, OCData.resourcePackHash, true, Component.text("リソースパックを適用しないと遊べません"));
+        if(OCResourcePackData.packHash != null){
+            event.getPlayer().setResourcePack(OCResourcePackData.packURL, OCResourcePackData.packHash, true, Component.text("リソースパックを適用しないと遊べません"));
         }
     }
     

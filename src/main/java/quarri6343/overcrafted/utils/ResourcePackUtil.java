@@ -2,7 +2,7 @@ package quarri6343.overcrafted.utils;
 
 import org.bukkit.scheduler.BukkitRunnable;
 import quarri6343.overcrafted.Overcrafted;
-import quarri6343.overcrafted.common.data.OCData;
+import quarri6343.overcrafted.common.data.OCResourcePackData;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -22,12 +22,12 @@ public class ResourcePackUtil {
                 isResourcePackReloading = true;
                 
                 try{
-                    downloadFile(OCData.resourcePackURL, OCData.resourcePackPath);
+                    downloadFile(OCResourcePackData.packURL, OCResourcePackData.packPath);
                 }
                 catch (IOException e) {
                     e.printStackTrace();
                 }
-                OCData.resourcePackHash = HashCalculator.getfileHash(OCData.resourcePackPath,HashCalculator.SHA_1);
+                OCResourcePackData.packHash = HashCalculator.getfileHash(OCResourcePackData.packPath,HashCalculator.SHA_1);
                 isResourcePackReloading = false;
             }
         }.runTaskAsynchronously(Overcrafted.getInstance());
@@ -35,8 +35,8 @@ public class ResourcePackUtil {
 
     /**
      * ファイルをダウンロード
-     * @param link
-     * @param directory
+     * @param link リンク
+     * @param directory 場所
      * @throws IOException
      */
     public static void downloadFile(String link, String directory) throws IOException {
