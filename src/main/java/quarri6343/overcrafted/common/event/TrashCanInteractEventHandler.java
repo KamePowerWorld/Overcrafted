@@ -55,12 +55,23 @@ public class TrashCanInteractEventHandler implements IPlayerInteractEventHandler
         }
 
         if(OrderHandler.isDish(event.getPlayer().getItemInHand())){
-            if(team.cleanDishPile.addDish()){
-                event.getPlayer().setItemInHand(null);
-                event.getPlayer().sendMessage(Component.text("ゴミ箱に持っている皿を捨てた！"));
+            if(OrderHandler.isDirty(event.getPlayer().getItemInHand())){
+                if(team.dirtyDishPile.addDish()){
+                    event.getPlayer().setItemInHand(null);
+                    event.getPlayer().sendMessage(Component.text("ゴミ箱に持っている皿を捨てた！"));
+                }
+                else{
+                    event.getPlayer().sendMessage(Component.text("皿置場が一杯で皿を捨てられなかった！"));
+                }
             }
             else{
-                event.getPlayer().sendMessage(Component.text("皿置場が一杯で皿を捨てられなかった！"));
+                if(team.cleanDishPile.addDish()){
+                    event.getPlayer().setItemInHand(null);
+                    event.getPlayer().sendMessage(Component.text("ゴミ箱に持っている皿を捨てた！"));
+                }
+                else{
+                    event.getPlayer().sendMessage(Component.text("皿置場が一杯で皿を捨てられなかった！"));
+                }
             }
             return;
         }

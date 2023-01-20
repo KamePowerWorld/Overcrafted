@@ -51,6 +51,7 @@ public class ConfigHandler {
             newTeam.joinLocation1 = config.getLocation("team.joinLocation1." + i);
             newTeam.joinLocation2 = config.getLocation("team.joinLocation2." + i);
             newTeam.cleanDishPile.location = config.getLocation("team.cleanDishPile." + i);
+            newTeam.dirtyDishPile.location = config.getLocation("team.dirtyDishPile." + i);
         }
     }
 
@@ -94,6 +95,7 @@ public class ConfigHandler {
             config.set("team.joinLocation1." + i, data.teams.getTeam(i).joinLocation1);
             config.set("team.joinLocation2." + i, data.teams.getTeam(i).joinLocation2);
             config.set("team.cleanDishPile." + i, data.teams.getTeam(i).cleanDishPile.location);
+            config.set("team.dirtyDishPile." + i, data.teams.getTeam(i).dirtyDishPile.location);
         }
     }
 

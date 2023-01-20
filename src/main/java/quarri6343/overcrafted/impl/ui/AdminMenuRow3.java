@@ -37,7 +37,14 @@ public class AdminMenuRow3 {
                 .addLore(getCleanDishPileLocationStats()).create();
         GuiItem placeCleanDishPileButton = new GuiItem(placeCleanDishPileItem,
                 AdminMenuRow3::setUpCleanDishPile);
-        gui.setItem(20, placeCleanDishPileButton);
+        gui.setItem(18, placeCleanDishPileButton);
+
+        ItemStack placeDirtyDishPileItem = new ItemCreator(OrderHandler.getDirtyDish()).setName(Component.text("チーム" + getData().adminSelectedTeam + "の汚い皿置場座標を設定")
+                        .color(NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false))
+                .addLore(getDirtyDishPileLocationStats()).create();
+        GuiItem placeDirtyDishPileButton = new GuiItem(placeDirtyDishPileItem,
+                AdminMenuRow3::setUpDirtyDishPile);
+        gui.setItem(20, placeDirtyDishPileButton);
 
         GuiItem closeButton = new GuiItem(new ItemCreator(Material.BARRIER).setName(Component.text("閉じる")).create(),
                 event -> gui.close(event.getWhoClicked()));
@@ -88,6 +95,19 @@ public class AdminMenuRow3 {
         return getLocDesc(team.cleanDishPile.location);
     }
 
+
+    /**
+     * @return 汚い皿置き場の位置を設定するボタンに表示する現在の状況
+     */
+    private static TextComponent getDirtyDishPileLocationStats() {
+        OCTeam team = getData().teams.getTeambyName(getData().adminSelectedTeam);
+        if (team == null) {
+            return teamNotSelectedText;
+        }
+
+        return getLocDesc(team.dirtyDishPile.location);
+    }
+
     /**
      * 現在立っている場所で綺麗な皿置場を登録する
      *
@@ -108,6 +128,29 @@ public class AdminMenuRow3 {
         DishPile cleanDishPile = team.cleanDishPile;
         cleanDishPile.location = event.getWhoClicked().getLocation();
         event.getWhoClicked().sendMessage(Component.text("綺麗な皿置場を" + locationBlockPostoString(event.getWhoClicked().getLocation()) + "で登録しました"));
+        UIAdminMenu.openUI((Player) event.getWhoClicked());
+    }
+
+    /**
+     * 現在立っている場所で汚い皿置場を登録する
+     *
+     * @param event
+     */
+    public static void setUpDirtyDishPile(InventoryClickEvent event) {
+        OCTeam team = getData().teams.getTeambyName(getData().adminSelectedTeam);
+        if (team == null) {
+            event.getWhoClicked().sendMessage(teamNotSelectedText);
+            return;
+        }
+
+        if (getLogic().gameStatus != OCLogic.GameStatus.INACTIVE) {
+            event.getWhoClicked().sendMessage(gameRunningText);
+            return;
+        }
+
+        DishPile dirtyDishPile = team.dirtyDishPile;
+        dirtyDishPile.location = event.getWhoClicked().getLocation();
+        event.getWhoClicked().sendMessage(Component.text("汚い皿置場を" + locationBlockPostoString(event.getWhoClicked().getLocation()) + "で登録しました"));
         UIAdminMenu.openUI((Player) event.getWhoClicked());
     }
 }

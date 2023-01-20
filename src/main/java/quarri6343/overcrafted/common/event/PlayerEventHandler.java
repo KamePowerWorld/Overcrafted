@@ -3,7 +3,7 @@ package quarri6343.overcrafted.common.event;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
@@ -76,7 +76,7 @@ public class PlayerEventHandler implements Listener {
     }
 
     @org.bukkit.event.EventHandler
-    public void onPlayerBreakBlock(BlockBreakEvent event) {
+    public void onEntityDeath(EntityDeathEvent event) {
         processDishPileDestruction(event);
     }
 
@@ -85,14 +85,21 @@ public class PlayerEventHandler implements Listener {
      *
      * @param event
      */
-    private void processDishPileDestruction(BlockBreakEvent event) {
+    private void processDishPileDestruction(EntityDeathEvent event) {
         for (int i = 0; i < getData().teams.getTeamsLength(); i++) {
             OCTeam team = getData().teams.getTeam(i);
 
             DishPile cleanDishPile = team.cleanDishPile;
-            if (event.getBlock().equals(cleanDishPile.location.getBlock()) && cleanDishPile.isPlaced()) {
+            if (event.getEntity().getLocation().getBlock().equals(cleanDishPile.location.getBlock()) && cleanDishPile.isPlaced()) {
                 event.setCancelled(true);
                 cleanDishPile.destroy();
+                return;
+            }
+
+            DishPile dirtyDishPile = team.dirtyDishPile;
+            if (event.getEntity().getLocation().getBlock().equals(dirtyDishPile.location.getBlock()) && dirtyDishPile.isPlaced()) {
+                event.setCancelled(true);
+                dirtyDishPile.destroy();
                 return;
             }
         }

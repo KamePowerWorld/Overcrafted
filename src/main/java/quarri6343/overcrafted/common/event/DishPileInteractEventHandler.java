@@ -48,6 +48,9 @@ public class DishPileInteractEventHandler implements IPlayerInteractEventHandler
         if(event.getClickedBlock().getRelative(BlockFace.UP).equals(team.cleanDishPile.location.getBlock())){
             if(team.cleanDishPile.removeDish())
                 event.getPlayer().setItemInHand(OrderHandler.getDish());
+        }else if(event.getClickedBlock().getRelative(BlockFace.UP).equals(team.dirtyDishPile.location.getBlock())){
+            if(team.dirtyDishPile.removeDish())
+                event.getPlayer().setItemInHand(OrderHandler.getDirtyDish());
         }
     }
 }

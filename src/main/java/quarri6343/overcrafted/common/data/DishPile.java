@@ -21,12 +21,18 @@ public class DishPile {
      * 皿置場のワールド内での場所
      */
     public Location location = null;
+    
+    public OCResourcePackData.IDishModel[] iDishModels;
 
     /**
      * 今積みあがっている皿の枚数
      */
     private int dishNumber = 0;
 
+    public DishPile(OCResourcePackData.IDishModel[] dishModels){
+        this.iDishModels = dishModels;
+    }
+    
     /**
      * 皿置場を設置
      */
@@ -42,10 +48,10 @@ public class DishPile {
         }
 
         int modelData = 0;
-        PiledCleanDishModel[] cleanDishModels = PiledCleanDishModel.values();
-        for (PiledCleanDishModel cleanDishModel : cleanDishModels) {
-            if (cleanDishModel.getStackedNumber() == dishNumber) {
-                modelData = cleanDishModel.getData();
+        for (OCResourcePackData.IDishModel dishModel : iDishModels) {
+            if (dishModel.getStackedNumber() == dishNumber) {
+                modelData = dishModel.getData();
+                break;
             }
         }
         

@@ -75,10 +75,15 @@ public class OCResourcePackData {
         }
     }
 
+    public interface IDishModel{
+        public int getStackedNumber();
+        public int getData();
+    }
+
     /**
      * リソースパックで設定された積みあがった皿(Materialはmusic_disc_pigstep)の名称と積みあがった枚数とcustomModelDataとの対応表
      */
-    public enum PiledCleanDishModel {
+    public enum PiledCleanDishModel implements IDishModel {
         DISH_STACKED_1(1, 1),
         DISH_STACKED_2(2, 2),
         DISH_STACKED_3(3, 3),
@@ -105,7 +110,7 @@ public class OCResourcePackData {
     /**
      * リソースパックで設定された積みあがった汚い皿(Materialはmusic_disc_pigstep)の名称と積みあがった枚数とcustomModelDataとの対応表
      */
-    public enum PiledDirtyDishModel {
+    public enum PiledDirtyDishModel implements IDishModel {
         DISH_STACKED_DIRTY_1(1, 6),
         DISH_STACKED_DIRTY_2(2, 7),
         DISH_STACKED_DIRTY_3(3, 8),

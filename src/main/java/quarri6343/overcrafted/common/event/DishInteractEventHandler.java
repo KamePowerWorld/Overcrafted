@@ -56,7 +56,7 @@ public class DishInteractEventHandler implements IPlayerInteractEventHandler {
         }
 
         if (OrderHandler.isDirty(event.getItem())) {
-            tryWashDish(event);
+            tryWashDish(event, team);
             return;
         }
 
@@ -76,7 +76,8 @@ public class DishInteractEventHandler implements IPlayerInteractEventHandler {
         Material material = OrderHandler.decodeOrder(event.getItem());
         if (event.getClickedBlock() != null && event.getClickedBlock().getType() == Material.RED_BED) {
             if(OrderHandler.trySatisfyOrder(team, material)){
-                event.getPlayer().setItemInHand(OrderHandler.getDirtyDish());
+                event.getPlayer().setItemInHand(null);
+                team.dirtyDishPile.addDish();
             }
             else{
                 event.getPlayer().sendMessage(Component.text("皿に載っているアイテムは誰も注文していないようだ..."));
@@ -118,7 +119,7 @@ public class DishInteractEventHandler implements IPlayerInteractEventHandler {
      *
      * @param event
      */
-    private void tryWashDish(PlayerInteractEvent event) {
+    private void tryWashDish(PlayerInteractEvent event, OCTeam team) {
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE)
             return;
 
@@ -135,7 +136,9 @@ public class DishInteractEventHandler implements IPlayerInteractEventHandler {
             event.getClickedBlock().setBlockData(cauldronData);
         }
 
-        event.getPlayer().setItemInHand(OrderHandler.getDish());
+        event.getPlayer().setItemInHand(null);
+        team.cleanDishPile.addDish();
+        
         event.getClickedBlock().getState().update();
     }
 }

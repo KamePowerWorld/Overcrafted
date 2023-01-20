@@ -130,6 +130,7 @@ public class OCTeams {
     public void clearDishPile() {
         for (int i = 0; i < getTeamsLength(); i++) {
             getTeam(i).cleanDishPile.destroy();
+            getTeam(i).dirtyDishPile.destroy();
         }
     }
 
