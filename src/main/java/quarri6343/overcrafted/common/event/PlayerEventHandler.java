@@ -13,7 +13,7 @@ import quarri6343.overcrafted.common.GlobalTeamHandler;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCResourcePackData;
 import quarri6343.overcrafted.common.data.OCTeam;
-import quarri6343.overcrafted.common.data.CleanDishPile;
+import quarri6343.overcrafted.common.data.DishPile;
 import quarri6343.overcrafted.common.logic.OCLogic;
 
 import java.util.ArrayList;
@@ -89,7 +89,7 @@ public class PlayerEventHandler implements Listener {
         for (int i = 0; i < getData().teams.getTeamsLength(); i++) {
             OCTeam team = getData().teams.getTeam(i);
 
-            CleanDishPile cleanDishPile = team.cleanDishPile;
+            DishPile cleanDishPile = team.cleanDishPile;
             if (event.getBlock().equals(cleanDishPile.location.getBlock()) && cleanDishPile.isPlaced()) {
                 event.setCancelled(true);
                 cleanDishPile.destroy();

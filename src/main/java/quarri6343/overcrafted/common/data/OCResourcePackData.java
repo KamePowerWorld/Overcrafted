@@ -74,4 +74,58 @@ public class OCResourcePackData {
             return data;
         }
     }
+
+    /**
+     * リソースパックで設定された積みあがった皿(Materialはmusic_disc_pigstep)の名称と積みあがった枚数とcustomModelDataとの対応表
+     */
+    public enum PiledCleanDishModel {
+        DISH_STACKED_1(1, 1),
+        DISH_STACKED_2(2, 2),
+        DISH_STACKED_3(3, 3),
+        DISH_STACKED_4(4, 4),
+        DISH_STACKED_5(5, 5);
+
+        private final int stackedNumber;
+        private final int data;
+
+        PiledCleanDishModel(int stackedNumber, int data){
+            this.stackedNumber = stackedNumber;
+            this.data = data;
+        }
+
+        public int getStackedNumber() {
+            return stackedNumber;
+        }
+
+        public int getData(){
+            return data;
+        }
+    }
+
+    /**
+     * リソースパックで設定された積みあがった汚い皿(Materialはmusic_disc_pigstep)の名称と積みあがった枚数とcustomModelDataとの対応表
+     */
+    public enum PiledDirtyDishModel {
+        DISH_STACKED_DIRTY_1(1, 6),
+        DISH_STACKED_DIRTY_2(2, 7),
+        DISH_STACKED_DIRTY_3(3, 8),
+        DISH_STACKED_DIRTY_4(4, 9),
+        DISH_STACKED_DIRTY_5(5, 10);
+
+        private final int stackedNumber;
+        private final int data;
+
+        PiledDirtyDishModel(int stackedNumber, int data){
+            this.stackedNumber = stackedNumber;
+            this.data = data;
+        }
+
+        public int getStackedNumber() {
+            return stackedNumber;
+        }
+
+        public int getData(){
+            return data;
+        }
+    }
 }

@@ -41,9 +41,9 @@ public class OCData {
     public static final int checkInventoryInterval = 20;
 
     /**
-     * ゲームが始まった時皿置場にある綺麗な皿の数
+     * ゲームが皿置場における最大の皿の数
      */
-    public static final int dishesOnStart = 5;
+    public static final int maxDishesNumber = 5;
 
     /**
      * ゲームで同時に表示される注文の数

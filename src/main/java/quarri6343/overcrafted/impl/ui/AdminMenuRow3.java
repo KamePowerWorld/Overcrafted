@@ -13,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCTeam;
-import quarri6343.overcrafted.common.data.CleanDishPile;
+import quarri6343.overcrafted.common.data.DishPile;
 import quarri6343.overcrafted.common.logic.OCLogic;
 import quarri6343.overcrafted.common.order.OrderHandler;
 import quarri6343.overcrafted.utils.ItemCreator;
@@ -105,7 +105,7 @@ public class AdminMenuRow3 {
             return;
         }
         
-        CleanDishPile cleanDishPile = team.cleanDishPile;
+        DishPile cleanDishPile = team.cleanDishPile;
         cleanDishPile.location = event.getWhoClicked().getLocation();
         event.getWhoClicked().sendMessage(Component.text("綺麗な皿置場を" + locationBlockPostoString(event.getWhoClicked().getLocation()) + "で登録しました"));
         UIAdminMenu.openUI((Player) event.getWhoClicked());

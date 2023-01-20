@@ -25,7 +25,7 @@ public class OCTeam {
     public Location joinLocation1;
     public Location joinLocation2;
 
-    public final CleanDishPile cleanDishPile = new CleanDishPile();
+    public final DishPile cleanDishPile = new DishPile();
 
     private final List<OCPlayer> players = new ArrayList<>();
 

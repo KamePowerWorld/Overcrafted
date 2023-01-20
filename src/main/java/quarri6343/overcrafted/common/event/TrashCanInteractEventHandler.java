@@ -60,7 +60,7 @@ public class TrashCanInteractEventHandler implements IPlayerInteractEventHandler
                 event.getPlayer().sendMessage(Component.text("ゴミ箱に持っている皿を捨てた！"));
             }
             else{
-                event.getPlayer().sendMessage(Component.text("注文箱が一杯で皿を捨てられなかった！"));
+                event.getPlayer().sendMessage(Component.text("皿置場が一杯で皿を捨てられなかった！"));
             }
             return;
         }
