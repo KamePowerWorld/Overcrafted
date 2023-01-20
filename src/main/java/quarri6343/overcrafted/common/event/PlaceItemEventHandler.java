@@ -8,6 +8,7 @@ import quarri6343.overcrafted.common.PlaceItemHandler;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
+import quarri6343.overcrafted.common.order.OrderHandler;
 
 public class PlaceItemEventHandler implements IPlayerInteractEventHandler {
     
@@ -35,7 +36,7 @@ public class PlaceItemEventHandler implements IPlayerInteractEventHandler {
 
         if(event.getClickedBlock() == null || event.getClickedBlock().getType() != blockCanPlaceItem)
             return;
-
+        
         OCTeam team = getData().teams.getTeambyPlayer(event.getPlayer());
         if (team == null) {
             return;
@@ -44,14 +45,30 @@ public class PlaceItemEventHandler implements IPlayerInteractEventHandler {
         event.setCancelled(true);
         
         if(event.getItem() != null){
-            if(PlaceItemHandler.placeItem(event.getClickedBlock(), event.getItem().getType())){
+            if(event.getItem().getType() == OCData.invalidItem.getType())
+                return;
+            
+            if(OrderHandler.isDish(event.getItem())){
+                ItemStack itemOnBlock = PlaceItemHandler.getItem(event.getClickedBlock());
+                if(itemOnBlock != null){
+                    ItemStack newDish = OrderHandler.tryEncodeOrderOnDish(itemOnBlock.getType());
+                    if(newDish != null){
+                        PlaceItemHandler.pickUpItem(event.getClickedBlock());
+                        event.getPlayer().setItemInHand(newDish);
+                    }
+                    
+                    return;
+                }
+            }
+            
+            if(PlaceItemHandler.placeItem(event.getClickedBlock(), event.getItem())){
                 event.getPlayer().setItemInHand(null);
             }
         }
         else{
-            Material material = PlaceItemHandler.pickUpItem(event.getClickedBlock());
-            if(material != null)
-                event.getPlayer().setItemInHand(new ItemStack(material));
+            ItemStack itemStack = PlaceItemHandler.pickUpItem(event.getClickedBlock());
+            if(itemStack != null)
+                event.getPlayer().setItemInHand(itemStack);
         }
     }
 }

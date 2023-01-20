@@ -15,13 +15,13 @@ import java.util.Map;
 
 public class PlaceItemHandler {
 
-    private static Map<Block, Material> placedItemMap = new HashMap<>();
+    private static Map<Block, ItemStack> placedItemMap = new HashMap<>();
 
     private static OCLogic getLogic() {
         return Overcrafted.getInstance().getLogic();
     }
 
-    public static boolean placeItem(Block block, Material material) {
+    public static boolean placeItem(Block block, ItemStack itemStack) {
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE)
             return false;
         
@@ -30,20 +30,24 @@ public class PlaceItemHandler {
         
         Location location = block.getLocation();
         location.add(block.getX() > 0 ? -0.5 : 0.5, 1.1, block.getZ() > 0 ? -0.5 : 0.5);
-        Item item = block.getWorld().dropItem(location, new ItemStack(material));
+        Item item = block.getWorld().dropItem(location, itemStack);
         item.teleport(location);
         item.setVelocity(new Vector().zero());
         item.setCanPlayerPickup(false);
         item.setCanMobPickup(false);
 
-        placedItemMap.put(block, material);
+        placedItemMap.put(block, itemStack);
         
         return true;
     }
+    
+    public static ItemStack getItem(Block block){
+        return placedItemMap.get(block);
+    }
 
-    public static Material pickUpItem(Block block) {
-        Material material = placedItemMap.get(block);
-        if (material == null)
+    public static ItemStack pickUpItem(Block block) {
+        ItemStack itemStack = placedItemMap.get(block);
+        if (itemStack == null)
             return null;
 
         Location location = block.getLocation();
@@ -52,7 +56,7 @@ public class PlaceItemHandler {
             if (entity.getType() == EntityType.DROPPED_ITEM) entity.remove();
         });
         placedItemMap.remove(block);
-        return material;
+        return itemStack;
     }
 
     public static void clear() {

@@ -11,15 +11,13 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.common.GlobalTeamHandler;
-import quarri6343.overcrafted.common.data.OCData;
-import quarri6343.overcrafted.common.data.OCResourcePackData;
-import quarri6343.overcrafted.common.data.OCTeam;
-import quarri6343.overcrafted.common.data.DishPile;
+import quarri6343.overcrafted.common.data.*;
 import quarri6343.overcrafted.common.logic.OCLogic;
 import quarri6343.overcrafted.common.order.OrderHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PlayerEventHandler implements Listener {
     
@@ -151,29 +149,41 @@ public class PlayerEventHandler implements Listener {
 
     @org.bukkit.event.EventHandler
     public void onPlayerDrop(PlayerDropItemEvent event) {
-        blockInvalidSlotDrop(event);
+        blockInvalidItemDrop(event);
         throwItems(event);
     }
 
     /**
-     * スロットをロックしているアイテムのドロップを阻止する
-     *
+     * 原料ではないアイテムのドロップを阻止する
      * @param event
      */
-    private void blockInvalidSlotDrop(PlayerDropItemEvent event) {
+    private void blockInvalidItemDrop(PlayerDropItemEvent event){
         if(event.isCancelled())
             return;
-        
+
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE
                 || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
             return;
-        
+
         OCTeam team = getData().teams.getTeambyPlayer(event.getPlayer());
         if (team == null)
             return;
+        
+        if(event.getItemDrop().getItemStack().getType() == Material.STICK 
+                && Objects.equals(event.getItemDrop().getItemStack().getItemMeta().displayName(), AdminMenuInteractEventHandler.menuItemName))
+            return;
 
-        if (event.getItemDrop().getItemStack().getType() == OCData.invalidItem.getType())
-            event.setCancelled(true);
+        Supply[] supplies = Supply.values();
+        for (Supply supply : supplies) {
+            if(event.getItemDrop().getItemStack().getType() == supply.getItemStack().getType())
+                return;
+        }
+        
+        event.setCancelled(true);
+
+        if (event.getItemDrop().getItemStack().getType() != OCData.invalidItem.getType()){
+            event.getPlayer().sendMessage("原料でないアイテムは捨てられません");
+        }
     }
 
     /**
