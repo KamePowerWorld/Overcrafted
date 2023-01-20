@@ -3,6 +3,7 @@ package quarri6343.overcrafted.common.logic;
 import org.bukkit.scheduler.BukkitRunnable;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.common.GlobalTeamHandler;
+import quarri6343.overcrafted.common.PlaceItemHandler;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.order.OrderHandler;
 
@@ -24,6 +25,7 @@ public class GameEndRunnable extends BukkitRunnable {
         getData().teams.clearDishPile();
         OrderHandler.clearOrders();
         GlobalTeamHandler.resetTeams(true);
+        PlaceItemHandler.clear();
         additionalAction.run();
         if (isScheduled)
             cancel();
