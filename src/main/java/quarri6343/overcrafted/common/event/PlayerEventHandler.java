@@ -13,7 +13,7 @@ import quarri6343.overcrafted.common.GlobalTeamHandler;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCResourcePackData;
 import quarri6343.overcrafted.common.data.OCTeam;
-import quarri6343.overcrafted.common.data.OrderBox;
+import quarri6343.overcrafted.common.data.CleanDishPile;
 import quarri6343.overcrafted.common.logic.OCLogic;
 
 import java.util.ArrayList;
@@ -77,22 +77,22 @@ public class PlayerEventHandler implements Listener {
 
     @org.bukkit.event.EventHandler
     public void onPlayerBreakBlock(BlockBreakEvent event) {
-        processOrderBoxDestruction(event);
+        processDishPileDestruction(event);
     }
 
     /**
-     * もし設置されている注文箱が壊された時、注文箱に処理を委譲する
+     * もし設置されている皿置場が壊された時、注文箱に処理を委譲する
      *
      * @param event
      */
-    private void processOrderBoxDestruction(BlockBreakEvent event) {
+    private void processDishPileDestruction(BlockBreakEvent event) {
         for (int i = 0; i < getData().teams.getTeamsLength(); i++) {
             OCTeam team = getData().teams.getTeam(i);
 
-            OrderBox orderBox = team.orderBox;
-            if (event.getBlock().equals(orderBox.location.getBlock()) && orderBox.isPlaced()) {
+            CleanDishPile cleanDishPile = team.cleanDishPile;
+            if (event.getBlock().equals(cleanDishPile.location.getBlock()) && cleanDishPile.isPlaced()) {
                 event.setCancelled(true);
-                orderBox.destroy();
+                cleanDishPile.destroy();
                 return;
             }
         }

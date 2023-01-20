@@ -17,9 +17,6 @@ import java.util.*;
  * 注文のハンドラ
  */
 public class OrderHandler {
-
-    private static final int orderNumber = 5;
-
     private static Map<OCTeam, List<DishMenu>> ordersMap = new HashMap<>();
 
     private static OCData getData() {
@@ -36,7 +33,7 @@ public class OrderHandler {
         for (int i = 0; i < getData().teams.getTeamsLength(); i++) {
             List<DishMenu> orders = new ArrayList<>();
             DishMenu[] menus = DishMenu.values();
-            for (int j = 0; j < orderNumber; j++) {
+            for (int j = 0; j < OCData.ordersOnStart; j++) {
                 orders.add(menus[new Random().nextInt(menus.length)]);
             }
             ordersMap.put(getData().teams.getTeam(i), orders);

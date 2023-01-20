@@ -69,6 +69,8 @@ public class OCLogic {
             for (int j = 0; j < team.getPlayersSize(); j++) {
                 team.setUpGameEnvforPlayer(team.getPlayer(j));
             }
+            
+            team.cleanDishPile.setUp();
         }
         Bukkit.getOnlinePlayers().forEach(player -> player.showTitle(Title.title(Component.text("ゲームスタート"), Component.empty())));
         OrderHandler.generateRandomOrders();

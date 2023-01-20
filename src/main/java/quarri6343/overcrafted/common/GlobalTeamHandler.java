@@ -73,7 +73,7 @@ public class GlobalTeamHandler {
                     gameMaster.sendMessage("チーム" + team.name + "の開始地点を設定してください");
                     return false;
                 }
-                if (team.orderBox.location == null) {
+                if (team.cleanDishPile.location == null) {
                     gameMaster.sendMessage("チーム" + team.name + "の注文箱の地点を設定してください");
                     return false;
                 }

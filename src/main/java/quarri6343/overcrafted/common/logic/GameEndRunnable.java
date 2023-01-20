@@ -21,7 +21,7 @@ public class GameEndRunnable extends BukkitRunnable {
     @Override
     public void run() {
         getData().teams.teleportTeamToLobby();
-        getData().teams.clearOrderBox();
+        getData().teams.clearDishPile();
         OrderHandler.clearOrders();
         GlobalTeamHandler.resetTeams(true);
         additionalAction.run();

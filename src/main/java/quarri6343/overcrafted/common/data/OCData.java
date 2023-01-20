@@ -41,9 +41,14 @@ public class OCData {
     public static final int checkInventoryInterval = 20;
 
     /**
-     * ゲームが始まった時注文箱に入っている注文の数
+     * ゲームが始まった時皿置場にある綺麗な皿の数
      */
     public static final int dishesOnStart = 5;
+
+    /**
+     * ゲームで同時に表示される注文の数
+     */
+    public static final int ordersOnStart = 5;
 
     /**
      * プレイヤーが投げたアイテムを他のプレイヤーが拾えるまでの時間(tick)

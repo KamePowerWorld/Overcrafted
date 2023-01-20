@@ -125,11 +125,11 @@ public class OCTeams {
     }
 
     /**
-     * 全てのチームの注文箱の中身を消去する
+     * 全てのチームの皿置場の中身を消去する
      */
-    public void clearOrderBox() {
+    public void clearDishPile() {
         for (int i = 0; i < getTeamsLength(); i++) {
-            getTeam(i).orderBox.clear();
+            getTeam(i).cleanDishPile.destroy();
         }
     }
 

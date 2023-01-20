@@ -13,8 +13,9 @@ import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCTeam;
-import quarri6343.overcrafted.common.data.OrderBox;
+import quarri6343.overcrafted.common.data.CleanDishPile;
 import quarri6343.overcrafted.common.logic.OCLogic;
+import quarri6343.overcrafted.common.order.OrderHandler;
 import quarri6343.overcrafted.utils.ItemCreator;
 
 import static quarri6343.overcrafted.utils.UIUtility.*;
@@ -31,12 +32,12 @@ public class AdminMenuRow3 {
 
     public static void addElements(PaginatedGui gui, Player player) {
 
-        ItemStack placeOrderBoxItem = new ItemCreator(Material.CHEST).setName(Component.text("チーム" + getData().adminSelectedTeam + "の注文箱の座標を設定")
+        ItemStack placeCleanDishPileItem = new ItemCreator(OrderHandler.getDish()).setName(Component.text("チーム" + getData().adminSelectedTeam + "の綺麗な皿置場座標を設定")
                         .color(NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false))
-                .addLore(getorderBoxLocationStats()).create();
-        GuiItem placeOrderBoxButton = new GuiItem(placeOrderBoxItem,
-                AdminMenuRow3::setUpOrderBox);
-        gui.setItem(20, placeOrderBoxButton);
+                .addLore(getCleanDishPileLocationStats()).create();
+        GuiItem placeCleanDishPileButton = new GuiItem(placeCleanDishPileItem,
+                AdminMenuRow3::setUpCleanDishPile);
+        gui.setItem(20, placeCleanDishPileButton);
 
         GuiItem closeButton = new GuiItem(new ItemCreator(Material.BARRIER).setName(Component.text("閉じる")).create(),
                 event -> gui.close(event.getWhoClicked()));
@@ -76,23 +77,23 @@ public class AdminMenuRow3 {
     }
 
     /**
-     * @return 注文箱の位置を設定するボタンに表示する現在の状況
+     * @return 綺麗な皿置き場の位置を設定するボタンに表示する現在の状況
      */
-    private static TextComponent getorderBoxLocationStats() {
+    private static TextComponent getCleanDishPileLocationStats() {
         OCTeam team = getData().teams.getTeambyName(getData().adminSelectedTeam);
         if (team == null) {
             return teamNotSelectedText;
         }
 
-        return getLocDesc(team.orderBox.location);
+        return getLocDesc(team.cleanDishPile.location);
     }
 
     /**
-     * 現在立っている場所で注文箱を登録する
+     * 現在立っている場所で綺麗な皿置場を登録する
      *
      * @param event
      */
-    public static void setUpOrderBox(InventoryClickEvent event) {
+    public static void setUpCleanDishPile(InventoryClickEvent event) {
         OCTeam team = getData().teams.getTeambyName(getData().adminSelectedTeam);
         if (team == null) {
             event.getWhoClicked().sendMessage(teamNotSelectedText);
@@ -103,12 +104,10 @@ public class AdminMenuRow3 {
             event.getWhoClicked().sendMessage(gameRunningText);
             return;
         }
-
-
-        OrderBox orderBox = team.orderBox;
-        orderBox.location = event.getWhoClicked().getLocation();
-        orderBox.place();
-        event.getWhoClicked().sendMessage(Component.text("注文箱を" + locationBlockPostoString(event.getWhoClicked().getLocation()) + "で登録しました"));
+        
+        CleanDishPile cleanDishPile = team.cleanDishPile;
+        cleanDishPile.location = event.getWhoClicked().getLocation();
+        event.getWhoClicked().sendMessage(Component.text("綺麗な皿置場を" + locationBlockPostoString(event.getWhoClicked().getLocation()) + "で登録しました"));
         UIAdminMenu.openUI((Player) event.getWhoClicked());
     }
 }
