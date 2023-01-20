@@ -115,7 +115,8 @@ public class OrderHandler {
         CustomDishModel[] model = CustomDishModel.values();
         for (CustomDishModel customDishModel : model) {
             if (customDishModel.getMaterialOnDish() == candidate) {
-                return new ItemCreator(Material.PAPER).setCustomModelData(customDishModel.getData()).create();
+                return new ItemCreator(Material.PAPER).setName(customDishModel.getName())
+                        .setCustomModelData(customDishModel.getData()).create();
             }
         }
 
@@ -150,7 +151,8 @@ public class OrderHandler {
      * @return
      */
     public static ItemStack getDish() {
-        return new ItemCreator(Material.PAPER).setCustomModelData(CustomDishModel.DISH.getData()).create();
+        return new ItemCreator(Material.PAPER).setName(CustomDishModel.DISH.getName())
+                .setCustomModelData(CustomDishModel.DISH.getData()).create();
     }
 
     /**
@@ -159,7 +161,8 @@ public class OrderHandler {
      * @return
      */
     public static ItemStack getDirtyDish() {
-        return new ItemCreator(Material.PAPER).setCustomModelData(CustomDishModel.DISH_DIRTY.getData()).create();
+        return new ItemCreator(Material.PAPER).setName(CustomDishModel.DISH_DIRTY.getName())
+                .setCustomModelData(CustomDishModel.DISH_DIRTY.getData()).create();
     }
 
     /**

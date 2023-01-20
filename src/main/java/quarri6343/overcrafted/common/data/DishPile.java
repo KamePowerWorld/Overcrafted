@@ -7,7 +7,6 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
 import quarri6343.overcrafted.Overcrafted;
-import quarri6343.overcrafted.common.data.OCResourcePackData.PiledCleanDishModel;
 import quarri6343.overcrafted.utils.ItemCreator;
 
 import java.util.Collection;
@@ -23,6 +22,8 @@ public class DishPile {
     public Location location = null;
     
     public OCResourcePackData.IDishModel[] iDishModels;
+    
+    private Entity dishPileEntity;
 
     /**
      * 今積みあがっている皿の枚数
@@ -60,6 +61,7 @@ public class DishPile {
         itemFrame.setFixed(true);
         itemFrame.setVisible(false);
         itemFrame.setItem(new ItemCreator(Material.MUSIC_DISC_PIGSTEP).setCustomModelData(modelData).create());//placeholder
+        dishPileEntity = itemFrame;
     }
 
     /**
@@ -121,5 +123,9 @@ public class DishPile {
         place();
 
         return true;
+    }
+    
+    public Entity getDishPileEntity(){
+        return dishPileEntity;
     }
 }

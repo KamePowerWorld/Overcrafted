@@ -1,6 +1,8 @@
 package quarri6343.overcrafted.common.data;
 
 import net.kyori.adventure.key.Key;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 
 public class OCResourcePackData {
@@ -48,26 +50,32 @@ public class OCResourcePackData {
     }
 
     /**
-     * リソースパックで設定されたカスタムの皿(Materialはpaper)と皿に載っているアイテムとcustomModelDataとの対応表
+     * リソースパックで設定されたカスタムの皿(Materialはpaper)と皿に載っているアイテムとその名称とcustomModelDataとの対応表
      */
     public enum CustomDishModel {
-        DISH(null, 1),
-        DISH_DIRTY(null, 2),
-        DISH_FURNACE(Material.FURNACE, 3),
-        DISH_IRON_INGOT(Material.IRON_INGOT, 4),
-        DISH_MINECART(Material.MINECART, 5),
-        DISH_TORCH(Material.TORCH, 6);
+        DISH(null, Component.text("皿").decoration(TextDecoration.ITALIC, false), 1),
+        DISH_DIRTY(null,Component.text("汚い皿").decoration(TextDecoration.ITALIC, false), 2),
+        DISH_FURNACE(Material.FURNACE,Component.text("かまどの載った皿").decoration(TextDecoration.ITALIC, false), 3),
+        DISH_IRON_INGOT(Material.IRON_INGOT,Component.text("鉄インゴットの載った皿").decoration(TextDecoration.ITALIC, false), 4),
+        DISH_MINECART(Material.MINECART,Component.text("トロッコが載った皿").decoration(TextDecoration.ITALIC, false), 5),
+        DISH_TORCH(Material.TORCH,Component.text("松明が載った皿").decoration(TextDecoration.ITALIC, false), 6);
 
         private final Material materialOnDish;
+        private final Component name;
         private final int data;
 
-        CustomDishModel(Material material, int data){
+        CustomDishModel(Material material,Component name, int data){
             this.materialOnDish = material;
+            this.name = name;
             this.data = data;
         }
 
         public Material getMaterialOnDish() {
             return materialOnDish;
+        }
+        
+        public Component getName(){
+            return name;
         }
         
         public int getData(){

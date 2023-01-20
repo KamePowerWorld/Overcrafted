@@ -1,7 +1,6 @@
 package quarri6343.overcrafted.common.data;
 
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.common.data.OCResourcePackData.MenuFont;
 
 /**

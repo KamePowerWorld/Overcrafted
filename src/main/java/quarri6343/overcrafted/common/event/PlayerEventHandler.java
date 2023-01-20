@@ -2,6 +2,7 @@ package quarri6343.overcrafted.common.event;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -15,6 +16,7 @@ import quarri6343.overcrafted.common.data.OCResourcePackData;
 import quarri6343.overcrafted.common.data.OCTeam;
 import quarri6343.overcrafted.common.data.DishPile;
 import quarri6343.overcrafted.common.logic.OCLogic;
+import quarri6343.overcrafted.common.order.OrderHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -246,5 +248,35 @@ public class PlayerEventHandler implements Listener {
     @org.bukkit.event.EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         GlobalTeamHandler.removePlayerFromTeam(event.getPlayer(), true);
+    }
+
+    @org.bukkit.event.EventHandler
+    public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
+        tryPickUpDish(event);
+    }
+    
+    private void tryPickUpDish(PlayerInteractEntityEvent event){
+        if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE
+                || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
+            return;
+        
+        if(event.getPlayer().getItemInHand().getType() != Material.AIR)
+            return;
+
+        OCTeam team = getData().teams.getTeambyPlayer(event.getPlayer());
+        if (team == null)
+            return;
+        
+        if(event.getRightClicked() == team.cleanDishPile.getDishPileEntity()){
+            event.setCancelled(true);
+            if(team.cleanDishPile.removeDish())
+                event.getPlayer().setItemInHand(OrderHandler.getDish());
+        }
+
+        if(event.getRightClicked() == team.dirtyDishPile.getDishPileEntity()){
+            event.setCancelled(true);
+            if(team.dirtyDishPile.removeDish())
+                event.getPlayer().setItemInHand(OrderHandler.getDirtyDish());
+        }
     }
 }

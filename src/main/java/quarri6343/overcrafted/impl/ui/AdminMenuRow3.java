@@ -31,7 +31,6 @@ public class AdminMenuRow3 {
     }
 
     public static void addElements(PaginatedGui gui, Player player) {
-
         ItemStack placeCleanDishPileItem = new ItemCreator(OrderHandler.getDish()).setName(Component.text("チーム" + getData().adminSelectedTeam + "の綺麗な皿置場座標を設定")
                         .color(NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false))
                 .addLore(getCleanDishPileLocationStats()).create();
