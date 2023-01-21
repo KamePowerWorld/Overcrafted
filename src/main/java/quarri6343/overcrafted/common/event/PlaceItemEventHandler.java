@@ -11,10 +11,10 @@ import quarri6343.overcrafted.common.logic.OCLogic;
 import quarri6343.overcrafted.common.order.OrderHandler;
 
 public class PlaceItemEventHandler implements IPlayerInteractEventHandler {
-    
+
     private static final Material blockCanPlaceItem = Material.DARK_OAK_PLANKS;
-    
-    public PlaceItemEventHandler(){
+
+    public PlaceItemEventHandler() {
         Overcrafted.getInstance().getPlayerEventHandler().registerHandler(this);
     }
 
@@ -28,46 +28,45 @@ public class PlaceItemEventHandler implements IPlayerInteractEventHandler {
 
     @Override
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if(event.isCancelled())
+        if (event.isCancelled())
             return;
 
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE)
             return;
 
-        if(event.getClickedBlock() == null || event.getClickedBlock().getType() != blockCanPlaceItem)
+        if (event.getClickedBlock() == null || event.getClickedBlock().getType() != blockCanPlaceItem)
             return;
-        
+
         OCTeam team = getData().teams.getTeambyPlayer(event.getPlayer());
         if (team == null) {
             return;
         }
 
         event.setCancelled(true);
-        
-        if(event.getItem() != null){
-            if(event.getItem().getType() == OCData.invalidItem.getType())
+
+        if (event.getItem() != null) {
+            if (event.getItem().getType() == OCData.invalidItem.getType())
                 return;
-            
-            if(OrderHandler.isDish(event.getItem())){
+
+            if (OrderHandler.isDish(event.getItem())) {
                 ItemStack itemOnBlock = PlaceItemHandler.getItem(event.getClickedBlock());
-                if(itemOnBlock != null){
+                if (itemOnBlock != null) {
                     ItemStack newDish = OrderHandler.tryEncodeOrderOnDish(itemOnBlock.getType());
-                    if(newDish != null){
+                    if (newDish != null) {
                         PlaceItemHandler.pickUpItem(event.getClickedBlock());
                         event.getPlayer().setItemInHand(newDish);
                     }
-                    
+
                     return;
                 }
             }
-            
-            if(PlaceItemHandler.placeItem(event.getClickedBlock(), event.getItem())){
+
+            if (PlaceItemHandler.placeItem(event.getClickedBlock(), event.getItem())) {
                 event.getPlayer().setItemInHand(null);
             }
-        }
-        else{
+        } else {
             ItemStack itemStack = PlaceItemHandler.pickUpItem(event.getClickedBlock());
-            if(itemStack != null)
+            if (itemStack != null)
                 event.getPlayer().setItemInHand(itemStack);
         }
     }

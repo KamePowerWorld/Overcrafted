@@ -9,8 +9,8 @@ import quarri6343.overcrafted.common.logic.OCLogic;
 import quarri6343.overcrafted.impl.ui.UISupplyMenu;
 
 public class SupplierInteractEventHandler implements IPlayerInteractEventHandler {
-    
-    public SupplierInteractEventHandler(){
+
+    public SupplierInteractEventHandler() {
         Overcrafted.getInstance().getPlayerEventHandler().registerHandler(this);
     }
 
@@ -24,7 +24,7 @@ public class SupplierInteractEventHandler implements IPlayerInteractEventHandler
 
     @Override
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if(event.isCancelled())
+        if (event.isCancelled())
             return;
 
         if (event.getClickedBlock() == null || !event.getClickedBlock().getType().equals(Material.OBSERVER))
@@ -39,7 +39,7 @@ public class SupplierInteractEventHandler implements IPlayerInteractEventHandler
 
         event.setCancelled(true);
 
-        if(!event.getAction().isRightClick()){
+        if (!event.getAction().isRightClick()) {
             return;
         }
 

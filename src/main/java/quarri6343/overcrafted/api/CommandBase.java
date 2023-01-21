@@ -75,10 +75,11 @@ public abstract class CommandBase extends BukkitCommand implements CommandExecut
 
     /**
      * 引数からコマンドを作製する
-     * @param command コマンド名
+     *
+     * @param command      コマンド名
      * @param minArguments 要求する最小の引数の数
      * @param maxArguments 要求する最大の引数の数
-     * @param playerOnly プレイヤーだけが実行できるか
+     * @param playerOnly   プレイヤーだけが実行できるか
      */
     @ParametersAreNonnullByDefault
     public CommandBase(String command, int minArguments, int maxArguments, boolean playerOnly) {
@@ -91,13 +92,14 @@ public abstract class CommandBase extends BukkitCommand implements CommandExecut
 
         CommandMap commandMap = OvercraftedUtils.getCommandMap();
         if (commandMap != null) {
-            if(!commandMap.register(command, "Overcrafted", this))
+            if (!commandMap.register(command, "Overcrafted", this))
                 commandMap.getKnownCommands().replace(command, this);
         }
     }
 
     /**
      * コマンドのクールダウンを有効にする
+     *
      * @param delay クールダウンの秒数
      * @return クールダウンが追加されたコマンド
      */
@@ -109,6 +111,7 @@ public abstract class CommandBase extends BukkitCommand implements CommandExecut
 
     /**
      * プレイヤーをクールダウンから解放する
+     *
      * @param player 解放したいプレイヤー
      */
     @ParametersAreNonnullByDefault
@@ -118,6 +121,7 @@ public abstract class CommandBase extends BukkitCommand implements CommandExecut
 
     /**
      * コマンド使用者にこのコマンドの仕様について送る
+     *
      * @param sender コマンドの使用者
      */
     @ParametersAreNonnullByDefault
@@ -127,8 +131,9 @@ public abstract class CommandBase extends BukkitCommand implements CommandExecut
 
     /**
      * コマンドが適切な条件の下にあるか確認してから実行する
-     * @param sender コマンドの実行者
-     * @param alias コマンドの別名
+     *
+     * @param sender    コマンドの実行者
+     * @param alias     コマンドの別名
      * @param arguments コマンドの引数リスト
      * @return 常にtrue
      */
@@ -138,28 +143,28 @@ public abstract class CommandBase extends BukkitCommand implements CommandExecut
             return true;
         }
 
-        if(playerOnly && !(sender instanceof Player)){
+        if (playerOnly && !(sender instanceof Player)) {
             sender.sendMessage(Component.text("The sender must be player.").color(NamedTextColor.RED));
             return true;
         }
 
-        if(!testPermission(sender))
+        if (!testPermission(sender))
             return true;
 
-        if(delayedPlayers != null && sender instanceof Player){
+        if (delayedPlayers != null && sender instanceof Player) {
             Player player = (Player) sender;
-            if(delayedPlayers.contains(player.getName())){
+            if (delayedPlayers.contains(player.getName())) {
                 player.sendMessage(Component.text("Please wait before using this command again.").color(NamedTextColor.RED));
                 return true;
             }
 
             delayedPlayers.add(player.getName());
-            Bukkit.getScheduler().scheduleSyncDelayedTask(Overcrafted.getInstance(), ()->{
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Overcrafted.getInstance(), () -> {
                 delayedPlayers.remove(player.getName());
             }, 20L * delay);
         }
 
-        if(!onCommand(sender, arguments)){
+        if (!onCommand(sender, arguments)) {
             sendUsage(sender);
         }
 
@@ -167,7 +172,7 @@ public abstract class CommandBase extends BukkitCommand implements CommandExecut
     }
 
     @ParametersAreNonnullByDefault
-    public boolean onCommand(CommandSender sender, Command command, String alias, @Nullable String [] arguments){
+    public boolean onCommand(CommandSender sender, Command command, String alias, @Nullable String[] arguments) {
         this.onCommand(sender, arguments);
         return true;
     }
@@ -175,10 +180,10 @@ public abstract class CommandBase extends BukkitCommand implements CommandExecut
     /**
      * コマンドが実行された時の挙動をここに定義する
      *
-     * @param sender コマンドの実行者
+     * @param sender    コマンドの実行者
      * @param arguments コマンドの引数
      * @return falseを返すことでコマンドの使用方法をプレイヤーに周知できる
      */
     @ParametersAreNonnullByDefault
-    public abstract boolean onCommand(CommandSender sender, @Nullable String [] arguments);
+    public abstract boolean onCommand(CommandSender sender, @Nullable String[] arguments);
 }

@@ -9,13 +9,12 @@ import quarri6343.overcrafted.impl.ui.UIAdminMenu;
 
 /**
  * 手持ちの管理メニューを識別してそれに応じたイベントを起こす
- *
  */
 public class AdminMenuInteractEventHandler implements IPlayerInteractEventHandler {
-    
+
     public static final Component menuItemName = Component.text("Overcrafted管理メニュー");
-    
-    public AdminMenuInteractEventHandler(){
+
+    public AdminMenuInteractEventHandler() {
         Overcrafted.getInstance().getPlayerEventHandler().registerHandler(this);
     }
 

@@ -6,7 +6,7 @@ import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 
 public class OCResourcePackData {
-    
+
     /**
      * リソースパックのurl
      */
@@ -26,24 +26,24 @@ public class OCResourcePackData {
      * menuFontのリソースパック上での名前
      */
     public static final Key menuFontName = Key.key("menu");
-    
+
     /**
      * リソースパックのmenuFontのカスタムアイコン名とunicodeの対応表
      */
-    public enum MenuFont{
+    public enum MenuFont {
         SPACE(" "),
         TORCH("\uE000"),
         FURNACE("\uE001"),
         IRON("\uE002"),
         MINECART("\uE003"),
         BONUS("\uE004");
-        
+
         private final String _char;
-        
-        MenuFont(String _char){
+
+        MenuFont(String _char) {
             this._char = _char;
         }
-        
+
         public String get_char() {
             return _char;
         }
@@ -54,17 +54,17 @@ public class OCResourcePackData {
      */
     public enum CustomDishModel {
         DISH(null, Component.text("皿").decoration(TextDecoration.ITALIC, false), 1),
-        DISH_DIRTY(null,Component.text("汚い皿").decoration(TextDecoration.ITALIC, false), 2),
-        DISH_FURNACE(Material.FURNACE,Component.text("かまどの載った皿").decoration(TextDecoration.ITALIC, false), 3),
-        DISH_IRON_INGOT(Material.IRON_INGOT,Component.text("鉄インゴットの載った皿").decoration(TextDecoration.ITALIC, false), 4),
-        DISH_MINECART(Material.MINECART,Component.text("トロッコが載った皿").decoration(TextDecoration.ITALIC, false), 5),
-        DISH_TORCH(Material.TORCH,Component.text("松明が載った皿").decoration(TextDecoration.ITALIC, false), 6);
+        DISH_DIRTY(null, Component.text("汚い皿").decoration(TextDecoration.ITALIC, false), 2),
+        DISH_FURNACE(Material.FURNACE, Component.text("かまどの載った皿").decoration(TextDecoration.ITALIC, false), 3),
+        DISH_IRON_INGOT(Material.IRON_INGOT, Component.text("鉄インゴットの載った皿").decoration(TextDecoration.ITALIC, false), 4),
+        DISH_MINECART(Material.MINECART, Component.text("トロッコが載った皿").decoration(TextDecoration.ITALIC, false), 5),
+        DISH_TORCH(Material.TORCH, Component.text("松明が載った皿").decoration(TextDecoration.ITALIC, false), 6);
 
         private final Material materialOnDish;
         private final Component name;
         private final int data;
 
-        CustomDishModel(Material material,Component name, int data){
+        CustomDishModel(Material material, Component name, int data) {
             this.materialOnDish = material;
             this.name = name;
             this.data = data;
@@ -73,18 +73,19 @@ public class OCResourcePackData {
         public Material getMaterialOnDish() {
             return materialOnDish;
         }
-        
-        public Component getName(){
+
+        public Component getName() {
             return name;
         }
-        
-        public int getData(){
+
+        public int getData() {
             return data;
         }
     }
 
-    public interface IDishModel{
+    public interface IDishModel {
         public int getStackedNumber();
+
         public int getData();
     }
 
@@ -101,7 +102,7 @@ public class OCResourcePackData {
         private final int stackedNumber;
         private final int data;
 
-        PiledCleanDishModel(int stackedNumber, int data){
+        PiledCleanDishModel(int stackedNumber, int data) {
             this.stackedNumber = stackedNumber;
             this.data = data;
         }
@@ -110,7 +111,7 @@ public class OCResourcePackData {
             return stackedNumber;
         }
 
-        public int getData(){
+        public int getData() {
             return data;
         }
     }
@@ -128,7 +129,7 @@ public class OCResourcePackData {
         private final int stackedNumber;
         private final int data;
 
-        PiledDirtyDishModel(int stackedNumber, int data){
+        PiledDirtyDishModel(int stackedNumber, int data) {
             this.stackedNumber = stackedNumber;
             this.data = data;
         }
@@ -137,7 +138,7 @@ public class OCResourcePackData {
             return stackedNumber;
         }
 
-        public int getData(){
+        public int getData() {
             return data;
         }
     }

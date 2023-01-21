@@ -32,20 +32,20 @@ public class CommandForceLeave extends CommandBase {
     private static OCLogic getLogic() {
         return Overcrafted.getInstance().getLogic();
     }
-    
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @Nullable String[] arguments) {
-        if (getLogic().gameStatus != OCLogic.GameStatus.ACTIVE){
+        if (getLogic().gameStatus != OCLogic.GameStatus.ACTIVE) {
             sender.sendMessage("このコマンドはゲーム中にしか実行できません");
             return true;
         }
-        
+
         Player player = Bukkit.getPlayer(arguments[0]);
         if (player == null) {
             sender.sendMessage("その名前のプレイヤーは存在しません");
             return true;
         }
-        
+
         OCTeam team = getData().teams.getTeambyPlayer(player);
         if (team == null) {
             sender.sendMessage(Component.text("プレイヤー" + arguments[0] + "はチームに所属していません").color(NamedTextColor.RED));

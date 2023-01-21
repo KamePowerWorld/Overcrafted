@@ -20,9 +20,9 @@ public class DishPile {
      * 皿置場のワールド内での場所
      */
     public Location location = null;
-    
+
     public OCResourcePackData.IDishModel[] iDishModels;
-    
+
     private Entity dishPileEntity;
 
     /**
@@ -30,10 +30,10 @@ public class DishPile {
      */
     private int dishNumber = 0;
 
-    public DishPile(OCResourcePackData.IDishModel[] dishModels){
+    public DishPile(OCResourcePackData.IDishModel[] dishModels) {
         this.iDishModels = dishModels;
     }
-    
+
     /**
      * 皿置場を設置
      */
@@ -44,7 +44,7 @@ public class DishPile {
         }
 
         destroy();
-        if(dishNumber <= 0){
+        if (dishNumber <= 0) {
             return;
         }
 
@@ -55,7 +55,7 @@ public class DishPile {
                 break;
             }
         }
-        
+
         ItemFrame itemFrame = location.getWorld().spawn(location, ItemFrame.class);
         itemFrame.setFacingDirection(BlockFace.DOWN);
         itemFrame.setFixed(true);
@@ -91,32 +91,34 @@ public class DishPile {
         ItemFrame itemFrame = (ItemFrame) block.getState();
         return itemFrame.isFixed();
     }
-    
-    public void setUp(){
+
+    public void setUp() {
         dishNumber = OCData.maxDishesNumber;
         place();
     }
 
     /**
      * 皿置場に皿を追加する
+     *
      * @return アイテムの追加に成功したかどうか
      */
     public boolean addDish() {
-        if(dishNumber + 1 > OCData.maxDishesNumber)
+        if (dishNumber + 1 > OCData.maxDishesNumber)
             return false;
-        
+
         dishNumber++;
         place();
-        
+
         return true;
     }
 
     /**
      * 皿置場から皿を取り除く
+     *
      * @return
      */
-    public boolean removeDish(){
-        if(dishNumber - 1 < 0)
+    public boolean removeDish() {
+        if (dishNumber - 1 < 0)
             return false;
 
         dishNumber--;
@@ -124,8 +126,8 @@ public class DishPile {
 
         return true;
     }
-    
-    public Entity getDishPileEntity(){
+
+    public Entity getDishPileEntity() {
         return dishPileEntity;
     }
 }

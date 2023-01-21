@@ -7,7 +7,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import quarri6343.overcrafted.api.CommandBase;
 import quarri6343.overcrafted.common.event.AdminMenuInteractEventHandler;
-import quarri6343.overcrafted.common.event.PlayerEventHandler;
 import quarri6343.overcrafted.utils.ItemCreator;
 
 /**

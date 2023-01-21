@@ -1,7 +1,6 @@
 package quarri6343.overcrafted.common;
 
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
@@ -24,12 +23,12 @@ public class PlaceItemHandler {
     public static boolean placeItem(Block block, ItemStack itemStack) {
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE)
             return false;
-        
-        if(placedItemMap.containsKey(block))
+
+        if (placedItemMap.containsKey(block))
             return false;
-        
+
         Location location = block.getLocation();
-        location.add(block.getX() > 0 ? -0.5 : 0.5, 1.1, block.getZ() > 0 ? -0.5 : 0.5);
+        location.add(0.5, 1.1, 0.5);
         Item item = block.getWorld().dropItem(location, itemStack);
         item.teleport(location);
         item.setVelocity(new Vector().zero());
@@ -37,11 +36,11 @@ public class PlaceItemHandler {
         item.setCanMobPickup(false);
 
         placedItemMap.put(block, itemStack);
-        
+
         return true;
     }
-    
-    public static ItemStack getItem(Block block){
+
+    public static ItemStack getItem(Block block) {
         return placedItemMap.get(block);
     }
 
@@ -51,7 +50,7 @@ public class PlaceItemHandler {
             return null;
 
         Location location = block.getLocation();
-        location.add(block.getX() > 0 ? -0.5 : 0.5, 1.1, block.getZ() > 0 ? -0.5 : 0.5);
+        location.add(0.5, 1.1, 0.5);
         location.getNearbyEntities(0.01, 0.01, 0.01).forEach(entity -> {
             if (entity.getType() == EntityType.DROPPED_ITEM) entity.remove();
         });

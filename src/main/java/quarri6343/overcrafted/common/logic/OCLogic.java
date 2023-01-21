@@ -11,10 +11,10 @@ import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import quarri6343.overcrafted.Overcrafted;
-import quarri6343.overcrafted.common.order.OrderHandler;
 import quarri6343.overcrafted.common.GlobalTeamHandler;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCTeam;
+import quarri6343.overcrafted.common.order.OrderHandler;
 
 import java.util.List;
 
@@ -32,10 +32,10 @@ public class OCLogic {
     private BukkitTask gameRunnable;
     private BukkitTask gameEndRunnable;
 
-    public OCLogic(){
-        gameInactiveRunnable = new GameInactiveRunnable().runTaskTimer(Overcrafted.getInstance(), 0 ,1);
+    public OCLogic() {
+        gameInactiveRunnable = new GameInactiveRunnable().runTaskTimer(Overcrafted.getInstance(), 0, 1);
     }
-    
+
     /**
      * ゲームを開始する
      *
@@ -46,11 +46,11 @@ public class OCLogic {
             gameMaster.sendMessage("ゲームが進行中です！");
             return;
         }
-        
-        if(!GlobalTeamHandler.areTeamsValid(gameMaster))
+
+        if (!GlobalTeamHandler.areTeamsValid(gameMaster))
             return;
 
-        if(gameInactiveRunnable != null)
+        if (gameInactiveRunnable != null)
             gameInactiveRunnable.cancel();
         gameWorld = gameMaster.getWorld();
         gameStatus = GameStatus.BEGINNING;
@@ -69,12 +69,12 @@ public class OCLogic {
             for (int j = 0; j < team.getPlayersSize(); j++) {
                 team.setUpGameEnvforPlayer(team.getPlayer(j));
             }
-            
+
             team.cleanDishPile.setUp();
         }
         Bukkit.getOnlinePlayers().forEach(player -> player.showTitle(Title.title(Component.text("ゲームスタート"), Component.empty())));
         OrderHandler.generateRandomOrders();
-        
+
         gameStatus = GameStatus.ACTIVE;
         gameRunnable = new GameRunnable(urTeam -> endGame(null, urTeam, GameResult.SUCCESS, true)).runTaskTimer(Overcrafted.getInstance(), 0, 1);
     }
@@ -114,8 +114,8 @@ public class OCLogic {
         if (hasResultScene)
             gameEndRunnable = new GameEndRunnable(() -> {
                 gameStatus = GameStatus.INACTIVE;
-                gameInactiveRunnable = new GameInactiveRunnable().runTaskTimer(Overcrafted.getInstance(), 0 ,1);
-                }, true)
+                gameInactiveRunnable = new GameInactiveRunnable().runTaskTimer(Overcrafted.getInstance(), 0, 1);
+            }, true)
                     .runTaskTimer(Overcrafted.getInstance(), gameResultSceneLength, 1);
         else
             new GameEndRunnable(() -> gameStatus = GameStatus.INACTIVE, false).run();

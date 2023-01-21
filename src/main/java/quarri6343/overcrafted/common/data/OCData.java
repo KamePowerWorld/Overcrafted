@@ -9,7 +9,7 @@ import quarri6343.overcrafted.utils.ItemCreator;
  * 必要なデータを全て保存するクラス
  */
 public class OCData {
-    
+
     /**
      * ゲーム管理者が現在選択しているクラスの名前
      */
@@ -19,7 +19,7 @@ public class OCData {
      * ゲーム開始前に自動的にプレイヤーをチームに割り当てる周期(tick)
      */
     public static final int assignTeamLength = 20;
-    
+
     /**
      * ゲームが始まるまでのカウントダウンの長さ(tick)
      */
@@ -54,7 +54,7 @@ public class OCData {
      * プレイヤーが投げたアイテムを他のプレイヤーが拾えるまでの時間(tick)
      */
     public static final int thrownItemsPickupDelay = 20;
-    
+
     /**
      * インベントリを埋める無効アイテム
      */

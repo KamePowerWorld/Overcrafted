@@ -9,17 +9,17 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
-import quarri6343.overcrafted.common.order.OrderHandler;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
+import quarri6343.overcrafted.common.order.OrderHandler;
 
 /**
  * 手持ちの皿を識別してそれに応じたイベントを起こす
  */
 public class DishInteractEventHandler implements IPlayerInteractEventHandler {
-    
-    public DishInteractEventHandler(){
+
+    public DishInteractEventHandler() {
         Overcrafted.getInstance().getPlayerEventHandler().registerHandler(this);
     }
 
@@ -33,9 +33,9 @@ public class DishInteractEventHandler implements IPlayerInteractEventHandler {
 
     @Override
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if(event.isCancelled())
+        if (event.isCancelled())
             return;
-        
+
         if (!(event.getItem() != null && OrderHandler.isDish(event.getItem())))
             return;
 
@@ -75,11 +75,10 @@ public class DishInteractEventHandler implements IPlayerInteractEventHandler {
     private void trySubmitOrder(PlayerInteractEvent event, OCTeam team) {
         Material material = OrderHandler.decodeOrder(event.getItem());
         if (event.getClickedBlock() != null && event.getClickedBlock().getType() == Material.RED_BED) {
-            if(OrderHandler.trySatisfyOrder(team, material)){
+            if (OrderHandler.trySatisfyOrder(team, material)) {
                 event.getPlayer().setItemInHand(null);
                 team.dirtyDishPile.addDish();
-            }
-            else{
+            } else {
                 event.getPlayer().sendMessage(Component.text("皿に載っているアイテムは誰も注文していないようだ..."));
             }
         } else {
@@ -96,11 +95,11 @@ public class DishInteractEventHandler implements IPlayerInteractEventHandler {
         if (event.getClickedBlock() != null && event.getClickedBlock().getState() instanceof Container) {
             Inventory inventory = ((Container) event.getClickedBlock().getState()).getInventory();
             for (int i = 0; i < inventory.getSize(); i++) {
-                if(inventory.getItem(i) == null)
+                if (inventory.getItem(i) == null)
                     continue;
-                
+
                 ItemStack newDish = OrderHandler.tryEncodeOrderOnDish(inventory.getItem(i).getType());
-                if(newDish != null){
+                if (newDish != null) {
                     inventory.setItem(i, null);
                     event.getPlayer().setItemInHand(newDish);
                 }
@@ -138,7 +137,7 @@ public class DishInteractEventHandler implements IPlayerInteractEventHandler {
 
         event.getPlayer().setItemInHand(null);
         team.cleanDishPile.addDish();
-        
+
         event.getClickedBlock().getState().update();
     }
 }

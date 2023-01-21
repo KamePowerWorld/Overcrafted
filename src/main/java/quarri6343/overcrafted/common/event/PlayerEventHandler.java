@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class PlayerEventHandler implements Listener {
-    
+
     private final List<IPlayerInteractEventHandler> playerInteractEventHandlers = new ArrayList<>();
 
     public PlayerEventHandler() {
@@ -42,22 +42,24 @@ public class PlayerEventHandler implements Listener {
 
     /**
      * プレイヤーにリソースパックをダウンロードさせる
+     *
      * @param event
      */
-    private void setResourcePack(PlayerJoinEvent event){
-        if(OCResourcePackData.packHash != null){
+    private void setResourcePack(PlayerJoinEvent event) {
+        if (OCResourcePackData.packHash != null) {
             event.getPlayer().setResourcePack(OCResourcePackData.packURL, OCResourcePackData.packHash, true, Component.text("リソースパックを適用しないと遊べません"));
         }
     }
-    
+
     /**
      * playerInteractが発生した時に呼び出されたいハンドラを登録する
+     *
      * @param playerInteractEventHandler
      */
-    public void registerHandler(IPlayerInteractEventHandler playerInteractEventHandler){
+    public void registerHandler(IPlayerInteractEventHandler playerInteractEventHandler) {
         playerInteractEventHandlers.add(playerInteractEventHandler);
     }
-    
+
     @org.bukkit.event.EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         processHandheldItem(event);
@@ -118,11 +120,11 @@ public class PlayerEventHandler implements Listener {
     private void removeInvalidItem(PlayerDeathEvent event) {
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE)
             return;
-        
+
         OCTeam team = getData().teams.getTeambyPlayer(event.getPlayer());
         if (team == null)
             return;
-        
+
         event.getDrops().removeIf(itemStack -> itemStack.getType().equals(OCData.invalidItem.getType()));
     }
 
@@ -143,7 +145,7 @@ public class PlayerEventHandler implements Listener {
         OCTeam team = getData().teams.getTeambyPlayer(event.getPlayer());
         if (team == null)
             return;
-        
+
         team.setUpGameEnvforPlayer(event.getPlayer());
     }
 
@@ -155,10 +157,11 @@ public class PlayerEventHandler implements Listener {
 
     /**
      * 原料ではないアイテムのドロップを阻止する
+     *
      * @param event
      */
-    private void blockInvalidItemDrop(PlayerDropItemEvent event){
-        if(event.isCancelled())
+    private void blockInvalidItemDrop(PlayerDropItemEvent event) {
+        if (event.isCancelled())
             return;
 
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE
@@ -168,20 +171,20 @@ public class PlayerEventHandler implements Listener {
         OCTeam team = getData().teams.getTeambyPlayer(event.getPlayer());
         if (team == null)
             return;
-        
-        if(event.getItemDrop().getItemStack().getType() == Material.STICK 
+
+        if (event.getItemDrop().getItemStack().getType() == Material.STICK
                 && Objects.equals(event.getItemDrop().getItemStack().getItemMeta().displayName(), AdminMenuInteractEventHandler.menuItemName))
             return;
 
         Supply[] supplies = Supply.values();
         for (Supply supply : supplies) {
-            if(event.getItemDrop().getItemStack().getType() == supply.getItemStack().getType())
+            if (event.getItemDrop().getItemStack().getType() == supply.getItemStack().getType())
                 return;
         }
-        
+
         event.setCancelled(true);
 
-        if (event.getItemDrop().getItemStack().getType() != OCData.invalidItem.getType()){
+        if (event.getItemDrop().getItemStack().getType() != OCData.invalidItem.getType()) {
             event.getPlayer().sendMessage("原料でないアイテムは捨てられません");
         }
     }
@@ -189,12 +192,13 @@ public class PlayerEventHandler implements Listener {
     /**
      * スニークしていない時アイテムを投げる
      * https://github.com/KamePowerWorld/ThrowItemPluginからの流用
+     *
      * @param event
      */
-    private void throwItems(PlayerDropItemEvent event){
-        if(event.isCancelled())
+    private void throwItems(PlayerDropItemEvent event) {
+        if (event.isCancelled())
             return;
-        
+
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE
                 || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
             return;
@@ -202,7 +206,7 @@ public class PlayerEventHandler implements Listener {
         OCTeam team = getData().teams.getTeambyPlayer(event.getPlayer());
         if (team == null)
             return;
-        
+
         if (!event.getPlayer().isSneaking()) {
             Location pLoc = event.getPlayer().getEyeLocation();
             event.getItemDrop().setVelocity(pLoc.getDirection());
@@ -218,7 +222,7 @@ public class PlayerEventHandler implements Listener {
     /**
      * プレイヤーがアイテムを1個より多く持たないように拾う量を調整する
      */
-    private void blockPickingUpExcessiveItems(PlayerAttemptPickupItemEvent event){
+    private void blockPickingUpExcessiveItems(PlayerAttemptPickupItemEvent event) {
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE
                 || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
             return;
@@ -226,12 +230,11 @@ public class PlayerEventHandler implements Listener {
         OCTeam team = getData().teams.getTeambyPlayer(event.getPlayer());
         if (team == null)
             return;
-        
-        if(event.getPlayer().getInventory().getItem(0) != null){
+
+        if (event.getPlayer().getInventory().getItem(0) != null) {
             event.setCancelled(true);
             return;
-        }
-        else if(event.getItem().getItemStack().getAmount() > 1){
+        } else if (event.getItem().getItemStack().getAmount() > 1) {
             ItemStack itemOnGround = event.getItem().getItemStack();
             itemOnGround.setAmount(itemOnGround.getAmount() - 1);
             event.getItem().setItemStack(itemOnGround);
@@ -249,12 +252,12 @@ public class PlayerEventHandler implements Listener {
     /**
      * ゲーム中メインハンドとオフハンドを入れ替えることを禁止する
      */
-    private void blockSwapHandItem(PlayerSwapHandItemsEvent event){
-        if(getLogic().gameStatus != OCLogic.GameStatus.INACTIVE){
+    private void blockSwapHandItem(PlayerSwapHandItemsEvent event) {
+        if (getLogic().gameStatus != OCLogic.GameStatus.INACTIVE) {
             event.setCancelled(true);
         }
     }
-    
+
     @org.bukkit.event.EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         GlobalTeamHandler.removePlayerFromTeam(event.getPlayer(), true);
@@ -264,28 +267,28 @@ public class PlayerEventHandler implements Listener {
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
         tryPickUpDish(event);
     }
-    
-    private void tryPickUpDish(PlayerInteractEntityEvent event){
+
+    private void tryPickUpDish(PlayerInteractEntityEvent event) {
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE
                 || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
             return;
-        
-        if(event.getPlayer().getItemInHand().getType() != Material.AIR)
+
+        if (event.getPlayer().getItemInHand().getType() != Material.AIR)
             return;
 
         OCTeam team = getData().teams.getTeambyPlayer(event.getPlayer());
         if (team == null)
             return;
-        
-        if(event.getRightClicked() == team.cleanDishPile.getDishPileEntity()){
+
+        if (event.getRightClicked() == team.cleanDishPile.getDishPileEntity()) {
             event.setCancelled(true);
-            if(team.cleanDishPile.removeDish())
+            if (team.cleanDishPile.removeDish())
                 event.getPlayer().setItemInHand(OrderHandler.getDish());
         }
 
-        if(event.getRightClicked() == team.dirtyDishPile.getDishPileEntity()){
+        if (event.getRightClicked() == team.dirtyDishPile.getDishPileEntity()) {
             event.setCancelled(true);
-            if(team.dirtyDishPile.removeDish())
+            if (team.dirtyDishPile.removeDish())
                 event.getPlayer().setItemInHand(OrderHandler.getDirtyDish());
         }
     }

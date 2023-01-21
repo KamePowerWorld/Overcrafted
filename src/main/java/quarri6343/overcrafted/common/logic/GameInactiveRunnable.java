@@ -20,11 +20,11 @@ import static quarri6343.overcrafted.common.GlobalTeamHandler.removePlayerFromTe
 public class GameInactiveRunnable extends BukkitRunnable {
 
     private int count = 0;
-    
+
     private static OCData getData() {
         return Overcrafted.getInstance().getData();
     }
-    
+
     @Override
     public void run() {
         if (count % OCData.assignTeamLength == 0) {
@@ -37,7 +37,7 @@ public class GameInactiveRunnable extends BukkitRunnable {
      */
     private void assignOrUnAssignPlayersToTeam() {
         List<Player> assignedPlayers = new ArrayList<>();
-                
+
         for (int i = 0; i < getData().teams.getTeamsLength(); i++) {
             OCTeam team = getData().teams.getTeam(i);
 
@@ -45,9 +45,9 @@ public class GameInactiveRunnable extends BukkitRunnable {
                 continue;
 
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                if(assignedPlayers.contains(onlinePlayer))
+                if (assignedPlayers.contains(onlinePlayer))
                     continue;
-                
+
                 if (OvercraftedUtils.isPlayerInArea(onlinePlayer, team.joinLocation1, team.joinLocation2)) {
                     addPlayerToTeam(onlinePlayer, team);
                     assignedPlayers.add(onlinePlayer);
@@ -56,7 +56,7 @@ public class GameInactiveRunnable extends BukkitRunnable {
         }
 
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-            if(!assignedPlayers.contains(onlinePlayer)){
+            if (!assignedPlayers.contains(onlinePlayer)) {
                 removePlayerFromTeam(onlinePlayer, false);
             }
         }

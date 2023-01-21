@@ -83,7 +83,7 @@ public class InventoryEventHandler implements Listener {
             event.setCancelled(true);
             return;
         }
-        
+
         if (event.getClick().equals(ClickType.NUMBER_KEY)) {
             blockNumberKeyClick(event);
         } else if (event.getClick().equals(ClickType.SHIFT_LEFT) || event.getClick().equals(ClickType.SHIFT_RIGHT)) {
@@ -93,10 +93,10 @@ public class InventoryEventHandler implements Listener {
         } else {
             blockPlayerInventoryClick(event);
         }
-        
+
     }
-    
-    private void blockNumberKeyClick(InventoryClickEvent event){
+
+    private void blockNumberKeyClick(InventoryClickEvent event) {
         ItemStack slotItem = event.getView().getTopInventory().getItem(event.getHotbarButton());
         if ((slotItem == null || slotItem.getType() == Material.AIR)) {
             return;
@@ -105,15 +105,15 @@ public class InventoryEventHandler implements Listener {
         if (slotItem.getAmount() > 1)
             event.setCancelled(true);
     }
-    
-    private void blockShiftKeyClick(InventoryClickEvent event){
+
+    private void blockShiftKeyClick(InventoryClickEvent event) {
         ItemStack currentItem = event.getCurrentItem();
         if (currentItem == null || currentItem.getType() == Material.AIR) {
             return;
         }
 
         if (currentItem.getAmount() > 1) {
-            if(event.getClickedInventory().getType() == InventoryType.WORKBENCH && event.getSlot() == 0){
+            if (event.getClickedInventory().getType() == InventoryType.WORKBENCH && event.getSlot() == 0) {
                 return;
             }
 
@@ -123,7 +123,7 @@ public class InventoryEventHandler implements Listener {
 
         if (event.getClickedInventory().getType() == InventoryType.PLAYER) {
             int firstEmpty = event.getView().getTopInventory().firstEmpty();
-            if (firstEmpty != -1){
+            if (firstEmpty != -1) {
                 event.setCancelled(true);
                 event.getView().getTopInventory().setItem(firstEmpty, currentItem);
                 event.setCurrentItem(null);
@@ -133,24 +133,23 @@ public class InventoryEventHandler implements Listener {
                 event.setCancelled(true);
         }
     }
-    
-    private void blockTargetInventoryClick(InventoryClickEvent event){
+
+    private void blockTargetInventoryClick(InventoryClickEvent event) {
         ItemStack currentItem = event.getCurrentItem();
         ItemStack cursorItem = event.getCursor();
         if (cursorItem == null || cursorItem.getType() == Material.AIR) {
             if (currentItem != null && currentItem.getAmount() > 1) {
-                if(event.getClickedInventory().getType() == InventoryType.WORKBENCH && event.getSlot() == 0){
+                if (event.getClickedInventory().getType() == InventoryType.WORKBENCH && event.getSlot() == 0) {
                     event.setCancelled(true);
 
                     ItemStack clickedItem = event.getClickedInventory().getItem(0);
-                    if(clickedItem == null || clickedItem.getType() == Material.AIR)
+                    if (clickedItem == null || clickedItem.getType() == Material.AIR)
                         return;
 
-                    if(event.getView().getBottomInventory().firstEmpty() != -1){
-                        try{
+                    if (event.getView().getBottomInventory().firstEmpty() != -1) {
+                        try {
                             event.getView().getBottomInventory().addItem(clickedItem);
-                        }
-                        finally {
+                        } finally {
                             event.getClickedInventory().clear();
                         }
                     }
@@ -169,14 +168,14 @@ public class InventoryEventHandler implements Listener {
             return;
         }
 
-        if(currentItem == null || currentItem.getType() == Material.AIR)
+        if (currentItem == null || currentItem.getType() == Material.AIR)
             return;
 
         if (cursorItem.getType() == currentItem.getType())
             event.setCancelled(true);
     }
-    
-    private void blockPlayerInventoryClick(InventoryClickEvent event){
+
+    private void blockPlayerInventoryClick(InventoryClickEvent event) {
         ItemStack currentItem = event.getCurrentItem();
         ItemStack cursorItem = event.getCursor();
         if (cursorItem == null || cursorItem.getType() == Material.AIR) {
@@ -193,7 +192,7 @@ public class InventoryEventHandler implements Listener {
             return;
         }
 
-        if(currentItem == null || currentItem.getType() == Material.AIR)
+        if (currentItem == null || currentItem.getType() == Material.AIR)
             return;
 
         if (cursorItem.getType() == currentItem.getType())

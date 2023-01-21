@@ -15,9 +15,9 @@ public final class Overcrafted extends JavaPlugin {
 
     private OCData data;
     private OCLogic logic;
-    
+
     private ConfigHandler config;
-    
+
     private PlayerEventHandler playerEventHandler;
 
     /**
@@ -39,12 +39,12 @@ public final class Overcrafted extends JavaPlugin {
         config = new ConfigHandler();
         config.loadConfig();
         logic = new OCLogic();
-        
+
         new CommandOvercrafted();
         new CommandForceJoin();
         new CommandForceLeave();
         new CommandReloadResourcePack();
-        
+
         playerEventHandler = new PlayerEventHandler();
         new InventoryEventHandler();
         new AdminMenuInteractEventHandler();
@@ -69,6 +69,12 @@ public final class Overcrafted extends JavaPlugin {
     public OCData getData() {
         return data;
     }
-    public OCLogic getLogic() {return logic; }
-    public PlayerEventHandler getPlayerEventHandler(){return playerEventHandler;}
+
+    public OCLogic getLogic() {
+        return logic;
+    }
+
+    public PlayerEventHandler getPlayerEventHandler() {
+        return playerEventHandler;
+    }
 }

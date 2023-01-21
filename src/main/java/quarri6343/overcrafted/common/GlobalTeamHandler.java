@@ -77,7 +77,7 @@ public class GlobalTeamHandler {
                     gameMaster.sendMessage("チーム" + team.name + "の綺麗な皿置き場の地点を設定してください");
                     return false;
                 }
-                if(team.dirtyDishPile.location == null) {
+                if (team.dirtyDishPile.location == null) {
                     gameMaster.sendMessage("チーム" + team.name + "の汚い皿置き場の地点を設定してください");
                     return false;
                 }

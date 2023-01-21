@@ -11,23 +11,22 @@ import java.io.OutputStream;
 import java.net.URL;
 
 public class ResourcePackUtil {
-    
+
     public static boolean isResourcePackReloading = false;
-    
-    public static void reloadResourcePack(){
-        new BukkitRunnable(){
+
+    public static void reloadResourcePack() {
+        new BukkitRunnable() {
 
             @Override
             public void run() {
                 isResourcePackReloading = true;
-                
-                try{
+
+                try {
                     downloadFile(OCResourcePackData.packURL, OCResourcePackData.packPath);
-                }
-                catch (IOException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
-                OCResourcePackData.packHash = HashCalculator.getfileHash(OCResourcePackData.packPath,HashCalculator.SHA_1);
+                OCResourcePackData.packHash = HashCalculator.getfileHash(OCResourcePackData.packPath, HashCalculator.SHA_1);
                 isResourcePackReloading = false;
             }
         }.runTaskAsynchronously(Overcrafted.getInstance());
@@ -35,7 +34,8 @@ public class ResourcePackUtil {
 
     /**
      * ファイルをダウンロード
-     * @param link リンク
+     *
+     * @param link      リンク
      * @param directory 場所
      * @throws IOException
      */

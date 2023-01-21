@@ -3,7 +3,6 @@ package quarri6343.overcrafted.common.data;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
-import quarri6343.overcrafted.common.order.OrderHandler;
 
 /**
  * GUIを通じてプレイヤーに無限に供給される素材アイテムの一覧
@@ -20,9 +19,9 @@ public enum Supply {
     private final ItemStack supply;
 
     Supply(ItemStack supply) {
-        if(supply.getAmount() > 1)
+        if (supply.getAmount() > 1)
             Overcrafted.getInstance().getLogger().severe("材料のスタックサイズは1にしてください");
-        
+
         this.supply = supply;
     }
 

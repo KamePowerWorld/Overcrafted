@@ -30,14 +30,14 @@ public class CommandForceJoin extends CommandBase {
     private static OCLogic getLogic() {
         return Overcrafted.getInstance().getLogic();
     }
-    
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @Nullable String[] arguments) {
-        if (getLogic().gameStatus != OCLogic.GameStatus.ACTIVE){
+        if (getLogic().gameStatus != OCLogic.GameStatus.ACTIVE) {
             sender.sendMessage("このコマンドはゲーム中にしか実行できません");
             return true;
         }
-        
+
         if (getData().adminSelectedTeam.isEmpty()) {
             sender.sendMessage("まずGUIで加入させたいチームを選択してください");
             return true;
@@ -62,7 +62,7 @@ public class CommandForceJoin extends CommandBase {
         sender.sendMessage(arguments[0] + "をチーム" + getData().adminSelectedTeam + "に加入させました");
 
         team.setUpGameEnvforPlayer(player);
-        
+
         return true;
     }
 }

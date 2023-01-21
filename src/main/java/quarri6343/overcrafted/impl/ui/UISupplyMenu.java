@@ -15,7 +15,7 @@ import quarri6343.overcrafted.utils.ItemCreator;
  * プレイヤーにアイテムを供給するGUI
  */
 public class UISupplyMenu {
-    
+
     private static OCData getData() {
         return Overcrafted.getInstance().getData();
     }

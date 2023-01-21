@@ -2,9 +2,9 @@ package quarri6343.overcrafted.common.logic;
 
 import org.bukkit.scheduler.BukkitRunnable;
 import quarri6343.overcrafted.Overcrafted;
-import quarri6343.overcrafted.common.order.ScoreBoardHandler;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCTeam;
+import quarri6343.overcrafted.common.order.ScoreBoardHandler;
 
 import java.util.function.Consumer;
 

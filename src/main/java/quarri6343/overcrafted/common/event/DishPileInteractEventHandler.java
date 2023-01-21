@@ -1,6 +1,5 @@
 package quarri6343.overcrafted.common.event;
 
-import net.kyori.adventure.text.Component;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.player.PlayerInteractEvent;
 import quarri6343.overcrafted.Overcrafted;
@@ -14,7 +13,7 @@ import quarri6343.overcrafted.common.order.OrderHandler;
  */
 public class DishPileInteractEventHandler implements IPlayerInteractEventHandler {
 
-    public DishPileInteractEventHandler(){
+    public DishPileInteractEventHandler() {
         Overcrafted.getInstance().getPlayerEventHandler().registerHandler(this);
     }
 
@@ -28,7 +27,7 @@ public class DishPileInteractEventHandler implements IPlayerInteractEventHandler
 
     @Override
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if(event.isCancelled())
+        if (event.isCancelled())
             return;
 
         if (event.getItem() != null)
@@ -36,20 +35,20 @@ public class DishPileInteractEventHandler implements IPlayerInteractEventHandler
 
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE)
             return;
-        
-        if(event.getClickedBlock() == null)
+
+        if (event.getClickedBlock() == null)
             return;
 
         OCTeam team = getData().teams.getTeambyPlayer(event.getPlayer());
         if (team == null) {
             return;
         }
-        
-        if(event.getClickedBlock().getRelative(BlockFace.UP).equals(team.cleanDishPile.location.getBlock())){
-            if(team.cleanDishPile.removeDish())
+
+        if (event.getClickedBlock().getRelative(BlockFace.UP).equals(team.cleanDishPile.location.getBlock())) {
+            if (team.cleanDishPile.removeDish())
                 event.getPlayer().setItemInHand(OrderHandler.getDish());
-        }else if(event.getClickedBlock().getRelative(BlockFace.UP).equals(team.dirtyDishPile.location.getBlock())){
-            if(team.dirtyDishPile.removeDish())
+        } else if (event.getClickedBlock().getRelative(BlockFace.UP).equals(team.dirtyDishPile.location.getBlock())) {
+            if (team.dirtyDishPile.removeDish())
                 event.getPlayer().setItemInHand(OrderHandler.getDirtyDish());
         }
     }

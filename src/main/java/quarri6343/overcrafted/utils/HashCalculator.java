@@ -16,20 +16,31 @@ import java.security.NoSuchAlgorithmException;
 public class HashCalculator {
 
 
-    /** MD2アルゴリズム */
+    /**
+     * MD2アルゴリズム
+     */
     public static final String MD2 = "MD2";
-    /** MD5アルゴリズム */
+    /**
+     * MD5アルゴリズム
+     */
     public static final String MD5 = "MD5";
-    /** SHA-1アルゴリズム */
+    /**
+     * SHA-1アルゴリズム
+     */
     public static final String SHA_1 = "SHA-1";
-    /** SHA-256アルゴリズム */
+    /**
+     * SHA-256アルゴリズム
+     */
     public static final String SHA_256 = "SHA-256";
-    /** SHA-512アルゴリズム */
+    /**
+     * SHA-512アルゴリズム
+     */
     public static final String SHA_512 = "SHA-512";
 
     /**
      * ファイルのハッシュ値（文字列）を返す
-     * @param filePath ファイルパス
+     *
+     * @param filePath      ファイルパス
      * @param algorithmName アルゴリズム
      * @return ハッシュ値（文字列）
      */

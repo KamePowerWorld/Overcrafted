@@ -46,7 +46,7 @@ public class OCTeam {
     public Location getStartLocation() {
         return startLocation;
     }
-    
+
     /**
      * チームに所属しているプレイヤーの環境をゲーム開始に適した状態に変更する
      *
