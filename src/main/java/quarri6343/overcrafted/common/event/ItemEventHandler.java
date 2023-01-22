@@ -35,15 +35,6 @@ public class ItemEventHandler implements Listener, IPlayerInteractEventHandler {
         IOCItem handOCItem = OCItems.toOCItem(handItem);
 
         if (handOCItem != null) {
-            IOCItem offhandOCItem = OCItems.toOCItem(offhandItem);
-            
-            if(e.getItem().equals(offhandItem)){
-                if(offhandOCItem != null){
-                    e.setCancelled(true);
-                }
-                return;
-            }
-
             Action action = e.getAction();
 
             if (action.equals(Action.RIGHT_CLICK_AIR) || action.equals(Action.RIGHT_CLICK_BLOCK)) {

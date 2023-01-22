@@ -15,13 +15,9 @@ import quarri6343.overcrafted.common.data.OCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
 import quarri6343.overcrafted.impl.item.OCItems;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class InteractableOCItem extends OCItem implements IRightClickEventHandler {
-
-    protected List<Material> blockCanPlaceItem = new ArrayList<>();
 
     private static OCData getData() {
         return Overcrafted.getInstance().getData();
@@ -41,7 +37,6 @@ public class InteractableOCItem extends OCItem implements IRightClickEventHandle
      */
     public InteractableOCItem(TextComponent name, Material material, String internalName, int customModelData) {
         super(name, material, internalName, customModelData);
-        blockCanPlaceItem.add(Material.DARK_OAK_PLANKS);
     }
 
     @Override
@@ -56,8 +51,6 @@ public class InteractableOCItem extends OCItem implements IRightClickEventHandle
         if (team == null) {
             return;
         }
-
-        event.setCancelled(true);
 
         if (event.getItem().getType() == OCData.invalidItem.getType())
             return;
@@ -76,6 +69,7 @@ public class InteractableOCItem extends OCItem implements IRightClickEventHandle
                     continue;
                 
                 if(((IProcessedOCItem)ocItems.get()).getIngredient().get().equals(ocItem)){
+                    event.setCancelled(true);
                     event.getPlayer().setItemInHand(ocItems.get().getItemStack());
                 }
             }
@@ -92,13 +86,12 @@ public class InteractableOCItem extends OCItem implements IRightClickEventHandle
                 Pair<OCItems, OCItems> ingredients = ((ICombinedOCItem)ocItem.get()).getIngredients();
                 if((ingredients.left().get().equals(ocItem1) && ingredients.right().get().equals(ocItem2))
                         || (ingredients.left().get().equals(ocItem2) && ingredients.right().get().equals(ocItem1))){
+                    event.setCancelled(true);
                     PlaceItemHandler.pickUpItem(event.getClickedBlock());
                     event.getPlayer().setItemInHand(ocItem.get().getItemStack());
                     return;
                 }
             }
-        } else if(blockCanPlaceItem.contains(event.getClickedBlock().getType()) && PlaceItemHandler.placeItem(event.getClickedBlock(), event.getItem())) {
-            event.getPlayer().setItemInHand(null);
         }
     }
 }

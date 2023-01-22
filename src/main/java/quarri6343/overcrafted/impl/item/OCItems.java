@@ -9,10 +9,7 @@ import quarri6343.overcrafted.api.item.interfaces.IProcessedOCItem.ProcessType;
 import quarri6343.overcrafted.common.data.OCResourcePackData;
 
 import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public enum OCItems {
     WOOD(new SuppliableOCItem(Component.text("原木"), Material.OAK_WOOD, "wood", 0)),
@@ -26,8 +23,8 @@ public enum OCItems {
     STICK(new ProcessedOCItem(Component.text("棒"), Material.STICK, "stick", 0, ProcessType.CRAFTING, PLANK)),
     CHARCOAL(new ProcessedOCItem(Component.text("木炭"), Material.CHARCOAL, "charcoal", 0, ProcessType.SMELTING, WOOD)),
     TORCH(new CombinedOCItem(Component.text("松明"), Material.TORCH, "torch", 0, STICK, CHARCOAL)),
-    DISH(new InteractableOCItem(Component.text("皿"), Material.PAPER, "dish", 1)),
-    DIRTY_DISH(new WashableOCItem(Component.text("汚い皿"), Material.PAPER, "dish", 2)),
+    DIRTY_DISH(new InteractableOCItem(Component.text("汚い皿"), Material.PAPER, "dirty_dish", 2)),
+    DISH(new ProcessedOCItem(Component.text("皿"), Material.PAPER, "dish", 1, ProcessType.WASHING, DIRTY_DISH)),
 
     DISH_STACKED_1(new StackedDish(Component.text("積まれた皿1"), "dish_stacked_1", 1, 1, StackedDish.StackedDishType.CLEAN)),
     DISH_STACKED_2(new StackedDish(Component.text("積まれた皿2"), "dish_stacked_2", 2, 2, StackedDish.StackedDishType.CLEAN)),

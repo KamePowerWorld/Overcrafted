@@ -1,24 +1,22 @@
-package quarri6343.overcrafted.common.event;
+package quarri6343.overcrafted.impl.block;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
 import quarri6343.overcrafted.Overcrafted;
+import quarri6343.overcrafted.api.block.OCBlock;
 import quarri6343.overcrafted.api.item.interfaces.IOCItem;
+import quarri6343.overcrafted.api.item.interfaces.IRightClickEventHandler;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
 import quarri6343.overcrafted.impl.item.OCItems;
 
-/**
- * プレイヤーがゴミ箱に触れた時、手に持っているアイテムを捨てる
- */
-public class TrashCanInteractEventHandler implements IPlayerInteractEventHandler {
-
-    public TrashCanInteractEventHandler() {
-        Overcrafted.getInstance().getPlayerEventHandler().registerHandler(this);
+public class BlockTrashCan extends OCBlock implements IRightClickEventHandler {
+    public BlockTrashCan() {
+        super(Material.DROPPER);
     }
-
+    
     private static OCData getData() {
         return Overcrafted.getInstance().getData();
     }
@@ -28,11 +26,8 @@ public class TrashCanInteractEventHandler implements IPlayerInteractEventHandler
     }
 
     @Override
-    public void onPlayerInteract(PlayerInteractEvent event) {
+    public void onRightClick(PlayerInteractEvent event) {
         if (event.isCancelled())
-            return;
-
-        if (event.getClickedBlock() == null || !event.getClickedBlock().getType().equals(Material.DROPPER))
             return;
 
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE)
@@ -68,7 +63,7 @@ public class TrashCanInteractEventHandler implements IPlayerInteractEventHandler
             }
             return;
         }
-        
+
         if (ocItem.equals(OCItems.DISH.get())) {
             if (team.cleanDishPile.addDish()) {
                 event.getPlayer().setItemInHand(null);

@@ -11,7 +11,8 @@ public interface IProcessedOCItem {
     
     public enum ProcessType{
         CRAFTING(Material.CRAFTING_TABLE),
-        SMELTING(Material.FURNACE);
+        SMELTING(Material.FURNACE),
+        WASHING(Material.WATER_CAULDRON);
         
         private final Material processBlock;
         
