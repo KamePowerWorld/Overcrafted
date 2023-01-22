@@ -1,14 +1,12 @@
 package quarri6343.overcrafted;
 
 import org.bukkit.plugin.java.JavaPlugin;
+import quarri6343.overcrafted.api.item.ItemEventHandler;
 import quarri6343.overcrafted.common.ConfigHandler;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.event.*;
 import quarri6343.overcrafted.common.logic.OCLogic;
-import quarri6343.overcrafted.impl.command.CommandForceJoin;
-import quarri6343.overcrafted.impl.command.CommandForceLeave;
-import quarri6343.overcrafted.impl.command.CommandOvercrafted;
-import quarri6343.overcrafted.impl.command.CommandReloadResourcePack;
+import quarri6343.overcrafted.impl.command.*;
 import quarri6343.overcrafted.utils.ResourcePackUtil;
 
 public final class Overcrafted extends JavaPlugin {
@@ -44,15 +42,16 @@ public final class Overcrafted extends JavaPlugin {
         new CommandForceJoin();
         new CommandForceLeave();
         new CommandReloadResourcePack();
+        new CommandOCGive();
 
         playerEventHandler = new PlayerEventHandler();
         new InventoryEventHandler();
         new AdminMenuInteractEventHandler();
+        new ItemEventHandler();
         new TrashCanInteractEventHandler();
-        new PlaceItemEventHandler();
-        new DishInteractEventHandler();
         new SupplierInteractEventHandler();
         new DishPileInteractEventHandler();
+        new PickUpItemEventHandler();
 
         ResourcePackUtil.reloadResourcePack();
     }

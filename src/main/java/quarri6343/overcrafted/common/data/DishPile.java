@@ -6,8 +6,11 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
+import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
-import quarri6343.overcrafted.utils.ItemCreator;
+import quarri6343.overcrafted.api.item.StackedDish;
+import quarri6343.overcrafted.api.item.interfaces.IStackedDish;
+import quarri6343.overcrafted.impl.item.OCItems;
 
 import java.util.Collection;
 
@@ -21,7 +24,7 @@ public class DishPile {
      */
     public Location location = null;
 
-    public OCResourcePackData.IDishModel[] iDishModels;
+    public StackedDish.StackedDishType type;
 
     private Entity dishPileEntity;
 
@@ -30,8 +33,8 @@ public class DishPile {
      */
     private int dishNumber = 0;
 
-    public DishPile(OCResourcePackData.IDishModel[] dishModels) {
-        this.iDishModels = dishModels;
+    public DishPile(StackedDish.StackedDishType type) {
+        this.type = type;
     }
 
     /**
@@ -48,19 +51,23 @@ public class DishPile {
             return;
         }
 
-        int modelData = 0;
-        for (OCResourcePackData.IDishModel dishModel : iDishModels) {
-            if (dishModel.getStackedNumber() == dishNumber) {
-                modelData = dishModel.getData();
+        ItemStack itemStack = null;
+        for (OCItems item : OCItems.values()) {
+            if (item.get() instanceof IStackedDish && ((IStackedDish)item.get()).getType() == type
+                && ((IStackedDish)item.get()).getStackedNumber() == dishNumber) {
+                itemStack = ((IStackedDish)item.get()).getItemStack();
                 break;
             }
         }
+        
+        if(itemStack == null)
+            Overcrafted.getInstance().getLogger().severe("積まれた皿のグラフィックに対応するアイテムが見つかりません！");
 
         ItemFrame itemFrame = location.getWorld().spawn(location, ItemFrame.class);
         itemFrame.setFacingDirection(BlockFace.DOWN);
         itemFrame.setFixed(true);
         itemFrame.setVisible(false);
-        itemFrame.setItem(new ItemCreator(Material.MUSIC_DISC_PIGSTEP).setCustomModelData(modelData).create());//placeholder
+        itemFrame.setItem(itemStack);//placeholder
         dishPileEntity = itemFrame;
     }
 

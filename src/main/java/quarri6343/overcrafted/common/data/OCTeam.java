@@ -7,6 +7,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import quarri6343.overcrafted.api.item.StackedDish;
 import quarri6343.overcrafted.utils.OvercraftedUtils;
 
 import java.util.ArrayList;
@@ -25,8 +26,8 @@ public class OCTeam {
     public Location joinLocation1;
     public Location joinLocation2;
 
-    public final DishPile cleanDishPile = new DishPile(OCResourcePackData.PiledCleanDishModel.values());
-    public final DishPile dirtyDishPile = new DishPile(OCResourcePackData.PiledDirtyDishModel.values());
+    public final DishPile cleanDishPile = new DishPile(StackedDish.StackedDishType.CLEAN);
+    public final DishPile dirtyDishPile = new DishPile(StackedDish.StackedDishType.DIRTY);
 
     private final List<OCPlayer> players = new ArrayList<>();
 

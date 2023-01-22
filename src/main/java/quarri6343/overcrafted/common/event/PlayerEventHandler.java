@@ -10,10 +10,15 @@ import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
+import quarri6343.overcrafted.api.item.interfaces.ISupplier;
 import quarri6343.overcrafted.common.GlobalTeamHandler;
-import quarri6343.overcrafted.common.data.*;
+import quarri6343.overcrafted.common.PlaceItemHandler;
+import quarri6343.overcrafted.common.data.DishPile;
+import quarri6343.overcrafted.common.data.OCData;
+import quarri6343.overcrafted.common.data.OCResourcePackData;
+import quarri6343.overcrafted.common.data.OCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
-import quarri6343.overcrafted.common.order.OrderHandler;
+import quarri6343.overcrafted.impl.item.OCItems;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -175,10 +180,9 @@ public class PlayerEventHandler implements Listener {
         if (event.getItemDrop().getItemStack().getType() == Material.STICK
                 && Objects.equals(event.getItemDrop().getItemStack().getItemMeta().displayName(), AdminMenuInteractEventHandler.menuItemName))
             return;
-
-        Supply[] supplies = Supply.values();
-        for (Supply supply : supplies) {
-            if (event.getItemDrop().getItemStack().getType() == supply.getItemStack().getType())
+        
+        for (OCItems ocItems : OCItems.values()) {
+            if (ocItems.get() instanceof ISupplier && event.getItemDrop().getItemStack().getType() == ocItems.get().getItemStack().getType())
                 return;
         }
 
@@ -283,13 +287,13 @@ public class PlayerEventHandler implements Listener {
         if (event.getRightClicked() == team.cleanDishPile.getDishPileEntity()) {
             event.setCancelled(true);
             if (team.cleanDishPile.removeDish())
-                event.getPlayer().setItemInHand(OrderHandler.getDish());
+                event.getPlayer().setItemInHand(OCItems.DISH.get().getItemStack());
         }
 
         if (event.getRightClicked() == team.dirtyDishPile.getDishPileEntity()) {
             event.setCancelled(true);
             if (team.dirtyDishPile.removeDish())
-                event.getPlayer().setItemInHand(OrderHandler.getDirtyDish());
+                event.getPlayer().setItemInHand(OCItems.DIRTY_DISH.get().getItemStack());
         }
     }
 }

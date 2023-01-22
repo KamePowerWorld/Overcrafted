@@ -15,7 +15,7 @@ import quarri6343.overcrafted.common.data.DishPile;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
-import quarri6343.overcrafted.common.order.OrderHandler;
+import quarri6343.overcrafted.impl.item.OCItems;
 import quarri6343.overcrafted.utils.ItemCreator;
 
 import static quarri6343.overcrafted.utils.UIUtility.*;
@@ -31,14 +31,14 @@ public class AdminMenuRow3 {
     }
 
     public static void addElements(PaginatedGui gui, Player player) {
-        ItemStack placeCleanDishPileItem = new ItemCreator(OrderHandler.getDish()).setName(Component.text("チーム" + getData().adminSelectedTeam + "の綺麗な皿置場座標を設定")
+        ItemStack placeCleanDishPileItem = new ItemCreator(OCItems.DISH.get().getItemStack()).setName(Component.text("チーム" + getData().adminSelectedTeam + "の綺麗な皿置場座標を設定")
                         .color(NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false))
                 .addLore(getCleanDishPileLocationStats()).create();
         GuiItem placeCleanDishPileButton = new GuiItem(placeCleanDishPileItem,
                 AdminMenuRow3::setUpCleanDishPile);
         gui.setItem(18, placeCleanDishPileButton);
 
-        ItemStack placeDirtyDishPileItem = new ItemCreator(OrderHandler.getDirtyDish()).setName(Component.text("チーム" + getData().adminSelectedTeam + "の汚い皿置場座標を設定")
+        ItemStack placeDirtyDishPileItem = new ItemCreator(OCItems.DIRTY_DISH.get().getItemStack()).setName(Component.text("チーム" + getData().adminSelectedTeam + "の汚い皿置場座標を設定")
                         .color(NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false))
                 .addLore(getDirtyDishPileLocationStats()).create();
         GuiItem placeDirtyDishPileButton = new GuiItem(placeDirtyDishPileItem,

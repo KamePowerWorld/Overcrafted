@@ -4,11 +4,11 @@ import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import quarri6343.overcrafted.Overcrafted;
-import quarri6343.overcrafted.common.data.DishMenu;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCResourcePackData;
 import quarri6343.overcrafted.common.data.OCResourcePackData.MenuFont;
 import quarri6343.overcrafted.common.data.OCTeam;
+import quarri6343.overcrafted.impl.item.ISubmittable;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,10 +22,10 @@ public class BossBarHandler {
         return Overcrafted.getInstance().getData();
     }
 
-    public static void displayDishMenu(OCTeam team, List<DishMenu> dishMenuList) {
+    public static void displayDishMenu(OCTeam team, List<ISubmittable> dishMenuList) {
         Component text = Component.text(MenuFont.BONUS.get_char() + MenuFont.SPACE.get_char()).font(OCResourcePackData.menuFontName);
-        for (DishMenu dishMenu : dishMenuList) {
-            text = text.append(Component.text(dishMenu.toUnicode() + MenuFont.SPACE.get_char() + MenuFont.SPACE.get_char()).font(OCResourcePackData.menuFontName));
+        for (ISubmittable dishMenu : dishMenuList) {
+            text = text.append(Component.text(dishMenu.toMenuUnicode() + MenuFont.SPACE.get_char() + MenuFont.SPACE.get_char()).font(OCResourcePackData.menuFontName));
         }
 
         BossBar bossBar = bossBarMap.get(team);
