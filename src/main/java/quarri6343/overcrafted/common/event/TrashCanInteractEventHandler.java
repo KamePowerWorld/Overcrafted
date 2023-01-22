@@ -4,12 +4,10 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
 import quarri6343.overcrafted.Overcrafted;
-import quarri6343.overcrafted.api.item.ItemManager;
 import quarri6343.overcrafted.api.item.interfaces.IOCItem;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
-import quarri6343.overcrafted.common.order.OrderHandler;
 import quarri6343.overcrafted.impl.item.OCItems;
 
 /**
@@ -57,7 +55,7 @@ public class TrashCanInteractEventHandler implements IPlayerInteractEventHandler
             return;
         }
 
-        IOCItem ocItem = ItemManager.toOCItem(event.getPlayer().getItemInHand());
+        IOCItem ocItem = OCItems.toOCItem(event.getPlayer().getItemInHand());
         if(ocItem == null)
             return;
 

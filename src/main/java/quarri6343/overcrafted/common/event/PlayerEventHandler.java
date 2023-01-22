@@ -10,7 +10,6 @@ import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
-import quarri6343.overcrafted.api.item.ItemManager;
 import quarri6343.overcrafted.api.item.interfaces.IOCItem;
 import quarri6343.overcrafted.api.item.interfaces.ISupplier;
 import quarri6343.overcrafted.common.GlobalTeamHandler;
@@ -23,7 +22,6 @@ import quarri6343.overcrafted.impl.item.OCItems;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class PlayerEventHandler implements Listener {
 
@@ -178,7 +176,7 @@ public class PlayerEventHandler implements Listener {
         if (team == null)
             return;
 
-        IOCItem ocItem = ItemManager.toOCItem(event.getItemDrop().getItemStack());
+        IOCItem ocItem = OCItems.toOCItem(event.getItemDrop().getItemStack());
         if (ocItem != null && ocItem.equals(OCItems.ADMIN_MENU.get()))
             return;
         

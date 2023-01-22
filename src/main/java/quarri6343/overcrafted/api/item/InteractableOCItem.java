@@ -65,7 +65,7 @@ public class InteractableOCItem extends OCItem implements IRightClickEventHandle
         //processing logic
         if(event.getClickedBlock() != null &&
                 Arrays.stream(IProcessedOCItem.ProcessType.values()).filter(processType -> processType.getProcessBlock() == event.getClickedBlock().getType()).findFirst().orElse(null) != null){
-            IOCItem ocItem = ItemManager.toOCItem(event.getItem());
+            IOCItem ocItem = OCItems.toOCItem(event.getItem());
 
             for(OCItems ocItems : OCItems.values()){
                 if(!(ocItems.get() instanceof IProcessedOCItem)){
@@ -81,8 +81,8 @@ public class InteractableOCItem extends OCItem implements IRightClickEventHandle
             }
         }
         else if(PlaceItemHandler.getItem(event.getClickedBlock()) != null){ //combine logic
-            IOCItem ocItem1 = ItemManager.toOCItem(event.getItem());
-            IOCItem ocItem2 = ItemManager.toOCItem(PlaceItemHandler.getItem(event.getClickedBlock()));
+            IOCItem ocItem1 = OCItems.toOCItem(event.getItem());
+            IOCItem ocItem2 = OCItems.toOCItem(PlaceItemHandler.getItem(event.getClickedBlock()));
 
             for(OCItems ocItem : OCItems.values()){
                 if(!(ocItem.get() instanceof ICombinedOCItem)){

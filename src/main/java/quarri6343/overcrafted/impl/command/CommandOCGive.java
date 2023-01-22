@@ -2,13 +2,12 @@ package quarri6343.overcrafted.impl.command;
 
 import com.destroystokyo.paper.event.server.AsyncTabCompleteEvent;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.api.CommandBase;
-import quarri6343.overcrafted.api.item.ItemManager;
 import quarri6343.overcrafted.api.item.interfaces.IOCItem;
+import quarri6343.overcrafted.impl.item.OCItems;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,7 +27,7 @@ public class CommandOCGive implements Listener {
 
             @Override
             public boolean onCommand(CommandSender sender, String[] argments) {
-                IOCItem item = ItemManager.commandToOCItem(argments[0]);
+                IOCItem item = OCItems.commandToOCItem(argments[0]);
                 if (item != null) {
                     if (argments.length > 1) {
                         item.onGiveCommand(sender, Arrays.copyOfRange(argments, 1, argments.length));
@@ -52,9 +51,8 @@ public class CommandOCGive implements Listener {
     @EventHandler
     public void AsyncTabCompleteEvent(AsyncTabCompleteEvent e) {
         if (e.getBuffer().startsWith("/" + commandName + "")) {
-            List<IOCItem> items = ItemManager.getAllRegisteredItems();
             List<String> suggestions = new ArrayList<>();
-            items.forEach(v -> suggestions.add(v.getInternalName()));
+            Arrays.stream(OCItems.values()).forEach(v -> suggestions.add(v.get().getInternalName()));
             e.setCompletions(suggestions);
         }
     }

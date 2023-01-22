@@ -7,12 +7,9 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import quarri6343.overcrafted.Overcrafted;
-import quarri6343.overcrafted.api.item.interfaces.IOCItem;
 import quarri6343.overcrafted.api.item.interfaces.ISupplier;
-import quarri6343.overcrafted.api.item.ItemManager;
 import quarri6343.overcrafted.common.data.OCData;
-
-import java.util.List;
+import quarri6343.overcrafted.impl.item.OCItems;
 
 /**
  * プレイヤーにアイテムを供給するGUI
@@ -30,18 +27,15 @@ public class UISupplyMenu {
                 .pageSize(27)
                 .disableAllInteractions()
                 .create();
-
-        List<IOCItem> items = ItemManager.getAllRegisteredItems();
-        if(items == null)
-            return;
         
-        for (int i = 0; i < items.size(); i++) {
-            if(!(items.get(i) instanceof ISupplier))
+        OCItems[] ocItems = OCItems.values();
+        for (int i = 0; i < OCItems.values().length; i++) {
+            if(!(ocItems[i].get() instanceof ISupplier))
                 continue;
-            
+
             int finalI = i;
-            GuiItem supplyButton = new GuiItem(items.get(finalI).getItemStack(),
-                    event -> ((ISupplier)items.get(finalI)).onSupply((Player) event.getWhoClicked()));
+            GuiItem supplyButton = new GuiItem((ocItems[i].get().getItemStack()),
+                    event -> ((ISupplier)(ocItems[finalI].get())).onSupply((Player) event.getWhoClicked()));
             gui.setItem(i, supplyButton);
         }
 
