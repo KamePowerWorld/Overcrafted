@@ -2,13 +2,13 @@ package quarri6343.overcrafted.api.item;
 
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Material;
-import quarri6343.overcrafted.api.item.interfaces.IOCItem;
 import quarri6343.overcrafted.api.item.interfaces.IProcessedOCItem;
+import quarri6343.overcrafted.impl.block.BlockProcessor;
 import quarri6343.overcrafted.impl.item.OCItems;
 
-public class ProcessedOCItem extends InteractableOCItem implements IProcessedOCItem {
+public class ProcessedOCItem extends OCItem implements IProcessedOCItem {
     
-    private final ProcessType processType;
+    private final BlockProcessor processType;
     private final OCItems ingredient;
     
     /**
@@ -19,7 +19,7 @@ public class ProcessedOCItem extends InteractableOCItem implements IProcessedOCI
      * @param internalName    作りたい固有アイテムの内部的な名前<br>
      * @param customModelData
      */
-    public ProcessedOCItem(TextComponent name, Material material, String internalName, int customModelData, ProcessType processType, OCItems ingredinet) {
+    public ProcessedOCItem(TextComponent name, Material material, String internalName, int customModelData, BlockProcessor processType, OCItems ingredinet) {
         super(name, material, internalName, customModelData);
         this.processType = processType;
         this.ingredient = ingredinet;
@@ -31,7 +31,7 @@ public class ProcessedOCItem extends InteractableOCItem implements IProcessedOCI
     }
 
     @Override
-    public ProcessType getType() {
+    public BlockProcessor getType() {
         return processType;
     }
 }

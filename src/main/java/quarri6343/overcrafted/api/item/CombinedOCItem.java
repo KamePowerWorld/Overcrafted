@@ -7,7 +7,7 @@ import org.bukkit.Material;
 import quarri6343.overcrafted.api.item.interfaces.ICombinedOCItem;
 import quarri6343.overcrafted.impl.item.OCItems;
 
-public class CombinedOCItem extends InteractableOCItem implements ICombinedOCItem {
+public class CombinedOCItem extends OCItem implements ICombinedOCItem {
     
     private final OCItems ingredient1;
     private final OCItems ingredient2;

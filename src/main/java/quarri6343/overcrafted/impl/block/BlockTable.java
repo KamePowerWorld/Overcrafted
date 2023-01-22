@@ -1,20 +1,24 @@
 package quarri6343.overcrafted.impl.block;
 
+import it.unimi.dsi.fastutil.Pair;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.api.block.OCBlock;
+import quarri6343.overcrafted.api.item.interfaces.ICombinedOCItem;
+import quarri6343.overcrafted.api.item.interfaces.IOCItem;
 import quarri6343.overcrafted.api.item.interfaces.IRightClickEventHandler;
 import quarri6343.overcrafted.common.PlaceItemHandler;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
+import quarri6343.overcrafted.impl.item.OCItems;
 
 public class BlockTable extends OCBlock implements IRightClickEventHandler {
 
-    public BlockTable() {
-        super(Material.DARK_OAK_PLANKS);
+    public BlockTable(Material material) {
+        super(material);
     }
 
     private static OCData getData() {
@@ -37,6 +41,9 @@ public class BlockTable extends OCBlock implements IRightClickEventHandler {
         if (team == null)
             return;
 
+        if (event.getItem() != null && event.getItem().getType() == OCData.invalidItem.getType())
+            return;
+
         if(PlaceItemHandler.placeItem(event.getClickedBlock(), event.getItem())) {
             event.setCancelled(true);
             event.getPlayer().setItemInHand(null);
@@ -47,6 +54,26 @@ public class BlockTable extends OCBlock implements IRightClickEventHandler {
             if (itemStack != null){
                 event.setCancelled(true);
                 event.getPlayer().setItemInHand(itemStack);
+            }
+        }
+
+        if(PlaceItemHandler.getItem(event.getClickedBlock()) != null){
+            IOCItem ocItem1 = OCItems.toOCItem(event.getItem());
+            IOCItem ocItem2 = OCItems.toOCItem(PlaceItemHandler.getItem(event.getClickedBlock()));
+
+            for(OCItems ocItem : OCItems.values()){
+                if(!(ocItem.get() instanceof ICombinedOCItem)){
+                    continue;
+                }
+
+                Pair<OCItems, OCItems> ingredients = ((ICombinedOCItem)ocItem.get()).getIngredients();
+                if((ingredients.left().get().equals(ocItem1) && ingredients.right().get().equals(ocItem2))
+                        || (ingredients.left().get().equals(ocItem2) && ingredients.right().get().equals(ocItem1))){
+                    event.setCancelled(true);
+                    PlaceItemHandler.pickUpItem(event.getClickedBlock());
+                    event.getPlayer().setItemInHand(ocItem.get().getItemStack());
+                    return;
+                }
             }
         }
     }

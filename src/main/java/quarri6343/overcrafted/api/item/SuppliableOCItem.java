@@ -5,7 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import quarri6343.overcrafted.api.item.interfaces.ISupplier;
 
-public class SuppliableOCItem extends InteractableOCItem implements ISupplier {
+public class SuppliableOCItem extends OCItem implements ISupplier {
 
     /**
      * 固有アイテムの型を作製する
