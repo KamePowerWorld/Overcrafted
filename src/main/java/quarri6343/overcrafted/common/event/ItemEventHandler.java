@@ -1,4 +1,4 @@
-package quarri6343.overcrafted.api.item;
+package quarri6343.overcrafted.common.event;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -7,6 +7,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import quarri6343.overcrafted.Overcrafted;
+import quarri6343.overcrafted.api.item.ItemManager;
 import quarri6343.overcrafted.api.item.interfaces.ILeftClickEventHandler;
 import quarri6343.overcrafted.api.item.interfaces.IOCItem;
 import quarri6343.overcrafted.api.item.interfaces.IRightClickEventHandler;
@@ -14,10 +15,10 @@ import quarri6343.overcrafted.api.item.interfaces.IRightClickEventHandler;
 /**
  * プレイヤーがアイテムにまつわるイベントを起こしたときそれを検知してそれぞれのアイテムクラスに伝える
  */
-public class ItemEventHandler implements Listener {
+public class ItemEventHandler implements Listener, IPlayerInteractEventHandler {
 
     public ItemEventHandler() {
-        Overcrafted.getInstance().getServer().getPluginManager().registerEvents(this, Overcrafted.getInstance());
+        Overcrafted.getInstance().getPlayerEventHandler().registerHandler(this);
     }
 
     /**
@@ -25,7 +26,6 @@ public class ItemEventHandler implements Listener {
      * オフハンドの特殊効果はブロックされる
      * @param e イベント
      */
-    @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
         if(e.getItem() ==null)
             return;

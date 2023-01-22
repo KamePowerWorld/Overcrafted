@@ -12,7 +12,6 @@ import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.api.item.interfaces.ISupplier;
 import quarri6343.overcrafted.common.GlobalTeamHandler;
-import quarri6343.overcrafted.common.PlaceItemHandler;
 import quarri6343.overcrafted.common.data.DishPile;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCResourcePackData;

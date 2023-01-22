@@ -7,6 +7,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.api.item.interfaces.ICombinedOCItem;
 import quarri6343.overcrafted.api.item.interfaces.IOCItem;
+import quarri6343.overcrafted.api.item.interfaces.IProcessedOCItem;
 import quarri6343.overcrafted.api.item.interfaces.IRightClickEventHandler;
 import quarri6343.overcrafted.common.PlaceItemHandler;
 import quarri6343.overcrafted.common.data.OCData;
@@ -14,9 +15,13 @@ import quarri6343.overcrafted.common.data.OCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
 import quarri6343.overcrafted.impl.item.OCItems;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class InteractableOCItem extends OCItem implements IRightClickEventHandler {
 
-    private static final Material blockCanPlaceItem = Material.DARK_OAK_PLANKS;
+    protected List<Material> blockCanPlaceItem = new ArrayList<>();
 
     private static OCData getData() {
         return Overcrafted.getInstance().getData();
@@ -36,6 +41,7 @@ public class InteractableOCItem extends OCItem implements IRightClickEventHandle
      */
     public InteractableOCItem(TextComponent name, Material material, String internalName, int customModelData) {
         super(name, material, internalName, customModelData);
+        blockCanPlaceItem.add(Material.DARK_OAK_PLANKS);
     }
 
     @Override
@@ -44,9 +50,6 @@ public class InteractableOCItem extends OCItem implements IRightClickEventHandle
             return;
 
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE)
-            return;
-
-        if (event.getClickedBlock() == null || event.getClickedBlock().getType() != blockCanPlaceItem)
             return;
 
         OCTeam team = getData().teams.getTeambyPlayer(event.getPlayer());
@@ -58,8 +61,26 @@ public class InteractableOCItem extends OCItem implements IRightClickEventHandle
 
         if (event.getItem().getType() == OCData.invalidItem.getType())
             return;
+        
+        //processing logic
+        if(event.getClickedBlock() != null &&
+                Arrays.stream(IProcessedOCItem.ProcessType.values()).filter(processType -> processType.getProcessBlock() == event.getClickedBlock().getType()).findFirst().orElse(null) != null){
+            IOCItem ocItem = ItemManager.toOCItem(event.getItem());
 
-        if(PlaceItemHandler.getItem(event.getClickedBlock()) != null){
+            for(OCItems ocItems : OCItems.values()){
+                if(!(ocItems.get() instanceof IProcessedOCItem)){
+                    continue;
+                }
+                
+                if(((IProcessedOCItem)ocItems.get()).getType().getProcessBlock() != event.getClickedBlock().getType())
+                    continue;
+                
+                if(((IProcessedOCItem)ocItems.get()).getIngredient().get().equals(ocItem)){
+                    event.getPlayer().setItemInHand(ocItems.get().getItemStack());
+                }
+            }
+        }
+        else if(PlaceItemHandler.getItem(event.getClickedBlock()) != null){ //combine logic
             IOCItem ocItem1 = ItemManager.toOCItem(event.getItem());
             IOCItem ocItem2 = ItemManager.toOCItem(PlaceItemHandler.getItem(event.getClickedBlock()));
 
@@ -76,7 +97,7 @@ public class InteractableOCItem extends OCItem implements IRightClickEventHandle
                     return;
                 }
             }
-        } else if(PlaceItemHandler.placeItem(event.getClickedBlock(), event.getItem())) {
+        } else if(blockCanPlaceItem.contains(event.getClickedBlock().getType()) && PlaceItemHandler.placeItem(event.getClickedBlock(), event.getItem())) {
             event.getPlayer().setItemInHand(null);
         }
     }

@@ -1,7 +1,7 @@
 package quarri6343.overcrafted;
 
 import org.bukkit.plugin.java.JavaPlugin;
-import quarri6343.overcrafted.api.item.ItemEventHandler;
+import quarri6343.overcrafted.common.event.ItemEventHandler;
 import quarri6343.overcrafted.common.ConfigHandler;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.event.*;
@@ -52,6 +52,7 @@ public final class Overcrafted extends JavaPlugin {
         new SupplierInteractEventHandler();
         new DishPileInteractEventHandler();
         new PickUpItemEventHandler();
+        new GuiInteractEventHandler();
 
         ResourcePackUtil.reloadResourcePack();
     }

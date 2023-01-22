@@ -3,6 +3,7 @@ package quarri6343.overcrafted.impl.item;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import quarri6343.overcrafted.api.item.*;
+import quarri6343.overcrafted.api.item.interfaces.IProcessedOCItem;
 import quarri6343.overcrafted.common.data.OCResourcePackData;
 
 public enum OCItems {
@@ -10,10 +11,13 @@ public enum OCItems {
     COBBLESTONE(new SuppliableOCItem(Component.text("丸石"), Material.COBBLESTONE, "cobblestone", 0)),
     IRON_ORE(new SuppliableOCItem(Component.text("鉄鉱石"), Material.IRON_ORE, "iron_ore", 0)),
 
-    FURNACE(new InteractableOCItem(Component.text("かまど"), Material.FURNACE, "furnace", 0)),
-    IRON_INGOT(new InteractableOCItem(Component.text("鉄インゴット"), Material.IRON_INGOT, "iron_ingot", 0)),
-    MINECART(new InteractableOCItem(Component.text("トロッコ"), Material.MINECART, "minecart", 0)),
-    TORCH(new InteractableOCItem(Component.text("松明"), Material.TORCH, "torch", 0)),
+    FURNACE(new ProcessedOCItem(Component.text("かまど"), Material.FURNACE, "furnace", 0, IProcessedOCItem.ProcessType.CRAFTING, COBBLESTONE)),
+    IRON_INGOT(new ProcessedOCItem(Component.text("鉄インゴット"), Material.IRON_INGOT, "iron_ingot", 0, IProcessedOCItem.ProcessType.SMELTING, IRON_ORE)),
+    MINECART(new ProcessedOCItem(Component.text("トロッコ"), Material.MINECART, "minecart", 0, IProcessedOCItem.ProcessType.CRAFTING, IRON_INGOT)),
+    PLANK(new ProcessedOCItem(Component.text("木材"), Material.OAK_PLANKS, "plank", 0, IProcessedOCItem.ProcessType.CRAFTING, WOOD)),
+    STICK(new ProcessedOCItem(Component.text("棒"), Material.STICK, "stick", 0, IProcessedOCItem.ProcessType.CRAFTING, PLANK)),
+    CHARCOAL(new ProcessedOCItem(Component.text("木炭"), Material.CHARCOAL, "charcoal", 0, IProcessedOCItem.ProcessType.SMELTING, WOOD)),
+    TORCH(new CombinedOCItem(Component.text("松明"), Material.TORCH, "torch", 0, STICK, CHARCOAL)),
     DISH(new InteractableOCItem(Component.text("皿"), Material.PAPER, "dish", 1)),
     DIRTY_DISH(new WashableOCItem(Component.text("汚い皿"), Material.PAPER, "dish", 2)),
 
