@@ -35,7 +35,9 @@ public enum OCItems {
     DISH_FURNACE(new SubmittableOCItem(Component.text("かまどの載った皿"), Material.PAPER, "dish_furnace", 3, DISH, FURNACE, 5, OCResourcePackData.MenuFont.FURNACE.get_char())),
     DISH_IRON_INGOT(new SubmittableOCItem(Component.text("鉄インゴットの載った皿"), Material.PAPER, "dish_iron_ingot", 4, DISH, IRON_INGOT, 3, OCResourcePackData.MenuFont.IRON.get_char())),
     DISH_MINECART(new SubmittableOCItem(Component.text("トロッコの載った皿"), Material.PAPER, "dish_minecart", 5, DISH, IRON_INGOT, 15,OCResourcePackData.MenuFont.MINECART.get_char())),
-    DISH_TORCH(new SubmittableOCItem(Component.text("松明の載った皿"), Material.PAPER, "dish_torch", 6, DISH, TORCH, 5, OCResourcePackData.MenuFont.TORCH.get_char()));
+    DISH_TORCH(new SubmittableOCItem(Component.text("松明の載った皿"), Material.PAPER, "dish_torch", 6, DISH, TORCH, 5, OCResourcePackData.MenuFont.TORCH.get_char())),
+    
+    ADMIN_MENU(new AdminMenu());
     
     private final OCItem ocItem;
 

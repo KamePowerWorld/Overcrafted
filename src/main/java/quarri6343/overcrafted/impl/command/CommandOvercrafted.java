@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import quarri6343.overcrafted.api.CommandBase;
-import quarri6343.overcrafted.common.event.AdminMenuInteractEventHandler;
+import quarri6343.overcrafted.impl.item.OCItems;
 import quarri6343.overcrafted.utils.ItemCreator;
 
 /**
@@ -22,7 +22,7 @@ public class CommandOvercrafted extends CommandBase {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @Nullable String[] arguments) {
-        ((Player) sender).getInventory().addItem(new ItemCreator(Material.STICK).setName(AdminMenuInteractEventHandler.menuItemName).create());
+        ((Player) sender).getInventory().addItem(OCItems.ADMIN_MENU.get().getItemStack());
         return true;
     }
 }
