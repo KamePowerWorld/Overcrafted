@@ -97,7 +97,7 @@ public class BlockProcessor extends BlockTable implements IRightClickEventHandle
             if(itemFrame != null)
                 itemFrame.remove();
             itemFrame = location.getWorld().spawn(block.getRelative(BlockFace.UP).getLocation(), ItemFrame.class);
-            itemFrame.setFacingDirection(BlockFace.DOWN);
+            itemFrame.setFacingDirection(BlockFace.UP);
             itemFrame.setFixed(true);
             itemFrame.setVisible(false);
             itemFrame.setCustomNameVisible(true);

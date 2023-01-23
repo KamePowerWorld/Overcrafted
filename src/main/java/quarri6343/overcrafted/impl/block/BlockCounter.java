@@ -33,6 +33,9 @@ public class BlockCounter extends OCBlock implements IRightClickEventHandler {
 
     @Override
     public void onRightClick(PlayerInteractEvent event) {
+        if(getLogic().gameStatus == OCLogic.GameStatus.INACTIVE)
+            return;
+        
         IOCTeam team = getData().getTeams().getTeamByPlayer(event.getPlayer());
         if (team == null) {
             event.getPlayer().sendMessage(Component.text("あなたはチームに所属していないため、皿を扱うことができません"));

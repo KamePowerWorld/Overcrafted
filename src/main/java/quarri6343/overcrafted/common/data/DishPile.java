@@ -64,7 +64,7 @@ public class DishPile implements IDishPile {
             Overcrafted.getInstance().getLogger().severe("積まれた皿のグラフィックに対応するアイテムが見つかりません！");
 
         ItemFrame itemFrame = location.getWorld().spawn(location, ItemFrame.class);
-        itemFrame.setFacingDirection(BlockFace.DOWN);
+        itemFrame.setFacingDirection(BlockFace.UP);
         itemFrame.setFixed(true);
         itemFrame.setVisible(false);
         itemFrame.setItem(itemStack);
