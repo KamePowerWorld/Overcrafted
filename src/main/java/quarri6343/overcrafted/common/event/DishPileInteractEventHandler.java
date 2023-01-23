@@ -1,8 +1,12 @@
 package quarri6343.overcrafted.common.event;
 
+import it.unimi.dsi.fastutil.Pair;
+import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.player.PlayerInteractEvent;
 import quarri6343.overcrafted.Overcrafted;
+import quarri6343.overcrafted.api.item.interfaces.ICombinedOCItem;
+import quarri6343.overcrafted.api.item.interfaces.IOCItem;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
@@ -30,9 +34,6 @@ public class DishPileInteractEventHandler implements IPlayerInteractEventHandler
         if (event.isCancelled())
             return;
 
-        if (event.getItem() != null)
-            return;
-
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE)
             return;
 
@@ -41,6 +42,38 @@ public class DishPileInteractEventHandler implements IPlayerInteractEventHandler
 
         IOCTeam team = getData().getTeams().getTeamByPlayer(event.getPlayer());
         if (team == null) {
+            return;
+        }
+
+        if (event.getItem() != null && event.getItem().getType() != Material.AIR){
+            IOCItem ocItem1 = OCItems.toOCItem(event.getPlayer().getItemInHand());
+            IOCItem ocItem2;
+            if (event.getClickedBlock().getRelative(BlockFace.UP).equals(team.getCleanDishPile().getLocation().getBlock())) {
+                ocItem2 = OCItems.DISH.get();
+            }
+            else{
+                ocItem2 = OCItems.DIRTY_DISH.get();
+            }
+
+            for(OCItems ocItem : OCItems.values()){
+                if(!(ocItem.get() instanceof ICombinedOCItem)){
+                    continue;
+                }
+
+                Pair<OCItems, OCItems> ingredients = ((ICombinedOCItem)ocItem.get()).getIngredients();
+                if((ingredients.left().get().equals(ocItem1) && ingredients.right().get().equals(ocItem2))
+                        || (ingredients.left().get().equals(ocItem2) && ingredients.right().get().equals(ocItem1))){
+                    if (event.getClickedBlock().getRelative(BlockFace.UP).equals(team.getCleanDishPile().getLocation().getBlock())) {
+                        if (team.getCleanDishPile().removeDish())
+                            event.getPlayer().setItemInHand(ocItem.get().getItemStack());
+                    }
+                    else{
+                        if (team.getDirtyDishPile().removeDish())
+                            event.getPlayer().setItemInHand(ocItem.get().getItemStack());
+                    }
+                    return;
+                }
+            }
             return;
         }
 

@@ -68,6 +68,7 @@ public class DishPile implements IDishPile {
         itemFrame.setFixed(true);
         itemFrame.setVisible(false);
         itemFrame.setItem(itemStack);
+        itemFrame.setCustomNameVisible(false);
         dishPileEntity = itemFrame;
     }
     

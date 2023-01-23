@@ -1,5 +1,6 @@
 package quarri6343.overcrafted.common.event;
 
+import it.unimi.dsi.fastutil.Pair;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -12,9 +13,11 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.api.block.IOCBlock;
+import quarri6343.overcrafted.api.item.interfaces.ICombinedOCItem;
 import quarri6343.overcrafted.api.item.interfaces.IOCItem;
 import quarri6343.overcrafted.api.item.interfaces.ISupplier;
 import quarri6343.overcrafted.common.GlobalTeamHandler;
+import quarri6343.overcrafted.common.PlaceItemHandler;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCResourcePackData;
 import quarri6343.overcrafted.common.data.interfaces.IDishPile;
@@ -282,13 +285,42 @@ public class PlayerEventHandler implements Listener {
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE
                 || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
             return;
-
-        if (event.getPlayer().getItemInHand().getType() != Material.AIR)
-            return;
-
+        
         IOCTeam team = getData().getTeams().getTeamByPlayer(event.getPlayer());
         if (team == null)
             return;
+
+        if (event.getPlayer().getItemInHand().getType() != Material.AIR){
+            IOCItem ocItem1 = OCItems.toOCItem(event.getPlayer().getItemInHand());
+            IOCItem ocItem2;
+            if (event.getRightClicked() == team.getCleanDishPile().getDishPileEntity()) {
+                ocItem2 = OCItems.DISH.get();
+            }
+            else{
+                ocItem2 = OCItems.DIRTY_DISH.get();
+            }
+
+            for(OCItems ocItem : OCItems.values()){
+                if(!(ocItem.get() instanceof ICombinedOCItem)){
+                    continue;
+                }
+
+                Pair<OCItems, OCItems> ingredients = ((ICombinedOCItem)ocItem.get()).getIngredients();
+                if((ingredients.left().get().equals(ocItem1) && ingredients.right().get().equals(ocItem2))
+                        || (ingredients.left().get().equals(ocItem2) && ingredients.right().get().equals(ocItem1))){
+                    if (event.getRightClicked() == team.getCleanDishPile().getDishPileEntity()) {
+                        if (team.getCleanDishPile().removeDish())
+                            event.getPlayer().setItemInHand(ocItem.get().getItemStack());
+                    }
+                    else{
+                        if (team.getDirtyDishPile().removeDish())
+                            event.getPlayer().setItemInHand(ocItem.get().getItemStack());
+                    }
+                    return;
+                }
+            }
+            return;   
+        }
 
         if (event.getRightClicked() == team.getCleanDishPile().getDishPileEntity()) {
             event.setCancelled(true);

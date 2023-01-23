@@ -8,13 +8,10 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
-import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.api.block.ISneakEventHandler;
-import quarri6343.overcrafted.api.block.OCBlock;
-import quarri6343.overcrafted.api.item.OCItem;
 import quarri6343.overcrafted.api.item.interfaces.IOCItem;
 import quarri6343.overcrafted.api.item.interfaces.IProcessedOCItem;
 import quarri6343.overcrafted.api.item.interfaces.IRightClickEventHandler;
@@ -25,13 +22,22 @@ import quarri6343.overcrafted.common.logic.OCLogic;
 import quarri6343.overcrafted.impl.item.OCItems;
 import quarri6343.overcrafted.utils.ItemCreator;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * アイテムを別のアイテムに加工できるブロック
  */
 public class BlockProcessor extends BlockTable implements IRightClickEventHandler, ISneakEventHandler {
 
+    /**
+     * ブロックとそのブロックの加工の進捗のmap
+     */
+    private static final Map<Block, Integer> progressionMap = new HashMap<>();
+    
     public BlockProcessor(Material material) {
         super(material);
+        onPickUp.add(this::cancelProcessing);
     }
 
     private static OCData getData() {
@@ -83,7 +89,7 @@ public class BlockProcessor extends BlockTable implements IRightClickEventHandle
         return false;
     }
     
-    public void process(Block block){
+    public void continueProcess(Block block){
         Location location = block.getLocation();
         location.add(0.5, 1.1, 0.5);
         ItemFrame itemFrame = null;
@@ -93,6 +99,11 @@ public class BlockProcessor extends BlockTable implements IRightClickEventHandle
             }
         }
         
+        Integer progress = progressionMap.get(block);
+        if(progress == null)
+            progress = 0;
+        progress++;
+        
         if(itemFrame == null || itemFrame.getItem().getItemMeta() == null){
             if(itemFrame != null)
                 itemFrame.remove();
@@ -101,22 +112,15 @@ public class BlockProcessor extends BlockTable implements IRightClickEventHandle
             itemFrame.setFixed(true);
             itemFrame.setVisible(false);
             itemFrame.setCustomNameVisible(true);
-            itemFrame.setItem(new ItemCreator(Material.BIRCH_BUTTON).setName(Component.text("0")).create());
         }
-        
-        int progress = 0;
-        try{
-            progress = Integer.parseInt(itemFrame.getItem().getItemMeta().getDisplayName());
-        }
-        catch (NumberFormatException e){
-            return;
-        }
+
+        itemFrame.setItem(new ItemCreator(Material.BARRIER).setName(Component.text(progress)).create());
         
         if(progress <= OCData.craftingTime){
-            progress++;
-            itemFrame.setItem(new ItemCreator(Material.BIRCH_BUTTON).setName(Component.text(Integer.toString(progress))).create());
+            progressionMap.put(block, progress);
         }
         else{
+            progressionMap.remove(block);            
             ItemStack itemStack = PlaceItemHandler.getItem(block);
             IOCItem iocItem = OCItems.toOCItem(itemStack);
             
@@ -135,12 +139,26 @@ public class BlockProcessor extends BlockTable implements IRightClickEventHandle
                 }
             }
         }
-        
     }
 
     @Override
     public void whileSneaking(Block block) {
         if(canProcess(block))
-            process(block);
+            continueProcess(block);
+    }
+    
+    public void cancelProcessing(Block block){
+        Location location = block.getLocation();
+        location.add(0.5, 1.1, 0.5);
+        ItemFrame itemFrame = null;
+        for (Entity nearbyEntity : location.getNearbyEntities(0.1, 0.1, 0.1)) {
+            if (nearbyEntity.getType() == EntityType.ITEM_FRAME){
+                itemFrame = (ItemFrame) nearbyEntity;
+            }
+        }
+        if(itemFrame != null)
+            itemFrame.remove();
+        
+        progressionMap.remove(block);
     }
 }

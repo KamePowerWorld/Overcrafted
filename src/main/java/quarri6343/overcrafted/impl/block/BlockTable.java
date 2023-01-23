@@ -2,6 +2,7 @@ package quarri6343.overcrafted.impl.block;
 
 import it.unimi.dsi.fastutil.Pair;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
@@ -15,10 +16,19 @@ import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
 import quarri6343.overcrafted.impl.item.OCItems;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+
 /**
  * アイテムを上に置くことのできるブロック
  */
 public class BlockTable extends OCBlock implements IRightClickEventHandler {
+
+    /**
+     * アイテムが拾われた時に発火されるイベント
+     */
+    protected List<Consumer<Block>> onPickUp = new ArrayList<>();
 
     public BlockTable(Material material) {
         super(material);
@@ -31,7 +41,7 @@ public class BlockTable extends OCBlock implements IRightClickEventHandler {
     private static OCLogic getLogic() {
         return Overcrafted.getInstance().getLogic();
     }
-
+    
     @Override
     public void onRightClick(PlayerInteractEvent event) {
         if (event.isCancelled())
@@ -57,6 +67,7 @@ public class BlockTable extends OCBlock implements IRightClickEventHandler {
             ItemStack itemStack = PlaceItemHandler.pickUpItem(event.getClickedBlock());
             if (itemStack != null){
                 event.getPlayer().setItemInHand(itemStack);
+                onPickUp.forEach(blockConsumer -> blockConsumer.accept(event.getClickedBlock()));
             }
         }
 
@@ -74,6 +85,7 @@ public class BlockTable extends OCBlock implements IRightClickEventHandler {
                         || (ingredients.left().get().equals(ocItem2) && ingredients.right().get().equals(ocItem1))){
                     PlaceItemHandler.pickUpItem(event.getClickedBlock());
                     event.getPlayer().setItemInHand(ocItem.get().getItemStack());
+                    onPickUp.forEach(blockConsumer -> blockConsumer.accept(event.getClickedBlock()));
                     return;
                 }
             }
