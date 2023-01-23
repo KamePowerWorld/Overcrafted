@@ -4,12 +4,14 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
+import quarri6343.overcrafted.api.block.IOCBlock;
 import quarri6343.overcrafted.api.item.interfaces.IOCItem;
 import quarri6343.overcrafted.api.item.interfaces.ISupplier;
 import quarri6343.overcrafted.common.GlobalTeamHandler;
@@ -18,6 +20,8 @@ import quarri6343.overcrafted.common.data.OCResourcePackData;
 import quarri6343.overcrafted.common.data.interfaces.IDishPile;
 import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
+import quarri6343.overcrafted.impl.block.BlockTable;
+import quarri6343.overcrafted.impl.block.OCBlocks;
 import quarri6343.overcrafted.impl.item.OCItems;
 
 import java.util.ArrayList;
@@ -296,6 +300,24 @@ public class PlayerEventHandler implements Listener {
             event.setCancelled(true);
             if (team.getDirtyDishPile().removeDish())
                 event.getPlayer().setItemInHand(OCItems.DIRTY_DISH.get().getItemStack());
+        }
+    }
+
+    @org.bukkit.event.EventHandler
+    public void onBlockBreak(BlockBreakEvent event) {
+        stopTableBreak(event);
+    }
+
+    /**
+     * ゲーム中テーブルが壊れて載っているアイテムが落ちてしまうことを阻止する
+     */
+    private void stopTableBreak(BlockBreakEvent event){
+        if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE
+                || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
+            return;
+        
+        if(OCBlocks.toOCBlock(event.getBlock()) instanceof BlockTable){
+            event.setCancelled(true);
         }
     }
 }

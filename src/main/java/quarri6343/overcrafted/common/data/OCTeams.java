@@ -31,39 +31,39 @@ public class OCTeams implements IOCTeams {
             throw new IllegalArgumentException();
         }
 
-        getTeams().add(new OCTeam(name, color));
+        teams.add(new OCTeam(name, color));
     }
     
     @ParametersAreNonnullByDefault
     public void removeTeam(String name) {
-        getTeams().removeIf(team -> team.getName().equals(name));
+        teams.removeIf(team -> team.getName().equals(name));
     }
     
     public @Nonnull IOCTeam getTeam(int index) {
-        return getTeams().get(index);
+        return teams.get(index);
     }
     
     @ParametersAreNonnullByDefault
     public @Nullable IOCTeam getTeamByName(String name) {
-        return getTeams().stream().filter(v -> v.getName().equals(name)).findFirst().orElse(null);
+        return teams.stream().filter(v -> v.getName().equals(name)).findFirst().orElse(null);
     }
     
     @ParametersAreNonnullByDefault
     public @Nullable IOCTeam getTeamByColor(String color) {
-        return getTeams().stream().filter(v -> v.getColor().equals(color)).findFirst().orElse(null);
+        return teams.stream().filter(v -> v.getColor().equals(color)).findFirst().orElse(null);
     }
 
     @ParametersAreNonnullByDefault
     public @Nullable IOCTeam getTeamByPlayer(Player player) {
-        return getTeams().stream().filter(v -> v.containsPlayer(player)).findFirst().orElse(null);
+        return teams.stream().filter(v -> v.containsPlayer(player)).findFirst().orElse(null);
     }
 
     public int getTeamsLength() {
-        return getTeams().size();
+        return teams.size();
     }
     
     public void clearTeam() {
-        getTeams().clear();
+        teams.clear();
     }
     
     public void disbandTeams(boolean restoreStats) {

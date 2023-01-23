@@ -47,15 +47,15 @@ public class BlockTable extends OCBlock implements IRightClickEventHandler {
         if (event.getItem() != null && event.getItem().getType() == OCData.invalidItem.getType())
             return;
 
+        event.setCancelled(true);
+        
         if(PlaceItemHandler.placeItem(event.getClickedBlock(), event.getItem())) {
-            event.setCancelled(true);
             event.getPlayer().setItemInHand(null);
         }
 
         if (event.getItem() == null || event.getItem().getType() == Material.AIR) {
             ItemStack itemStack = PlaceItemHandler.pickUpItem(event.getClickedBlock());
             if (itemStack != null){
-                event.setCancelled(true);
                 event.getPlayer().setItemInHand(itemStack);
             }
         }
@@ -72,7 +72,6 @@ public class BlockTable extends OCBlock implements IRightClickEventHandler {
                 Pair<OCItems, OCItems> ingredients = ((ICombinedOCItem)ocItem.get()).getIngredients();
                 if((ingredients.left().get().equals(ocItem1) && ingredients.right().get().equals(ocItem2))
                         || (ingredients.left().get().equals(ocItem2) && ingredients.right().get().equals(ocItem1))){
-                    event.setCancelled(true);
                     PlaceItemHandler.pickUpItem(event.getClickedBlock());
                     event.getPlayer().setItemInHand(ocItem.get().getItemStack());
                     return;

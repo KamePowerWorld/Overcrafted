@@ -60,6 +60,16 @@ public class OCData {
     public static final int thrownItemsPickupDelay = 20;
 
     /**
+     * プレイヤーの近くのブロックがプレイヤーを検知してイベントを起こす範囲
+     */
+    public static final int blockEventTriggerRange = 2;
+
+    /**
+     * クラフトにかかる時間(tick)
+     */
+    public static final int craftingTime = 40;
+
+    /**
      * インベントリを埋める無効アイテム
      */
     public static final ItemStack invalidItem = new ItemCreator(Material.RED_STAINED_GLASS_PANE).setName(Component.text("")).create();

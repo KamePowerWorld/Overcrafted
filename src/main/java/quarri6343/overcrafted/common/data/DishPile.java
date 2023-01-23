@@ -67,7 +67,7 @@ public class DishPile implements IDishPile {
         itemFrame.setFacingDirection(BlockFace.DOWN);
         itemFrame.setFixed(true);
         itemFrame.setVisible(false);
-        itemFrame.setItem(itemStack);//placeholder
+        itemFrame.setItem(itemStack);
         dishPileEntity = itemFrame;
     }
     
