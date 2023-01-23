@@ -4,7 +4,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.event.player.PlayerInteractEvent;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.common.data.OCData;
-import quarri6343.overcrafted.common.data.OCTeam;
+import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
 import quarri6343.overcrafted.impl.item.OCItems;
 
@@ -39,16 +39,16 @@ public class DishPileInteractEventHandler implements IPlayerInteractEventHandler
         if (event.getClickedBlock() == null)
             return;
 
-        OCTeam team = getData().teams.getTeambyPlayer(event.getPlayer());
+        IOCTeam team = getData().teams.getTeamByPlayer(event.getPlayer());
         if (team == null) {
             return;
         }
 
-        if (event.getClickedBlock().getRelative(BlockFace.UP).equals(team.cleanDishPile.location.getBlock())) {
-            if (team.cleanDishPile.removeDish())
+        if (event.getClickedBlock().getRelative(BlockFace.UP).equals(team.getCleanDishPile().getLocation().getBlock())) {
+            if (team.getCleanDishPile().removeDish())
                 event.getPlayer().setItemInHand(OCItems.DISH.get().getItemStack());
-        } else if (event.getClickedBlock().getRelative(BlockFace.UP).equals(team.dirtyDishPile.location.getBlock())) {
-            if (team.dirtyDishPile.removeDish())
+        } else if (event.getClickedBlock().getRelative(BlockFace.UP).equals(team.getDirtyDishPile().getLocation().getBlock())) {
+            if (team.getDirtyDishPile().removeDish())
                 event.getPlayer().setItemInHand(OCItems.DIRTY_DISH.get().getItemStack());
         }
     }

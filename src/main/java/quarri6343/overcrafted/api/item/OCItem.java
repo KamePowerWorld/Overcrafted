@@ -1,5 +1,7 @@
 package quarri6343.overcrafted.api.item;
 
+import lombok.Data;
+import lombok.Getter;
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -15,6 +17,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 /**
  * このプラグインに存在する全ての固有アイテムの親クラス
  */
+@Data
 public class OCItem implements IOCItem {
 
     /**
@@ -82,23 +85,8 @@ public class OCItem implements IOCItem {
     }
 
     @Nonnull
-    public TextComponent getName() {
-        return name;
-    }
-
-    @Nonnull
-    public Material getMaterial() {
-        return material;
-    }
-
-    @Nonnull
     public ItemStack getItemStack() {
         return itemStackTemplate.clone();
-    }
-
-    @Nonnull
-    public String getInternalName() {
-        return internalName;
     }
 
     public boolean isSimilar(@Nullable ItemStack itemStack) {

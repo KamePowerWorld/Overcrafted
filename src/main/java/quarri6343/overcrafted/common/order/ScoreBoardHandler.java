@@ -11,6 +11,7 @@ import org.bukkit.scoreboard.Scoreboard;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCTeam;
+import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,7 +29,7 @@ public class ScoreBoardHandler {
 
     private static Objective objective;
 
-    private final static Map<OCTeam, Integer> scores = new HashMap<>();
+    private final static Map<IOCTeam, Integer> scores = new HashMap<>();
     private final static List<String> currentScoreString = new ArrayList<>();
 
     /**
@@ -39,7 +40,7 @@ public class ScoreBoardHandler {
         destroy();
 
         for (int i = 0; i < getData().teams.getTeamsLength(); i++) {
-            OCTeam team = getData().teams.getTeam(i);
+            IOCTeam team = getData().teams.getTeam(i);
             scores.put(team, 0);
         }
 
@@ -51,7 +52,7 @@ public class ScoreBoardHandler {
      *
      * @param team
      */
-    public static void addScore(OCTeam team, int value) {
+    public static void addScore(IOCTeam team, int value) {
         if (scores.get(team) == null)
             return;
 
@@ -63,13 +64,13 @@ public class ScoreBoardHandler {
      *
      * @return 最もスコアの高いチーム、もしチームが存在しないまたは複数存在した場合null
      */
-    public static OCTeam getHighestScoreTeam() {
+    public static IOCTeam getHighestScoreTeam() {
         int highestScore = 0;
-        OCTeam highestTeam = null;
+        IOCTeam highestTeam = null;
         boolean draw = false;
 
         for (int i = 0; i < getData().teams.getTeamsLength(); i++) {
-            OCTeam team = getData().teams.getTeam(i);
+            IOCTeam team = getData().teams.getTeam(i);
             int score = scores.get(team);
 
             if (score > highestScore) {
@@ -104,8 +105,8 @@ public class ScoreBoardHandler {
         currentScoreString.add(timeScore.getEntry());
 
         int i = 1;
-        for (Map.Entry<OCTeam, Integer> entry : scores.entrySet()) {
-            Score score = objective.getScore(entry.getKey().name + ": " + ChatColor.YELLOW + entry.getValue());
+        for (Map.Entry<IOCTeam, Integer> entry : scores.entrySet()) {
+            Score score = objective.getScore(entry.getKey().getName() + ": " + ChatColor.YELLOW + entry.getValue());
             score.setScore(i);
             currentScoreString.add(score.getEntry());
             i++;

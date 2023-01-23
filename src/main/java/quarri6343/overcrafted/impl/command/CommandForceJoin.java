@@ -9,7 +9,7 @@ import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.api.CommandBase;
 import quarri6343.overcrafted.common.GlobalTeamHandler;
 import quarri6343.overcrafted.common.data.OCData;
-import quarri6343.overcrafted.common.data.OCTeam;
+import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
 
 /**
@@ -49,12 +49,12 @@ public class CommandForceJoin extends CommandBase {
             return true;
         }
 
-        if (getData().teams.getTeambyPlayer(player) != null) {
+        if (getData().teams.getTeamByPlayer(player) != null) {
             GlobalTeamHandler.removePlayerFromTeam(player, true);
             sender.sendMessage(arguments[0] + "が既にチームに入っていたので離脱させました");
         }
 
-        OCTeam team = getData().teams.getTeambyName(getData().adminSelectedTeam);
+        IOCTeam team = getData().teams.getTeamByName(getData().adminSelectedTeam);
         if (team == null)
             return true;
 

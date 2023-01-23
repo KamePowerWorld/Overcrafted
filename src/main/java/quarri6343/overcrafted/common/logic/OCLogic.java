@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.common.GlobalTeamHandler;
 import quarri6343.overcrafted.common.data.OCData;
-import quarri6343.overcrafted.common.data.OCTeam;
+import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 import quarri6343.overcrafted.common.order.OrderHandler;
 
 import java.util.List;
@@ -62,7 +62,7 @@ public class OCLogic {
      */
     private void onGameBegin() {
         for (int i = 0; i < getData().teams.getTeamsLength(); i++) {
-            OCTeam team = getData().teams.getTeam(i);
+            IOCTeam team = getData().teams.getTeam(i);
             if (team.getPlayersSize() == 0)
                 continue;
 
@@ -70,7 +70,7 @@ public class OCLogic {
                 team.setUpGameEnvforPlayer(team.getPlayer(j));
             }
 
-            team.cleanDishPile.setUp();
+            team.getCleanDishPile().setUp();
         }
         Bukkit.getOnlinePlayers().forEach(player -> player.showTitle(Title.title(Component.text("ゲームスタート"), Component.empty())));
         OrderHandler.generateRandomOrders();
@@ -90,7 +90,7 @@ public class OCLogic {
      * @param victoryTeam 勝ったチーム
      * @param gameResult  ゲームの結果
      */
-    public void endGame(@Nullable Player sender, @Nullable OCTeam victoryTeam, GameResult gameResult, boolean hasResultScene) {
+    public void endGame(@Nullable Player sender, @Nullable IOCTeam victoryTeam, GameResult gameResult, boolean hasResultScene) {
         if (gameStatus == GameStatus.INACTIVE) {
             if (sender != null)
                 sender.sendMessage("ゲームが始まっていません！");
@@ -126,7 +126,7 @@ public class OCLogic {
      *
      * @param victoryTeam 勝利したチーム。もしnullだった場合引き分けになる
      */
-    private void displayGameSuccessTitle(OCTeam victoryTeam) {
+    private void displayGameSuccessTitle(IOCTeam victoryTeam) {
         if (victoryTeam == null) {
             Bukkit.getOnlinePlayers().forEach(player ->
                     player.showTitle(Title.title(Component.text("引き分け"), Component.text(""))));
@@ -142,7 +142,7 @@ public class OCLogic {
         }
         Component finalSubTitle = subTitle;
         Bukkit.getOnlinePlayers().forEach(player ->
-                player.showTitle(Title.title(Component.text("チーム" + victoryTeam.name + "の勝利！"), finalSubTitle)));
+                player.showTitle(Title.title(Component.text("チーム" + victoryTeam.getName() + "の勝利！"), finalSubTitle)));
     }
 
     /**

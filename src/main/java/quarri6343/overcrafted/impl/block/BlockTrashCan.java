@@ -8,7 +8,7 @@ import quarri6343.overcrafted.api.block.OCBlock;
 import quarri6343.overcrafted.api.item.interfaces.IOCItem;
 import quarri6343.overcrafted.api.item.interfaces.IRightClickEventHandler;
 import quarri6343.overcrafted.common.data.OCData;
-import quarri6343.overcrafted.common.data.OCTeam;
+import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
 import quarri6343.overcrafted.impl.item.OCItems;
 
@@ -33,7 +33,7 @@ public class BlockTrashCan extends OCBlock implements IRightClickEventHandler {
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE)
             return;
 
-        OCTeam team = getData().teams.getTeambyPlayer(event.getPlayer());
+        IOCTeam team = getData().teams.getTeamByPlayer(event.getPlayer());
         if (team == null)
             return;
 
@@ -55,7 +55,7 @@ public class BlockTrashCan extends OCBlock implements IRightClickEventHandler {
             return;
 
         if (ocItem.equals(OCItems.DIRTY_DISH.get())) {
-            if (team.dirtyDishPile.addDish()) {
+            if (team.getDirtyDishPile().addDish()) {
                 event.getPlayer().setItemInHand(null);
                 event.getPlayer().sendMessage(Component.text("ゴミ箱に持っている皿を捨てた！"));
             } else {
@@ -65,7 +65,7 @@ public class BlockTrashCan extends OCBlock implements IRightClickEventHandler {
         }
 
         if (ocItem.equals(OCItems.DISH.get())) {
-            if (team.cleanDishPile.addDish()) {
+            if (team.getCleanDishPile().addDish()) {
                 event.getPlayer().setItemInHand(null);
                 event.getPlayer().sendMessage(Component.text("ゴミ箱に持っている皿を捨てた！"));
             } else {

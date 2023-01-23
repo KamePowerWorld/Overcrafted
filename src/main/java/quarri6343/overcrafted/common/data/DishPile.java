@@ -1,5 +1,7 @@
 package quarri6343.overcrafted.common.data;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -10,22 +12,23 @@ import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.api.item.StackedDish;
 import quarri6343.overcrafted.api.item.interfaces.IStackedDish;
+import quarri6343.overcrafted.common.data.interfaces.IDishPile;
 import quarri6343.overcrafted.impl.item.OCItems;
 
 import java.util.Collection;
 
-/**
- * 皿置場
- */
-public class DishPile {
+public class DishPile implements IDishPile {
 
     /**
      * 皿置場のワールド内での場所
      */
-    public Location location = null;
+    @Getter
+    @Setter
+    private Location location = null;
 
-    public StackedDish.StackedDishType type;
+    private final StackedDish.StackedDishType type;
 
+    @Getter
     private Entity dishPileEntity;
 
     /**
@@ -36,10 +39,7 @@ public class DishPile {
     public DishPile(StackedDish.StackedDishType type) {
         this.type = type;
     }
-
-    /**
-     * 皿置場を設置
-     */
+    
     public void place() {
         if (location == null) {
             Overcrafted.getInstance().getLogger().severe("存在しない座標に皿置き場は置けません！");
@@ -70,10 +70,7 @@ public class DishPile {
         itemFrame.setItem(itemStack);//placeholder
         dishPileEntity = itemFrame;
     }
-
-    /**
-     * 設置されている皿置場を消去
-     */
+    
     public void destroy() {
         if (location == null) {
             Overcrafted.getInstance().getLogger().severe("存在しない座標の皿置場は消せません！");
@@ -83,10 +80,7 @@ public class DishPile {
         Collection<ItemFrame> itemFrames = location.getWorld().getNearbyEntitiesByType(ItemFrame.class, location, 2);
         itemFrames.forEach(Entity::remove);
     }
-
-    /**
-     * 皿置き場が設置されているかどうか
-     */
+    
     public boolean isPlaced() {
         if (location == null)
             return false;
@@ -103,12 +97,7 @@ public class DishPile {
         dishNumber = OCData.maxDishesNumber;
         place();
     }
-
-    /**
-     * 皿置場に皿を追加する
-     *
-     * @return アイテムの追加に成功したかどうか
-     */
+    
     public boolean addDish() {
         if (dishNumber + 1 > OCData.maxDishesNumber)
             return false;
@@ -118,12 +107,7 @@ public class DishPile {
 
         return true;
     }
-
-    /**
-     * 皿置場から皿を取り除く
-     *
-     * @return
-     */
+    
     public boolean removeDish() {
         if (dishNumber - 1 < 0)
             return false;
@@ -132,9 +116,5 @@ public class DishPile {
         place();
 
         return true;
-    }
-
-    public Entity getDishPileEntity() {
-        return dishPileEntity;
     }
 }

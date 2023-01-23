@@ -5,6 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCTeam;
+import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.File;
@@ -46,12 +47,12 @@ public class ConfigHandler {
             }
 
             data.teams.addTeam(teamName, teamColor);
-            OCTeam newTeam = data.teams.getTeam(i);
+            IOCTeam newTeam = data.teams.getTeam(i);
             newTeam.setStartLocation(config.getLocation("team.startLocation." + i));
-            newTeam.joinLocation1 = config.getLocation("team.joinLocation1." + i);
-            newTeam.joinLocation2 = config.getLocation("team.joinLocation2." + i);
-            newTeam.cleanDishPile.location = config.getLocation("team.cleanDishPile." + i);
-            newTeam.dirtyDishPile.location = config.getLocation("team.dirtyDishPile." + i);
+            newTeam.setJoinLocation1(config.getLocation("team.joinLocation1." + i));
+            newTeam.setJoinLocation2(config.getLocation("team.joinLocation2." + i));
+            newTeam.getCleanDishPile().setLocation(config.getLocation("team.cleanDishPile." + i));
+            newTeam.getDirtyDishPile().setLocation(config.getLocation("team.dirtyDishPile." + i));
         }
     }
 
@@ -89,20 +90,20 @@ public class ConfigHandler {
     private void saveTeams(FileConfiguration config) {
         OCData data = Overcrafted.getInstance().getData();
         for (int i = 0; i < data.teams.getTeamsLength(); i++) {
-            config.set("team.name." + i, data.teams.getTeam(i).name);
-            config.set("team.color." + i, data.teams.getTeam(i).color);
+            config.set("team.name." + i, data.teams.getTeam(i).getName());
+            config.set("team.color." + i, data.teams.getTeam(i).getColor());
             config.set("team.startLocation." + i, data.teams.getTeam(i).getStartLocation());
-            config.set("team.joinLocation1." + i, data.teams.getTeam(i).joinLocation1);
-            config.set("team.joinLocation2." + i, data.teams.getTeam(i).joinLocation2);
-            config.set("team.cleanDishPile." + i, data.teams.getTeam(i).cleanDishPile.location);
-            config.set("team.dirtyDishPile." + i, data.teams.getTeam(i).dirtyDishPile.location);
+            config.set("team.joinLocation1." + i, data.teams.getTeam(i).getJoinLocation1());
+            config.set("team.joinLocation2." + i, data.teams.getTeam(i).getJoinLocation2());
+            config.set("team.cleanDishPile." + i, data.teams.getTeam(i).getCleanDishPile().getLocation());
+            config.set("team.dirtyDishPile." + i, data.teams.getTeam(i).getDirtyDishPile().getLocation());
         }
     }
 
     /**
      * その他データをコンフィグに保存する
      *
-     * @param config
+     * @param config コンフィグ
      */
     @ParametersAreNonnullByDefault
     private void saveMisc(FileConfiguration config) {

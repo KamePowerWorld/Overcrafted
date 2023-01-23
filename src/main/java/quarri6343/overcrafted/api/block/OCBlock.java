@@ -1,9 +1,12 @@
 package quarri6343.overcrafted.api.block;
 
+import lombok.Getter;
 import org.bukkit.Material;
 import quarri6343.overcrafted.Overcrafted;
 
 public class OCBlock implements IOCBlock{
+
+    @Getter
     private final Material material;
     
     public OCBlock(Material material){
@@ -11,10 +14,5 @@ public class OCBlock implements IOCBlock{
             Overcrafted.getInstance().getLogger().severe("ブロッククラスのベースにアイテムは登録できません");
         
         this.material = material;
-    }
-    
-    @Override
-    public Material getMaterial() {
-        return material;
     }
 }

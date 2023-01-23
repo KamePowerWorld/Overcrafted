@@ -41,11 +41,11 @@ public class UIAdminSelectTeam {
                 lores.addAll(data.teams.getTeam(i).playerNamesToText());
 
                 ItemStack teamSelectItem = new ItemCreator(Material.WHITE_WOOL)
-                        .setName(Component.text("チーム" + data.teams.getTeam(i).name + "を選択"))
+                        .setName(Component.text("チーム" + data.teams.getTeam(i).getName() + "を選択"))
                         .setLores(lores).create();
                 GuiItem teamSelectButton = new GuiItem(teamSelectItem,
                         event -> {
-                            data.adminSelectedTeam = data.teams.getTeam(event.getSlot()).name;
+                            data.adminSelectedTeam = data.teams.getTeam(event.getSlot()).getName();
                             event.getWhoClicked().sendMessage("チーム" + data.adminSelectedTeam + "を選択しました");
                             UIAdminMenu.openUI((Player) event.getWhoClicked());
                         });

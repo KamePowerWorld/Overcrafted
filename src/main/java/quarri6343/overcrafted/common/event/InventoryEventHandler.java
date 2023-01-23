@@ -7,7 +7,7 @@ import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.common.data.OCData;
-import quarri6343.overcrafted.common.data.OCTeam;
+import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
 
 public class InventoryEventHandler implements Listener {
@@ -33,7 +33,7 @@ public class InventoryEventHandler implements Listener {
         if (!(event.getWhoClicked() instanceof Player))
             return;
 
-        OCTeam team = getData().teams.getTeambyPlayer((Player) event.getWhoClicked());
+        IOCTeam team = getData().teams.getTeamByPlayer((Player) event.getWhoClicked());
         if (team == null)
             return;
 
@@ -239,7 +239,7 @@ public class InventoryEventHandler implements Listener {
         if (!(event.getWhoClicked() instanceof Player))
             return;
 
-        OCTeam team = getData().teams.getTeambyPlayer((Player) event.getWhoClicked());
+        IOCTeam team = getData().teams.getTeamByPlayer((Player) event.getWhoClicked());
         if (team == null)
             return;
 

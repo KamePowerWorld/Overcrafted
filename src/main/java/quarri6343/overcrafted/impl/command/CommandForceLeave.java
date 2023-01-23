@@ -11,7 +11,7 @@ import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.api.CommandBase;
 import quarri6343.overcrafted.common.GlobalTeamHandler;
 import quarri6343.overcrafted.common.data.OCData;
-import quarri6343.overcrafted.common.data.OCTeam;
+import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
 
 /**
@@ -46,14 +46,14 @@ public class CommandForceLeave extends CommandBase {
             return true;
         }
 
-        OCTeam team = getData().teams.getTeambyPlayer(player);
+        IOCTeam team = getData().teams.getTeamByPlayer(player);
         if (team == null) {
             sender.sendMessage(Component.text("プレイヤー" + arguments[0] + "はチームに所属していません").color(NamedTextColor.RED));
             return true;
         }
 
         GlobalTeamHandler.removePlayerFromTeam(player, true);
-        sender.sendMessage(arguments[0] + "をチーム" + team.name + "から離脱させました");
+        sender.sendMessage(arguments[0] + "をチーム" + team.getName() + "から離脱させました");
         return true;
     }
 }

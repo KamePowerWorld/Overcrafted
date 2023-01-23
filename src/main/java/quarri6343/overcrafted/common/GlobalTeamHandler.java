@@ -4,7 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.common.data.OCData;
-import quarri6343.overcrafted.common.data.OCTeam;
+import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
 import quarri6343.overcrafted.utils.OvercraftedUtils;
 
@@ -19,7 +19,7 @@ public class GlobalTeamHandler {
      * @param player プレイヤー
      * @param team   入れたいURチーム
      */
-    public static void addPlayerToTeam(Player player, OCTeam team) {
+    public static void addPlayerToTeam(Player player, IOCTeam team) {
         team.addPlayer(player);
         MCTeams.addPlayerToMCTeam(player, team);
     }
@@ -28,7 +28,7 @@ public class GlobalTeamHandler {
      * プレイヤーをUR, MC両方のチームから退出させる
      */
     public static void removePlayerFromTeam(Player player, boolean restoreStats) {
-        OCTeam team = getData().teams.getTeambyPlayer(player);
+        IOCTeam team = getData().teams.getTeamByPlayer(player);
         if (team != null) {
             team.removePlayer(player, restoreStats);
         }
@@ -42,7 +42,7 @@ public class GlobalTeamHandler {
     /**
      * 全てのプレイヤーをUR, MC両方のチームから退出させる
      */
-    public static void removeAllPlayerFromTeam(OCTeam team, boolean restoreStats) {
+    public static void removeAllPlayerFromTeam(IOCTeam team, boolean restoreStats) {
         for (int i = 0; i < team.getPlayersSize(); i++) {
             removePlayerFromTeam(team.getPlayer(i), restoreStats);
         }
@@ -66,19 +66,19 @@ public class GlobalTeamHandler {
         }
 
         for (int i = 0; i < getData().teams.getTeamsLength(); i++) {
-            OCTeam team = getData().teams.getTeam(i);
+            IOCTeam team = getData().teams.getTeam(i);
 
             if (team.getPlayersSize() > 0) {
                 if (team.getStartLocation() == null) {
-                    gameMaster.sendMessage("チーム" + team.name + "の開始地点を設定してください");
+                    gameMaster.sendMessage("チーム" + team.getName() + "の開始地点を設定してください");
                     return false;
                 }
-                if (team.cleanDishPile.location == null) {
-                    gameMaster.sendMessage("チーム" + team.name + "の綺麗な皿置き場の地点を設定してください");
+                if (team.getCleanDishPile().getLocation() == null) {
+                    gameMaster.sendMessage("チーム" + team.getName() + "の綺麗な皿置き場の地点を設定してください");
                     return false;
                 }
-                if (team.dirtyDishPile.location == null) {
-                    gameMaster.sendMessage("チーム" + team.name + "の汚い皿置き場の地点を設定してください");
+                if (team.getDirtyDishPile().getLocation() == null) {
+                    gameMaster.sendMessage("チーム" + team.getName() + "の汚い皿置き場の地点を設定してください");
                     return false;
                 }
             }
@@ -104,12 +104,12 @@ public class GlobalTeamHandler {
             }
 
             for (int i = 0; i < getData().teams.getTeamsLength(); i++) {
-                OCTeam team = getData().teams.getTeam(i);
+                IOCTeam team = getData().teams.getTeam(i);
 
-                if (team.joinLocation1 == null || team.joinLocation2 == null)
+                if (team.getJoinLocation1() == null || team.getJoinLocation2() == null)
                     continue;
 
-                if (OvercraftedUtils.isPlayerInArea(onlinePlayer, team.joinLocation1, team.joinLocation2)) {
+                if (OvercraftedUtils.isPlayerInArea(onlinePlayer, team.getJoinLocation1(), team.getJoinLocation2())) {
                     addPlayerToTeam(onlinePlayer, team);
                     break;
                 }

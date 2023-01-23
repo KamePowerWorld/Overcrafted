@@ -1,5 +1,7 @@
 package quarri6343.overcrafted.common.data;
 
+import lombok.Getter;
+import lombok.Setter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -8,28 +10,36 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.api.item.StackedDish;
+import quarri6343.overcrafted.common.data.interfaces.IDishPile;
+import quarri6343.overcrafted.common.data.interfaces.IOCPlayer;
+import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 import quarri6343.overcrafted.utils.OvercraftedUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * UnRedstoneを共に攻略するチームのデータクラス
- */
-public class OCTeam {
+public class OCTeam implements IOCTeam {
 
-    public final String name;
-    public final String color;
+    @Getter
+    private final String name;
+    @Getter
+    private final String color;
 
+    @Getter @Setter
     private Location startLocation;
 
-    public Location joinLocation1;
-    public Location joinLocation2;
+    @Getter @Setter
+    private Location joinLocation1;
+    
+    @Getter @Setter
+    private Location joinLocation2;
 
-    public final DishPile cleanDishPile = new DishPile(StackedDish.StackedDishType.CLEAN);
-    public final DishPile dirtyDishPile = new DishPile(StackedDish.StackedDishType.DIRTY);
+    @Getter
+    private final IDishPile cleanDishPile = new DishPile(StackedDish.StackedDishType.CLEAN);
+    @Getter
+    private final IDishPile dirtyDishPile = new DishPile(StackedDish.StackedDishType.DIRTY);
 
-    private final List<OCPlayer> players = new ArrayList<>();
+    private final List<IOCPlayer> players = new ArrayList<>();
 
     public OCTeam(String name, String color) {
         if (name.isEmpty()) {
@@ -44,15 +54,6 @@ public class OCTeam {
         this.color = color;
     }
 
-    public Location getStartLocation() {
-        return startLocation;
-    }
-
-    /**
-     * チームに所属しているプレイヤーの環境をゲーム開始に適した状態に変更する
-     *
-     * @param player チームに所属しているプレイヤー
-     */
     public void setUpGameEnvforPlayer(Player player) {
         if (!containsPlayer(player))
             return;
@@ -69,10 +70,6 @@ public class OCTeam {
         }
     }
 
-    public void setStartLocation(Location location) {
-        startLocation = location;
-    }
-
     public void addPlayer(Player player) {
         if (containsPlayer(player))
             removePlayer(player, false);
@@ -85,7 +82,7 @@ public class OCTeam {
     }
 
     public void removePlayer(Player player, boolean restoreStats) {
-        OCPlayer playerToRemove = players.stream().filter(urPlayer -> urPlayer.getEntity().equals(player)).findFirst().orElse(null);
+        IOCPlayer playerToRemove = players.stream().filter(urPlayer -> urPlayer.getEntity().equals(player)).findFirst().orElse(null);
         if (playerToRemove == null) {
             return;
         }
@@ -97,7 +94,7 @@ public class OCTeam {
 
     public void removeAllPlayer(boolean restoreStats) {
         if (restoreStats) {
-            for (OCPlayer player : players) {
+            for (IOCPlayer player : players) {
                 player.restoreStats();
             }
         }
@@ -117,7 +114,7 @@ public class OCTeam {
     }
 
     public void clearExcessiveItemsFromAllPlayers() {
-        players.forEach(OCPlayer::dropExcessiveItems);
+        players.forEach(IOCPlayer::dropExcessiveItems);
     }
 
     public void teleportPlayerToLobby() {

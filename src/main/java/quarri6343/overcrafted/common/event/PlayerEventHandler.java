@@ -13,10 +13,10 @@ import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.api.item.interfaces.IOCItem;
 import quarri6343.overcrafted.api.item.interfaces.ISupplier;
 import quarri6343.overcrafted.common.GlobalTeamHandler;
-import quarri6343.overcrafted.common.data.DishPile;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCResourcePackData;
-import quarri6343.overcrafted.common.data.OCTeam;
+import quarri6343.overcrafted.common.data.interfaces.IDishPile;
+import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
 import quarri6343.overcrafted.impl.item.OCItems;
 
@@ -93,17 +93,17 @@ public class PlayerEventHandler implements Listener {
      */
     private void processDishPileDestruction(EntityDeathEvent event) {
         for (int i = 0; i < getData().teams.getTeamsLength(); i++) {
-            OCTeam team = getData().teams.getTeam(i);
+            IOCTeam team = getData().teams.getTeam(i);
 
-            DishPile cleanDishPile = team.cleanDishPile;
-            if (event.getEntity().getLocation().getBlock().equals(cleanDishPile.location.getBlock()) && cleanDishPile.isPlaced()) {
+            IDishPile cleanDishPile = team.getCleanDishPile();
+            if (event.getEntity().getLocation().getBlock().equals(cleanDishPile.getLocation().getBlock()) && cleanDishPile.isPlaced()) {
                 event.setCancelled(true);
                 cleanDishPile.destroy();
                 return;
             }
 
-            DishPile dirtyDishPile = team.dirtyDishPile;
-            if (event.getEntity().getLocation().getBlock().equals(dirtyDishPile.location.getBlock()) && dirtyDishPile.isPlaced()) {
+            IDishPile dirtyDishPile = team.getDirtyDishPile();
+            if (event.getEntity().getLocation().getBlock().equals(dirtyDishPile.getLocation().getBlock()) && dirtyDishPile.isPlaced()) {
                 event.setCancelled(true);
                 dirtyDishPile.destroy();
                 return;
@@ -125,7 +125,7 @@ public class PlayerEventHandler implements Listener {
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE)
             return;
 
-        OCTeam team = getData().teams.getTeambyPlayer(event.getPlayer());
+        IOCTeam team = getData().teams.getTeamByPlayer(event.getPlayer());
         if (team == null)
             return;
 
@@ -146,7 +146,7 @@ public class PlayerEventHandler implements Listener {
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE)
             return;
 
-        OCTeam team = getData().teams.getTeambyPlayer(event.getPlayer());
+        IOCTeam team = getData().teams.getTeamByPlayer(event.getPlayer());
         if (team == null)
             return;
 
@@ -172,7 +172,7 @@ public class PlayerEventHandler implements Listener {
                 || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
             return;
 
-        OCTeam team = getData().teams.getTeambyPlayer(event.getPlayer());
+        IOCTeam team = getData().teams.getTeamByPlayer(event.getPlayer());
         if (team == null)
             return;
 
@@ -206,7 +206,7 @@ public class PlayerEventHandler implements Listener {
                 || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
             return;
 
-        OCTeam team = getData().teams.getTeambyPlayer(event.getPlayer());
+        IOCTeam team = getData().teams.getTeamByPlayer(event.getPlayer());
         if (team == null)
             return;
 
@@ -230,7 +230,7 @@ public class PlayerEventHandler implements Listener {
                 || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
             return;
 
-        OCTeam team = getData().teams.getTeambyPlayer(event.getPlayer());
+        IOCTeam team = getData().teams.getTeamByPlayer(event.getPlayer());
         if (team == null)
             return;
 
@@ -279,19 +279,19 @@ public class PlayerEventHandler implements Listener {
         if (event.getPlayer().getItemInHand().getType() != Material.AIR)
             return;
 
-        OCTeam team = getData().teams.getTeambyPlayer(event.getPlayer());
+        IOCTeam team = getData().teams.getTeamByPlayer(event.getPlayer());
         if (team == null)
             return;
 
-        if (event.getRightClicked() == team.cleanDishPile.getDishPileEntity()) {
+        if (event.getRightClicked() == team.getCleanDishPile().getDishPileEntity()) {
             event.setCancelled(true);
-            if (team.cleanDishPile.removeDish())
+            if (team.getCleanDishPile().removeDish())
                 event.getPlayer().setItemInHand(OCItems.DISH.get().getItemStack());
         }
 
-        if (event.getRightClicked() == team.dirtyDishPile.getDishPileEntity()) {
+        if (event.getRightClicked() == team.getDirtyDishPile().getDishPileEntity()) {
             event.setCancelled(true);
-            if (team.dirtyDishPile.removeDish())
+            if (team.getDirtyDishPile().removeDish())
                 event.getPlayer().setItemInHand(OCItems.DIRTY_DISH.get().getItemStack());
         }
     }

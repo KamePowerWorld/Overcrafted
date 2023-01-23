@@ -1,5 +1,6 @@
 package quarri6343.overcrafted.api.item;
 
+import lombok.Getter;
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Material;
 import quarri6343.overcrafted.api.item.interfaces.IProcessedOCItem;
@@ -8,7 +9,9 @@ import quarri6343.overcrafted.impl.item.OCItems;
 
 public class ProcessedOCItem extends OCItem implements IProcessedOCItem {
     
+    @Getter
     private final BlockProcessor processType;
+    @Getter
     private final OCItems ingredient;
     
     /**
@@ -23,15 +26,5 @@ public class ProcessedOCItem extends OCItem implements IProcessedOCItem {
         super(name, material, internalName, customModelData);
         this.processType = processType;
         this.ingredient = ingredinet;
-    }
-
-    @Override
-    public OCItems getIngredient() {
-        return ingredient;
-    }
-
-    @Override
-    public BlockProcessor getType() {
-        return processType;
     }
 }

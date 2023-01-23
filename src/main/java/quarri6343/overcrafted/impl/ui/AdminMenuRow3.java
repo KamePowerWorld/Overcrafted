@@ -11,9 +11,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
-import quarri6343.overcrafted.common.data.DishPile;
 import quarri6343.overcrafted.common.data.OCData;
-import quarri6343.overcrafted.common.data.OCTeam;
+import quarri6343.overcrafted.common.data.interfaces.IDishPile;
+import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
 import quarri6343.overcrafted.impl.item.OCItems;
 import quarri6343.overcrafted.utils.ItemCreator;
@@ -86,12 +86,12 @@ public class AdminMenuRow3 {
      * @return 綺麗な皿置き場の位置を設定するボタンに表示する現在の状況
      */
     private static TextComponent getCleanDishPileLocationStats() {
-        OCTeam team = getData().teams.getTeambyName(getData().adminSelectedTeam);
+        IOCTeam team = getData().teams.getTeamByName(getData().adminSelectedTeam);
         if (team == null) {
             return teamNotSelectedText;
         }
 
-        return getLocDesc(team.cleanDishPile.location);
+        return getLocDesc(team.getCleanDishPile().getLocation());
     }
 
 
@@ -99,12 +99,12 @@ public class AdminMenuRow3 {
      * @return 汚い皿置き場の位置を設定するボタンに表示する現在の状況
      */
     private static TextComponent getDirtyDishPileLocationStats() {
-        OCTeam team = getData().teams.getTeambyName(getData().adminSelectedTeam);
+        IOCTeam team = getData().teams.getTeamByName(getData().adminSelectedTeam);
         if (team == null) {
             return teamNotSelectedText;
         }
 
-        return getLocDesc(team.dirtyDishPile.location);
+        return getLocDesc(team.getDirtyDishPile().getLocation());
     }
 
     /**
@@ -113,7 +113,7 @@ public class AdminMenuRow3 {
      * @param event
      */
     public static void setUpCleanDishPile(InventoryClickEvent event) {
-        OCTeam team = getData().teams.getTeambyName(getData().adminSelectedTeam);
+        IOCTeam team = getData().teams.getTeamByName(getData().adminSelectedTeam);
         if (team == null) {
             event.getWhoClicked().sendMessage(teamNotSelectedText);
             return;
@@ -124,8 +124,8 @@ public class AdminMenuRow3 {
             return;
         }
         
-        DishPile cleanDishPile = team.cleanDishPile;
-        cleanDishPile.location = event.getWhoClicked().getLocation();
+        IDishPile cleanDishPile = team.getCleanDishPile();
+        cleanDishPile.setLocation(event.getWhoClicked().getLocation());
         event.getWhoClicked().sendMessage(Component.text("綺麗な皿置場を" + locationBlockPostoString(event.getWhoClicked().getLocation()) + "で登録しました"));
         UIAdminMenu.openUI((Player) event.getWhoClicked());
     }
@@ -136,7 +136,7 @@ public class AdminMenuRow3 {
      * @param event
      */
     public static void setUpDirtyDishPile(InventoryClickEvent event) {
-        OCTeam team = getData().teams.getTeambyName(getData().adminSelectedTeam);
+        IOCTeam team = getData().teams.getTeamByName(getData().adminSelectedTeam);
         if (team == null) {
             event.getWhoClicked().sendMessage(teamNotSelectedText);
             return;
@@ -147,8 +147,8 @@ public class AdminMenuRow3 {
             return;
         }
 
-        DishPile dirtyDishPile = team.dirtyDishPile;
-        dirtyDishPile.location = event.getWhoClicked().getLocation();
+        IDishPile dirtyDishPile = team.getDirtyDishPile();
+        dirtyDishPile.setLocation(event.getWhoClicked().getLocation());
         event.getWhoClicked().sendMessage(Component.text("汚い皿置場を" + locationBlockPostoString(event.getWhoClicked().getLocation()) + "で登録しました"));
         UIAdminMenu.openUI((Player) event.getWhoClicked());
     }

@@ -14,7 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.common.GlobalTeamHandler;
 import quarri6343.overcrafted.common.data.OCData;
-import quarri6343.overcrafted.common.data.OCTeam;
+import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
 import quarri6343.overcrafted.utils.ItemCreator;
 import quarri6343.overcrafted.utils.UIUtility;
@@ -69,7 +69,7 @@ public class AdminMenuRow1 {
      * @return 初期位置を設定するボタンに表示する現在の状況
      */
     private static TextComponent getSetStartButtonStats() {
-        OCTeam team = getData().teams.getTeambyName(getData().adminSelectedTeam);
+        IOCTeam team = getData().teams.getTeamByName(getData().adminSelectedTeam);
         if (team == null) {
             return teamNotSelectedText;
         }
@@ -81,7 +81,7 @@ public class AdminMenuRow1 {
      * 初期位置を設定するボタンを押したときのイベント
      */
     private static void onSetStartButton(InventoryClickEvent event) {
-        OCTeam team = getData().teams.getTeambyName(getData().adminSelectedTeam);
+        IOCTeam team = getData().teams.getTeamByName(getData().adminSelectedTeam);
         if (team == null) {
             event.getWhoClicked().sendMessage(teamNotSelectedText);
             return;
@@ -113,7 +113,7 @@ public class AdminMenuRow1 {
             return;
         }
 
-        OCTeam team = getData().teams.getTeambyName(getData().adminSelectedTeam);
+        IOCTeam team = getData().teams.getTeamByName(getData().adminSelectedTeam);
         if (team == null)
             return;
 

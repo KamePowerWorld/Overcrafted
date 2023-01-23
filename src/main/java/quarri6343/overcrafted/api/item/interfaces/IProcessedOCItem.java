@@ -7,5 +7,5 @@ public interface IProcessedOCItem {
     
     public OCItems getIngredient();
     
-    public BlockProcessor getType();
+    public BlockProcessor getProcessType();
 }

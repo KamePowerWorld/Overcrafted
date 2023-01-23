@@ -1,12 +1,16 @@
 package quarri6343.overcrafted.api.item;
 
+import lombok.Getter;
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Material;
 import quarri6343.overcrafted.api.item.interfaces.IStackedDish;
 
 public class StackedDish extends OCItem implements IStackedDish {
 
+    @Getter
     private final int stackedNumber;
+    
+    @Getter
     private final StackedDishType type;
     
     /**
@@ -20,14 +24,6 @@ public class StackedDish extends OCItem implements IStackedDish {
         super(name, Material.MUSIC_DISC_PIGSTEP, internalName, customModelData);
         this.stackedNumber = stackedNumber;
         this.type = type;
-    }
-
-    public int getStackedNumber() {
-        return stackedNumber;
-    }
-    
-    public StackedDishType getType(){
-        return type;
     }
 
     public enum StackedDishType {

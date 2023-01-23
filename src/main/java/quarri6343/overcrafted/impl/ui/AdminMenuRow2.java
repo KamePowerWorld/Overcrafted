@@ -12,7 +12,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.common.data.OCData;
-import quarri6343.overcrafted.common.data.OCTeam;
+import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
 import quarri6343.overcrafted.utils.ItemCreator;
 import quarri6343.overcrafted.utils.UIUtility;
@@ -76,20 +76,21 @@ public class AdminMenuRow2 {
     }
 
     private static TextComponent getSetJoinLocation1ButtonStats() {
-        if (getData().teams.getTeambyName(getData().adminSelectedTeam) == null) {
-            return teamNotSelectedText;
-        }
-
-        return getLocDesc(getData().teams.getTeambyName(getData().adminSelectedTeam).joinLocation1);
-    }
-
-    private static TextComponent getSetJoinLocation2ButtonStats() {
-        OCTeam selectedTeam = getData().teams.getTeambyName(getData().adminSelectedTeam);
+        IOCTeam selectedTeam = getData().teams.getTeamByName(getData().adminSelectedTeam);
         if (selectedTeam == null) {
             return teamNotSelectedText;
         }
 
-        return getLocDesc(selectedTeam.joinLocation2);
+        return getLocDesc(selectedTeam.getJoinLocation1());
+    }
+
+    private static TextComponent getSetJoinLocation2ButtonStats() {
+        IOCTeam selectedTeam = getData().teams.getTeamByName(getData().adminSelectedTeam);
+        if (selectedTeam == null) {
+            return teamNotSelectedText;
+        }
+
+        return getLocDesc(selectedTeam.getJoinLocation2());
     }
 
     /**
@@ -103,16 +104,16 @@ public class AdminMenuRow2 {
             return;
         }
 
-        OCTeam team = getData().teams.getTeambyName(getData().adminSelectedTeam);
+        IOCTeam team = getData().teams.getTeamByName(getData().adminSelectedTeam);
         if (team == null) {
             event.getWhoClicked().sendMessage(teamNotSelectedText);
             return;
         }
 
         team.setStartLocation(null);
-        team.joinLocation1 = null;
-        team.joinLocation2 = null;
-        event.getWhoClicked().sendMessage(Component.text("チーム" + team.name + "の設定をリセットしました"));
+        team.setJoinLocation1(null);
+        team.setJoinLocation2(null);
+        event.getWhoClicked().sendMessage(Component.text("チーム" + team.getName() + "の設定をリセットしました"));
     }
 
     /**
@@ -121,17 +122,17 @@ public class AdminMenuRow2 {
      * @param isLocation1 チーム加入地点1かどうか
      */
     private static void onSetJoinLocationButton(InventoryClickEvent event, boolean isLocation1) {
-        OCTeam selectedTeam = getData().teams.getTeambyName(getData().adminSelectedTeam);
+        IOCTeam selectedTeam = getData().teams.getTeamByName(getData().adminSelectedTeam);
         if (selectedTeam == null) {
             event.getWhoClicked().sendMessage(teamNotSelectedText);
             return;
         }
 
         if (isLocation1) {
-            selectedTeam.joinLocation1 = event.getWhoClicked().getLocation();
+            selectedTeam.setJoinLocation1(event.getWhoClicked().getLocation());
             event.getWhoClicked().sendMessage(Component.text("チーム" + getData().adminSelectedTeam + "の参加エリアの始点を" + UIUtility.locationBlockPostoString(event.getWhoClicked().getLocation()) + "に設定しました"));
         } else {
-            selectedTeam.joinLocation2 = event.getWhoClicked().getLocation();
+            selectedTeam.setJoinLocation2(event.getWhoClicked().getLocation());
             event.getWhoClicked().sendMessage(Component.text("チーム" + getData().adminSelectedTeam + "の参加エリアの終点を" + UIUtility.locationBlockPostoString(event.getWhoClicked().getLocation()) + "に設定しました"));
         }
     }

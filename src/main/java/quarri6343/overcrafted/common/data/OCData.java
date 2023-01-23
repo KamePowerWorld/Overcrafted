@@ -3,6 +3,7 @@ package quarri6343.overcrafted.common.data;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import quarri6343.overcrafted.common.data.interfaces.IOCTeams;
 import quarri6343.overcrafted.utils.ItemCreator;
 
 /**
@@ -60,5 +61,5 @@ public class OCData {
      */
     public static final ItemStack invalidItem = new ItemCreator(Material.RED_STAINED_GLASS_PANE).setName(Component.text("")).create();
 
-    public final OCTeams teams = new OCTeams();
+    public final IOCTeams teams = new OCTeams();
 }

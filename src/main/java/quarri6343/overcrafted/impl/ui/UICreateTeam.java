@@ -29,7 +29,7 @@ public class UICreateTeam {
      */
     private static List<AnvilGUI.ResponseAction> onTeamNameInputted(Player player, String text) {
         OCData data = Overcrafted.getInstance().getData();
-        if (data.teams.getTeambyName(text) != null) {
+        if (data.teams.getTeamByName(text) != null) {
             player.sendMessage(Component.text("その名前のチームは既に存在します").color(NamedTextColor.RED));
             return AnvilGUI.Response.close();
         }
@@ -56,7 +56,7 @@ public class UICreateTeam {
         }
 
         OCData data = Overcrafted.getInstance().getData();
-        if (data.teams.getTeambyColor(text) != null) {
+        if (data.teams.getTeamByColor(text) != null) {
             player.sendMessage(Component.text("その色のチームは既に存在します").color(NamedTextColor.RED));
             return AnvilGUI.Response.close();
         }

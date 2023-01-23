@@ -4,6 +4,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCTeam;
+import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 import quarri6343.overcrafted.common.order.ScoreBoardHandler;
 
 import java.util.function.Consumer;
@@ -14,9 +15,9 @@ import java.util.function.Consumer;
 public class GameRunnable extends BukkitRunnable {
 
     private int count = 0;
-    private final Consumer<OCTeam> onGameSuccess;
+    private final Consumer<IOCTeam> onGameSuccess;
 
-    public GameRunnable(Consumer<OCTeam> onGameSuccess) {
+    public GameRunnable(Consumer<IOCTeam> onGameSuccess) {
         this.onGameSuccess = onGameSuccess;
     }
 

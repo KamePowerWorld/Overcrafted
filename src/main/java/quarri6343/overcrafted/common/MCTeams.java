@@ -7,13 +7,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 import quarri6343.overcrafted.common.data.OCTeam;
+import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
 public class MCTeams {
 
-    public static void addPlayerToMCTeam(Player player, OCTeam urTeam) {
-        Team team = getBoard().getTeam(urTeam.name);
+    public static void addPlayerToMCTeam(Player player, IOCTeam urTeam) {
+        Team team = getBoard().getTeam(urTeam.getName());
         if (team == null)
             team = createMinecraftTeam(urTeam);
 
@@ -24,10 +25,10 @@ public class MCTeams {
     /**
      * 新しいminecraftのチームを作る
      */
-    private static Team createMinecraftTeam(OCTeam urTeam) {
-        Team team = getBoard().registerNewTeam(urTeam.name);
-        team.color(NamedTextColor.NAMES.value(urTeam.color));
-        team.displayName(Component.text(urTeam.name).color(NamedTextColor.NAMES.value(urTeam.color)));
+    private static Team createMinecraftTeam(IOCTeam urTeam) {
+        Team team = getBoard().registerNewTeam(urTeam.getName());
+        team.color(NamedTextColor.NAMES.value(urTeam.getColor()));
+        team.displayName(Component.text(urTeam.getName()).color(NamedTextColor.NAMES.value(urTeam.getColor())));
         team.setAllowFriendlyFire(false);
 
         return team;
@@ -38,7 +39,7 @@ public class MCTeams {
      */
     public static void deleteMinecraftTeams() {
         for (int i = 0; i < getBoard().getTeams().size(); i++) {
-            getBoard().getTeams().forEach(team -> team.unregister());
+            getBoard().getTeams().forEach(Team::unregister);
         }
     }
 
