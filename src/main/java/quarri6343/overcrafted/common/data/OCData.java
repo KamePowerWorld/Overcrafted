@@ -65,9 +65,14 @@ public class OCData {
     public static final int blockEventTriggerRange = 2;
 
     /**
-     * クラフトにかかる時間(tick)
+     * 人力で行うクラフトにかかる時間(tick)
      */
     public static final int craftingTime = 40;
+
+    /**
+     * 時間をかけるクラフトにかかる時間(tick)
+     */
+    public static final int cookingTime = 100;
 
     /**
      * インベントリを埋める無効アイテム

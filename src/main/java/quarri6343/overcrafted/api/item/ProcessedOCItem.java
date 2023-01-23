@@ -4,7 +4,7 @@ import lombok.Getter;
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Material;
 import quarri6343.overcrafted.api.item.interfaces.IProcessedOCItem;
-import quarri6343.overcrafted.impl.block.BlockProcessor;
+import quarri6343.overcrafted.impl.block.IBlockProcessor;
 import quarri6343.overcrafted.impl.item.OCItems;
 
 public class ProcessedOCItem extends OCItem implements IProcessedOCItem {
@@ -13,7 +13,7 @@ public class ProcessedOCItem extends OCItem implements IProcessedOCItem {
      * 材料を加工するブロック
      */
     @Getter
-    private final BlockProcessor processType;
+    private final IBlockProcessor processType;
 
     /**
      * 材料
@@ -29,7 +29,7 @@ public class ProcessedOCItem extends OCItem implements IProcessedOCItem {
      * @param internalName    作りたい固有アイテムの内部的な名前<br>
      * @param customModelData カスタムモデルデータ
      */
-    public ProcessedOCItem(TextComponent name, Material material, String internalName, int customModelData, BlockProcessor processType, OCItems ingredinet) {
+    public ProcessedOCItem(TextComponent name, Material material, String internalName, int customModelData, IBlockProcessor processType, OCItems ingredinet) {
         super(name, material, internalName, customModelData);
         this.processType = processType;
         this.ingredient = ingredinet;

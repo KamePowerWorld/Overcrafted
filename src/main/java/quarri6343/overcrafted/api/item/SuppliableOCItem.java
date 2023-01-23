@@ -21,6 +21,6 @@ public class SuppliableOCItem extends OCItem implements ISupplier {
 
     @Override
     public void onSupply(Player player) {
-        player.setItemInHand(getItemStack());
+        player.getInventory().addItem(getItemStack());
     }
 }

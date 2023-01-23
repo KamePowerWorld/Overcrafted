@@ -1,6 +1,6 @@
 package quarri6343.overcrafted.api.item.interfaces;
 
-import quarri6343.overcrafted.impl.block.BlockProcessor;
+import quarri6343.overcrafted.impl.block.IBlockProcessor;
 import quarri6343.overcrafted.impl.item.OCItems;
 
 /**
@@ -20,5 +20,5 @@ public interface IProcessedOCItem {
      *
      * @return 加工するブロック
      */
-    public BlockProcessor getProcessType();
+    public IBlockProcessor getProcessType();
 }
