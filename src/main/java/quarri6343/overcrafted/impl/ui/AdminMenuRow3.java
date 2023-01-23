@@ -31,14 +31,14 @@ public class AdminMenuRow3 {
     }
 
     public static void addElements(PaginatedGui gui, Player player) {
-        ItemStack placeCleanDishPileItem = new ItemCreator(OCItems.DISH.get().getItemStack()).setName(Component.text("チーム" + getData().adminSelectedTeam + "の綺麗な皿置場座標を設定")
+        ItemStack placeCleanDishPileItem = new ItemCreator(OCItems.DISH.get().getItemStack()).setName(Component.text("チーム" + getData().getAdminSelectedTeam() + "の綺麗な皿置場座標を設定")
                         .color(NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false))
                 .addLore(getCleanDishPileLocationStats()).create();
         GuiItem placeCleanDishPileButton = new GuiItem(placeCleanDishPileItem,
                 AdminMenuRow3::setUpCleanDishPile);
         gui.setItem(18, placeCleanDishPileButton);
 
-        ItemStack placeDirtyDishPileItem = new ItemCreator(OCItems.DIRTY_DISH.get().getItemStack()).setName(Component.text("チーム" + getData().adminSelectedTeam + "の汚い皿置場座標を設定")
+        ItemStack placeDirtyDishPileItem = new ItemCreator(OCItems.DIRTY_DISH.get().getItemStack()).setName(Component.text("チーム" + getData().getAdminSelectedTeam() + "の汚い皿置場座標を設定")
                         .color(NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false))
                 .addLore(getDirtyDishPileLocationStats()).create();
         GuiItem placeDirtyDishPileButton = new GuiItem(placeDirtyDishPileItem,
@@ -86,7 +86,7 @@ public class AdminMenuRow3 {
      * @return 綺麗な皿置き場の位置を設定するボタンに表示する現在の状況
      */
     private static TextComponent getCleanDishPileLocationStats() {
-        IOCTeam team = getData().teams.getTeamByName(getData().adminSelectedTeam);
+        IOCTeam team = getData().getTeams().getTeamByName(getData().getAdminSelectedTeam());
         if (team == null) {
             return teamNotSelectedText;
         }
@@ -99,7 +99,7 @@ public class AdminMenuRow3 {
      * @return 汚い皿置き場の位置を設定するボタンに表示する現在の状況
      */
     private static TextComponent getDirtyDishPileLocationStats() {
-        IOCTeam team = getData().teams.getTeamByName(getData().adminSelectedTeam);
+        IOCTeam team = getData().getTeams().getTeamByName(getData().getAdminSelectedTeam());
         if (team == null) {
             return teamNotSelectedText;
         }
@@ -113,7 +113,7 @@ public class AdminMenuRow3 {
      * @param event
      */
     public static void setUpCleanDishPile(InventoryClickEvent event) {
-        IOCTeam team = getData().teams.getTeamByName(getData().adminSelectedTeam);
+        IOCTeam team = getData().getTeams().getTeamByName(getData().getAdminSelectedTeam());
         if (team == null) {
             event.getWhoClicked().sendMessage(teamNotSelectedText);
             return;
@@ -136,7 +136,7 @@ public class AdminMenuRow3 {
      * @param event
      */
     public static void setUpDirtyDishPile(InventoryClickEvent event) {
-        IOCTeam team = getData().teams.getTeamByName(getData().adminSelectedTeam);
+        IOCTeam team = getData().getTeams().getTeamByName(getData().getAdminSelectedTeam());
         if (team == null) {
             event.getWhoClicked().sendMessage(teamNotSelectedText);
             return;

@@ -39,7 +39,7 @@ public class DishPileInteractEventHandler implements IPlayerInteractEventHandler
         if (event.getClickedBlock() == null)
             return;
 
-        IOCTeam team = getData().teams.getTeamByPlayer(event.getPlayer());
+        IOCTeam team = getData().getTeams().getTeamByPlayer(event.getPlayer());
         if (team == null) {
             return;
         }

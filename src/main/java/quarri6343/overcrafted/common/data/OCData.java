@@ -1,5 +1,7 @@
 package quarri6343.overcrafted.common.data;
 
+import lombok.Getter;
+import lombok.Setter;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -14,7 +16,8 @@ public class OCData {
     /**
      * ゲーム管理者が現在選択しているクラスの名前
      */
-    public String adminSelectedTeam = "";
+    @Getter @Setter
+    private String adminSelectedTeam = "";
 
     /**
      * ゲーム開始前に自動的にプレイヤーをチームに割り当てる周期(tick)
@@ -61,5 +64,6 @@ public class OCData {
      */
     public static final ItemStack invalidItem = new ItemCreator(Material.RED_STAINED_GLASS_PANE).setName(Component.text("")).create();
 
-    public final IOCTeams teams = new OCTeams();
+    @Getter
+    private final IOCTeams teams = new OCTeams();
 }

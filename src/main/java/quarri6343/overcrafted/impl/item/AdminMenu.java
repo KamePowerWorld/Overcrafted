@@ -7,6 +7,9 @@ import quarri6343.overcrafted.api.item.OCItem;
 import quarri6343.overcrafted.api.item.interfaces.IRightClickEventHandler;
 import quarri6343.overcrafted.impl.ui.UIAdminMenu;
 
+/**
+ * 管理者メニューアイテム
+ */
 public class AdminMenu extends OCItem implements IRightClickEventHandler {
     
     /**

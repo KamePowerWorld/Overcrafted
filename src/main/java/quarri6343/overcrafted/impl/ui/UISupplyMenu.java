@@ -16,10 +16,6 @@ import quarri6343.overcrafted.impl.item.OCItems;
  */
 public class UISupplyMenu {
 
-    private static OCData getData() {
-        return Overcrafted.getInstance().getData();
-    }
-
     public static void openUI(Player player) {
         PaginatedGui gui = Gui.paginated()
                 .title(Component.text("補給所").color(NamedTextColor.GRAY))

@@ -49,7 +49,6 @@ public final class Overcrafted extends JavaPlugin {
         new ItemEventHandler();
         new BlockEventHandler();
         new DishPileInteractEventHandler();
-        new GuiInteractEventHandler();
 
         ResourcePackUtil.reloadResourcePack();
     }

@@ -9,6 +9,7 @@ public interface IRightClickEventHandler {
 
     /**
      * 固有アイテムが右クリックされた際に発火されるイベント
+     *
      * @param e イベント
      */
     void onRightClick(PlayerInteractEvent e);

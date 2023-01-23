@@ -14,9 +14,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
-/**
- * このプラグインに存在する全ての固有アイテムの親クラス
- */
 @Data
 public class OCItem implements IOCItem {
 
@@ -48,12 +45,13 @@ public class OCItem implements IOCItem {
     private final int customModelData;
 
     /**
-     * 固有アイテムの型を作製する
-     *
-     * @param name         作りたい固有アイテムの名前(ユーザーが読むので必ず日本語にすること)
-     * @param material     作りたい固有アイテムの元となるバニラアイテム
+     *　固有アイテムの型を作成する
+     * 
+     * @param name 作りたい固有アイテムの名前(ユーザーが読むので必ず日本語にすること)
+     * @param material 作りたい固有アイテムの元となるバニラアイテム
      * @param internalName 作りたい固有アイテムの内部的な名前<br>
      *                     召喚コマンドで使われるので必ず半角英数字にしてスペースの代わりに_を使うこと
+     * @param customModelData 固有アイテムにセットするカスタムモデルデータ
      */
     @ParametersAreNonnullByDefault
     public OCItem(TextComponent name, Material material, String internalName, int customModelData) {
@@ -67,7 +65,7 @@ public class OCItem implements IOCItem {
     /**
      * 固有アイテムの型の実体を作製する内部的な関数
      *
-     * @return
+     * @return 作られたアイテムの型の実体
      */
     private ItemStack createItem() {
         return new ItemCreator(material)
@@ -99,9 +97,5 @@ public class OCItem implements IOCItem {
             return false;
 
         return ID.equals(internalName);
-    }
-
-    public boolean isPlacable() {
-        return false;
     }
 }

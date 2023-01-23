@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * ocgiveコマンドを作製するメインクラス
+ * プレイヤーにカスタムアイテムを渡すコマンド
  */
 public class CommandOCGive implements Listener {
 

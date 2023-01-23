@@ -7,7 +7,11 @@ import org.bukkit.entity.Player;
  * チームに所属するプレイヤー
  */
 public interface IOCPlayer {
-    
+
+    /**
+     * プレイヤーのエンティティを取得
+     * @return 座標
+     */
     public Player getEntity();
 
     /**
@@ -22,7 +26,7 @@ public interface IOCPlayer {
 
     /**
      * プレイヤーをテレポートさせる
-     * @param location
+     * @param location 座標
      */
     public void teleport(Location location);
 }

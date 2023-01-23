@@ -13,6 +13,9 @@ import java.util.Arrays;
 
 import static quarri6343.overcrafted.impl.block.OCBlocks.*;
 
+/**
+ * アイテムレジストリ
+ */
 public enum OCItems {
     WOOD(new SuppliableOCItem(Component.text("原木"), Material.OAK_WOOD, "wood", 0)),
     COBBLESTONE(new SuppliableOCItem(Component.text("丸石"), Material.COBBLESTONE, "cobblestone", 0)),

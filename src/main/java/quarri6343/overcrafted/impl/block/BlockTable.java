@@ -15,6 +15,9 @@ import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
 import quarri6343.overcrafted.impl.item.OCItems;
 
+/**
+ * アイテムを上に置くことのできるブロック
+ */
 public class BlockTable extends OCBlock implements IRightClickEventHandler {
 
     public BlockTable(Material material) {
@@ -37,7 +40,7 @@ public class BlockTable extends OCBlock implements IRightClickEventHandler {
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE)
             return;
 
-        IOCTeam team = getData().teams.getTeamByPlayer(event.getPlayer());
+        IOCTeam team = getData().getTeams().getTeamByPlayer(event.getPlayer());
         if (team == null)
             return;
 

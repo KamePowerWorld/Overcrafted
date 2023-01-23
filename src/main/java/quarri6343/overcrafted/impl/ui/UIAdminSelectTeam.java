@@ -29,24 +29,24 @@ public class UIAdminSelectTeam {
                 .create();
 
         OCData data = Overcrafted.getInstance().getData();
-        if (data.teams.getTeamsLength() == 0) {
+        if (data.getTeams().getTeamsLength() == 0) {
             GuiItem closeButton = new GuiItem(new ItemCreator(Material.BARRIER)
                     .setName(Component.text("まず/create team {チーム名} {チームの色}でチームを作ってください").color(NamedTextColor.WHITE)).create(),
                     event -> gui.close(event.getWhoClicked()));
             gui.setItem(22, closeButton);
         } else {
-            for (int i = 0; i < data.teams.getTeamsLength(); i++) {
+            for (int i = 0; i < data.getTeams().getTeamsLength(); i++) {
                 List<Component> lores = new ArrayList<>();
-                lores.add(Component.text("プレイヤー数: " + data.teams.getTeam(i).getPlayersSize()));
-                lores.addAll(data.teams.getTeam(i).playerNamesToText());
+                lores.add(Component.text("プレイヤー数: " + data.getTeams().getTeam(i).getPlayersSize()));
+                lores.addAll(data.getTeams().getTeam(i).playerNamesToText());
 
                 ItemStack teamSelectItem = new ItemCreator(Material.WHITE_WOOL)
-                        .setName(Component.text("チーム" + data.teams.getTeam(i).getName() + "を選択"))
+                        .setName(Component.text("チーム" + data.getTeams().getTeam(i).getName() + "を選択"))
                         .setLores(lores).create();
                 GuiItem teamSelectButton = new GuiItem(teamSelectItem,
                         event -> {
-                            data.adminSelectedTeam = data.teams.getTeam(event.getSlot()).getName();
-                            event.getWhoClicked().sendMessage("チーム" + data.adminSelectedTeam + "を選択しました");
+                            data.setAdminSelectedTeam(data.getTeams().getTeam(event.getSlot()).getName());
+                            event.getWhoClicked().sendMessage("チーム" + data.getAdminSelectedTeam() + "を選択しました");
                             UIAdminMenu.openUI((Player) event.getWhoClicked());
                         });
                 gui.setItem(i, teamSelectButton);

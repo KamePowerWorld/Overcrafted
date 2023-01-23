@@ -10,6 +10,9 @@ import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.logic.OCLogic;
 import quarri6343.overcrafted.utils.ResourcePackUtil;
 
+/**
+ * リソースパックをリロードするコマンド
+ */
 public class CommandReloadResourcePack extends CommandBase {
 
     private static final String commandName = "reloadresourcepack";

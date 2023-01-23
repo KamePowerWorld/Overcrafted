@@ -61,8 +61,8 @@ public class OCLogic {
      * ゲームが実際に始まった時に行う処理
      */
     private void onGameBegin() {
-        for (int i = 0; i < getData().teams.getTeamsLength(); i++) {
-            IOCTeam team = getData().teams.getTeam(i);
+        for (int i = 0; i < getData().getTeams().getTeamsLength(); i++) {
+            IOCTeam team = getData().getTeams().getTeam(i);
             if (team.getPlayersSize() == 0)
                 continue;
 

@@ -9,6 +9,9 @@ import quarri6343.overcrafted.api.item.interfaces.ILeftClickEventHandler;
 import quarri6343.overcrafted.api.item.interfaces.IRightClickEventHandler;
 import quarri6343.overcrafted.impl.block.OCBlocks;
 
+/**
+ * 全てのOCBlocksクラスに右クリックと左クリックのイベントを渡す
+ */
 public class BlockEventHandler implements Listener, IPlayerInteractEventHandler{
     
     public BlockEventHandler(){

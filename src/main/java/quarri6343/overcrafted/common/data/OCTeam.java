@@ -13,7 +13,7 @@ import quarri6343.overcrafted.api.item.StackedDish;
 import quarri6343.overcrafted.common.data.interfaces.IDishPile;
 import quarri6343.overcrafted.common.data.interfaces.IOCPlayer;
 import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
-import quarri6343.overcrafted.utils.OvercraftedUtils;
+import quarri6343.overcrafted.utils.OverCraftedUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,7 +121,7 @@ public class OCTeam implements IOCTeam {
         if (joinLocation1 == null || joinLocation2 == null)
             return;
 
-        Location centerLocation = OvercraftedUtils.getCenterLocation(joinLocation1, joinLocation2);
+        Location centerLocation = OverCraftedUtils.getCenterLocation(joinLocation1, joinLocation2);
         for (int j = 0; j < getPlayersSize(); j++) {
             getPlayer(j).teleport(centerLocation);
         }

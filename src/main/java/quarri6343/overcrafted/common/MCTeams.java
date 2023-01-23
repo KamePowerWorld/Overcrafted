@@ -11,6 +11,9 @@ import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
+/**
+ * minecraftネイティブのチームハンドラ
+ */
 public class MCTeams {
 
     public static void addPlayerToMCTeam(Player player, IOCTeam urTeam) {

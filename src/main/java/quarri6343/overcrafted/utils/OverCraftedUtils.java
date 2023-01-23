@@ -15,7 +15,10 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Field;
 
-public class OvercraftedUtils {
+/**
+ * 雑多な関数をまとめたクラス
+ */
+public class OverCraftedUtils {
 
     /**
      * プラグインマネージャからコマンドマップを取得する

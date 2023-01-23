@@ -15,6 +15,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * ボスバーの表示を制御する
+ */
 public class BossBarHandler {
 
     private static Map<IOCTeam, BossBar> bossBarMap = new HashMap<>();
@@ -23,6 +26,11 @@ public class BossBarHandler {
         return Overcrafted.getInstance().getData();
     }
 
+    /**
+     * ボスバーに渡された提出可能なアイテムのアイコンリストを表示する
+     * @param team ボスバーを表示させるチーム
+     * @param dishMenuList メニューリスト
+     */
     public static void displayDishMenu(IOCTeam team, List<ISubmittable> dishMenuList) {
         Component text = Component.text(MenuFont.BONUS.get_char() + MenuFont.SPACE.get_char()).font(OCResourcePackData.menuFontName);
         for (ISubmittable dishMenu : dishMenuList) {
@@ -42,9 +50,12 @@ public class BossBarHandler {
         }
     }
 
+    /**
+     * 全てのプレイヤーからボスバーの全てのオブジェクトを隠す
+     */
     public static void hideEverything() {
-        for (int i = 0; i < getData().teams.getTeamsLength(); i++) {
-            IOCTeam team = getData().teams.getTeam(i);
+        for (int i = 0; i < getData().getTeams().getTeamsLength(); i++) {
+            IOCTeam team = getData().getTeams().getTeam(i);
             BossBar bossBar = bossBarMap.get(team);
             if (bossBar != null) {
                 for (int j = 0; j < team.getPlayersSize(); j++) {

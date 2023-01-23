@@ -12,11 +12,7 @@ import quarri6343.overcrafted.common.data.OCData;
  * プラグインの管理パネル
  */
 public class UIAdminMenu {
-
-    private static OCData getData() {
-        return Overcrafted.getInstance().getData();
-    }
-
+    
     public static void openUI(Player player) {
         PaginatedGui gui = Gui.paginated()
                 .title(Component.text("管理メニュー").color(NamedTextColor.GRAY))

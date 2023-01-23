@@ -5,9 +5,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.common.data.OCData;
-import quarri6343.overcrafted.common.data.OCTeam;
 import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
-import quarri6343.overcrafted.utils.OvercraftedUtils;
+import quarri6343.overcrafted.utils.OverCraftedUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +38,8 @@ public class GameInactiveRunnable extends BukkitRunnable {
     private void assignOrUnAssignPlayersToTeam() {
         List<Player> assignedPlayers = new ArrayList<>();
 
-        for (int i = 0; i < getData().teams.getTeamsLength(); i++) {
-            IOCTeam team = getData().teams.getTeam(i);
+        for (int i = 0; i < getData().getTeams().getTeamsLength(); i++) {
+            IOCTeam team = getData().getTeams().getTeam(i);
 
             if (team.getJoinLocation1() == null || team.getJoinLocation2() == null)
                 continue;
@@ -49,7 +48,7 @@ public class GameInactiveRunnable extends BukkitRunnable {
                 if (assignedPlayers.contains(onlinePlayer))
                     continue;
 
-                if (OvercraftedUtils.isPlayerInArea(onlinePlayer, team.getJoinLocation1(), team.getJoinLocation2())) {
+                if (OverCraftedUtils.isPlayerInArea(onlinePlayer, team.getJoinLocation1(), team.getJoinLocation2())) {
                     addPlayerToTeam(onlinePlayer, team);
                     assignedPlayers.add(onlinePlayer);
                 }

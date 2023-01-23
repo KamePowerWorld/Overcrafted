@@ -12,6 +12,9 @@ import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
 import quarri6343.overcrafted.impl.item.OCItems;
 
+/**
+ * アイテムを別のアイテムに加工できるブロック
+ */
 public class BlockProcessor extends OCBlock implements IRightClickEventHandler {
 
     public BlockProcessor(Material material) {
@@ -33,13 +36,14 @@ public class BlockProcessor extends OCBlock implements IRightClickEventHandler {
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE)
             return;
 
-        IOCTeam team = getData().teams.getTeamByPlayer(event.getPlayer());
+        IOCTeam team = getData().getTeams().getTeamByPlayer(event.getPlayer());
         if (team == null) {
             return;
         }
-
+        
+        event.setCancelled(true);
+        
         IOCItem ocItem = OCItems.toOCItem(event.getItem());
-
         for(OCItems ocItems : OCItems.values()){
             if(!(ocItems.get() instanceof IProcessedOCItem)){
                 continue;
@@ -49,7 +53,6 @@ public class BlockProcessor extends OCBlock implements IRightClickEventHandler {
                 continue;
 
             if(((IProcessedOCItem)ocItems.get()).getIngredient().get().equals(ocItem)){
-                event.setCancelled(true);
                 event.getPlayer().setItemInHand(ocItems.get().getItemStack());
             }
         }

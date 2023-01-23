@@ -46,7 +46,7 @@ public class CommandForceLeave extends CommandBase {
             return true;
         }
 
-        IOCTeam team = getData().teams.getTeamByPlayer(player);
+        IOCTeam team = getData().getTeams().getTeamByPlayer(player);
         if (team == null) {
             sender.sendMessage(Component.text("プレイヤー" + arguments[0] + "はチームに所属していません").color(NamedTextColor.RED));
             return true;

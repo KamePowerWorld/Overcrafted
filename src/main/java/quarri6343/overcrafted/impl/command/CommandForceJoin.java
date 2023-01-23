@@ -38,7 +38,7 @@ public class CommandForceJoin extends CommandBase {
             return true;
         }
 
-        if (getData().adminSelectedTeam.isEmpty()) {
+        if (getData().getAdminSelectedTeam().isEmpty()) {
             sender.sendMessage("まずGUIで加入させたいチームを選択してください");
             return true;
         }
@@ -49,17 +49,17 @@ public class CommandForceJoin extends CommandBase {
             return true;
         }
 
-        if (getData().teams.getTeamByPlayer(player) != null) {
+        if (getData().getTeams().getTeamByPlayer(player) != null) {
             GlobalTeamHandler.removePlayerFromTeam(player, true);
             sender.sendMessage(arguments[0] + "が既にチームに入っていたので離脱させました");
         }
 
-        IOCTeam team = getData().teams.getTeamByName(getData().adminSelectedTeam);
+        IOCTeam team = getData().getTeams().getTeamByName(getData().getAdminSelectedTeam());
         if (team == null)
             return true;
 
         GlobalTeamHandler.addPlayerToTeam(player, team);
-        sender.sendMessage(arguments[0] + "をチーム" + getData().adminSelectedTeam + "に加入させました");
+        sender.sendMessage(arguments[0] + "をチーム" + getData().getAdminSelectedTeam() + "に加入させました");
 
         team.setUpGameEnvforPlayer(player);
 

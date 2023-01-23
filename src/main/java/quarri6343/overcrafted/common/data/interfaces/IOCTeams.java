@@ -32,7 +32,8 @@ public interface IOCTeams {
      * @param index チームのインデックス
      * @return チーム
      */
-    public @Nonnull IOCTeam getTeam(int index);
+    public @Nonnull
+    IOCTeam getTeam(int index);
 
     /**
      * 名前からチームを取得する
@@ -54,7 +55,7 @@ public interface IOCTeams {
 
     /**
      * プレイヤー名からチームを取得する
-     * 
+     *
      * @param player プレイヤー名
      * @return チーム
      */
@@ -65,12 +66,12 @@ public interface IOCTeams {
      * チームの数を取得する
      */
     public int getTeamsLength();
-    
+
     /**
      * チームを全削除する
      */
     public void clearTeam();
-    
+
     /**
      * チームのプレイヤーを解散させる
      */

@@ -10,10 +10,16 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 
+/**
+ * リソースパックを扱う関数を集めたクラス
+ */
 public class ResourcePackUtil {
 
     public static boolean isResourcePackReloading = false;
 
+    /**
+     * リソースパックを再ダウンロードさせ必要ならプレイヤーに再ダウンロードさせる
+     */
     public static void reloadResourcePack() {
         new BukkitRunnable() {
 

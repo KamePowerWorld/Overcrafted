@@ -8,6 +8,9 @@ import quarri6343.overcrafted.api.block.OCBlock;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 
+/**
+ * ブロックのレジストリ
+ */
 public enum OCBlocks {
 
     TRASHCAN(new BlockTrashCan()),

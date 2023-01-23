@@ -92,8 +92,8 @@ public class PlayerEventHandler implements Listener {
      * @param event
      */
     private void processDishPileDestruction(EntityDeathEvent event) {
-        for (int i = 0; i < getData().teams.getTeamsLength(); i++) {
-            IOCTeam team = getData().teams.getTeam(i);
+        for (int i = 0; i < getData().getTeams().getTeamsLength(); i++) {
+            IOCTeam team = getData().getTeams().getTeam(i);
 
             IDishPile cleanDishPile = team.getCleanDishPile();
             if (event.getEntity().getLocation().getBlock().equals(cleanDishPile.getLocation().getBlock()) && cleanDishPile.isPlaced()) {
@@ -125,7 +125,7 @@ public class PlayerEventHandler implements Listener {
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE)
             return;
 
-        IOCTeam team = getData().teams.getTeamByPlayer(event.getPlayer());
+        IOCTeam team = getData().getTeams().getTeamByPlayer(event.getPlayer());
         if (team == null)
             return;
 
@@ -146,7 +146,7 @@ public class PlayerEventHandler implements Listener {
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE)
             return;
 
-        IOCTeam team = getData().teams.getTeamByPlayer(event.getPlayer());
+        IOCTeam team = getData().getTeams().getTeamByPlayer(event.getPlayer());
         if (team == null)
             return;
 
@@ -172,7 +172,7 @@ public class PlayerEventHandler implements Listener {
                 || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
             return;
 
-        IOCTeam team = getData().teams.getTeamByPlayer(event.getPlayer());
+        IOCTeam team = getData().getTeams().getTeamByPlayer(event.getPlayer());
         if (team == null)
             return;
 
@@ -206,7 +206,7 @@ public class PlayerEventHandler implements Listener {
                 || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
             return;
 
-        IOCTeam team = getData().teams.getTeamByPlayer(event.getPlayer());
+        IOCTeam team = getData().getTeams().getTeamByPlayer(event.getPlayer());
         if (team == null)
             return;
 
@@ -230,7 +230,7 @@ public class PlayerEventHandler implements Listener {
                 || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
             return;
 
-        IOCTeam team = getData().teams.getTeamByPlayer(event.getPlayer());
+        IOCTeam team = getData().getTeams().getTeamByPlayer(event.getPlayer());
         if (team == null)
             return;
 
@@ -271,6 +271,9 @@ public class PlayerEventHandler implements Listener {
         tryPickUpDish(event);
     }
 
+    /**
+     * 皿のエンティティがクリックされた時皿を拾うことを試みる
+     */
     private void tryPickUpDish(PlayerInteractEntityEvent event) {
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE
                 || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
@@ -279,7 +282,7 @@ public class PlayerEventHandler implements Listener {
         if (event.getPlayer().getItemInHand().getType() != Material.AIR)
             return;
 
-        IOCTeam team = getData().teams.getTeamByPlayer(event.getPlayer());
+        IOCTeam team = getData().getTeams().getTeamByPlayer(event.getPlayer());
         if (team == null)
             return;
 

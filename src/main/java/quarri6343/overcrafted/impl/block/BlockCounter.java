@@ -14,6 +14,9 @@ import quarri6343.overcrafted.common.order.OrderHandler;
 import quarri6343.overcrafted.impl.item.ISubmittable;
 import quarri6343.overcrafted.impl.item.OCItems;
 
+/**
+ * 皿を提出してスコアにできるブロック
+ */
 public class BlockCounter extends OCBlock implements IRightClickEventHandler {
 
     public BlockCounter(Material material) {
@@ -30,7 +33,7 @@ public class BlockCounter extends OCBlock implements IRightClickEventHandler {
 
     @Override
     public void onRightClick(PlayerInteractEvent event) {
-        IOCTeam team = getData().teams.getTeamByPlayer(event.getPlayer());
+        IOCTeam team = getData().getTeams().getTeamByPlayer(event.getPlayer());
         if (team == null) {
             event.getPlayer().sendMessage(Component.text("あなたはチームに所属していないため、皿を扱うことができません"));
             return;

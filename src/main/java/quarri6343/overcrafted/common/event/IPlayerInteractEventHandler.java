@@ -2,6 +2,9 @@ package quarri6343.overcrafted.common.event;
 
 import org.bukkit.event.player.PlayerInteractEvent;
 
+/**
+ * PlayerEventHandlerにこれを実装したクラスを登録することでイベントを受け取れる
+ */
 public interface IPlayerInteractEventHandler {
 
     /**

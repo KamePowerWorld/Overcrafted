@@ -6,7 +6,7 @@ import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
-import quarri6343.overcrafted.utils.OvercraftedUtils;
+import quarri6343.overcrafted.utils.OverCraftedUtils;
 
 /**
  * UR,MC両方のチームクラスに対する処理を行う
@@ -28,13 +28,13 @@ public class GlobalTeamHandler {
      * プレイヤーをUR, MC両方のチームから退出させる
      */
     public static void removePlayerFromTeam(Player player, boolean restoreStats) {
-        IOCTeam team = getData().teams.getTeamByPlayer(player);
+        IOCTeam team = getData().getTeams().getTeamByPlayer(player);
         if (team != null) {
             team.removePlayer(player, restoreStats);
         }
         MCTeams.removePlayerFromMCTeam(player);
 
-        if (getLogic().gameStatus == OCLogic.GameStatus.ACTIVE && getData().teams.countAllPlayers() == 0) {
+        if (getLogic().gameStatus == OCLogic.GameStatus.ACTIVE && getData().getTeams().countAllPlayers() == 0) {
             getLogic().endGame(null, null, OCLogic.GameResult.FAIL, true);
         }
     }
@@ -50,7 +50,7 @@ public class GlobalTeamHandler {
 
     public static void resetTeams(boolean restoreStats) {
         MCTeams.deleteMinecraftTeams();
-        getData().teams.disbandTeams(restoreStats);
+        getData().getTeams().disbandTeams(restoreStats);
     }
 
     /**
@@ -60,13 +60,13 @@ public class GlobalTeamHandler {
      * @return ゲームを開始できるか
      */
     public static boolean areTeamsValid(Player gameMaster) {
-        if (getData().teams.getTeamsLength() == 0) {
+        if (getData().getTeams().getTeamsLength() == 0) {
             gameMaster.sendMessage("チームが存在しません!");
             return false;
         }
 
-        for (int i = 0; i < getData().teams.getTeamsLength(); i++) {
-            IOCTeam team = getData().teams.getTeam(i);
+        for (int i = 0; i < getData().getTeams().getTeamsLength(); i++) {
+            IOCTeam team = getData().getTeams().getTeam(i);
 
             if (team.getPlayersSize() > 0) {
                 if (team.getStartLocation() == null) {
@@ -84,7 +84,7 @@ public class GlobalTeamHandler {
             }
         }
 
-        if (getData().teams.countAllPlayers() == 0) {
+        if (getData().getTeams().countAllPlayers() == 0) {
             gameMaster.sendMessage("誰もチームに参加していません!");
             return false;
         }
@@ -97,19 +97,19 @@ public class GlobalTeamHandler {
      */
     public static void assignPlayersInJoinArea() {
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-            for (int i = 0; i < getData().teams.getTeamsLength(); i++) {
-                if (getData().teams.getTeam(i).containsPlayer(onlinePlayer)) {
+            for (int i = 0; i < getData().getTeams().getTeamsLength(); i++) {
+                if (getData().getTeams().getTeam(i).containsPlayer(onlinePlayer)) {
                     return;
                 }
             }
 
-            for (int i = 0; i < getData().teams.getTeamsLength(); i++) {
-                IOCTeam team = getData().teams.getTeam(i);
+            for (int i = 0; i < getData().getTeams().getTeamsLength(); i++) {
+                IOCTeam team = getData().getTeams().getTeam(i);
 
                 if (team.getJoinLocation1() == null || team.getJoinLocation2() == null)
                     continue;
 
-                if (OvercraftedUtils.isPlayerInArea(onlinePlayer, team.getJoinLocation1(), team.getJoinLocation2())) {
+                if (OverCraftedUtils.isPlayerInArea(onlinePlayer, team.getJoinLocation1(), team.getJoinLocation2())) {
                     addPlayerToTeam(onlinePlayer, team);
                     break;
                 }

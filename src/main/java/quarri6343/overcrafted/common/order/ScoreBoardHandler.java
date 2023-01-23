@@ -39,8 +39,8 @@ public class ScoreBoardHandler {
         objective = getBoard().getObjective(objectiveName);
         destroy();
 
-        for (int i = 0; i < getData().teams.getTeamsLength(); i++) {
-            IOCTeam team = getData().teams.getTeam(i);
+        for (int i = 0; i < getData().getTeams().getTeamsLength(); i++) {
+            IOCTeam team = getData().getTeams().getTeam(i);
             scores.put(team, 0);
         }
 
@@ -69,8 +69,8 @@ public class ScoreBoardHandler {
         IOCTeam highestTeam = null;
         boolean draw = false;
 
-        for (int i = 0; i < getData().teams.getTeamsLength(); i++) {
-            IOCTeam team = getData().teams.getTeam(i);
+        for (int i = 0; i < getData().getTeams().getTeamsLength(); i++) {
+            IOCTeam team = getData().getTeams().getTeam(i);
             int score = scores.get(team);
 
             if (score > highestScore) {

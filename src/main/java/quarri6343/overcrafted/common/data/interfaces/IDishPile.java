@@ -42,9 +42,21 @@ public interface IDishPile {
      */
     public boolean removeDish();
 
+    /**
+     * 積まれた皿の額縁エンティティを取得
+     * @return
+     */
     public Entity getDishPileEntity();
 
+    /**
+     * 積まれた皿の座標を取得
+     * @return
+     */
     public Location getLocation();
 
+    /**
+     * 積まれた皿の座標を設定
+     * @param location
+     */
     public void setLocation(Location location);
 }

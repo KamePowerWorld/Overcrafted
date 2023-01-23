@@ -8,8 +8,15 @@ import quarri6343.overcrafted.api.item.interfaces.ICombinedOCItem;
 import quarri6343.overcrafted.impl.item.OCItems;
 
 public class CombinedOCItem extends OCItem implements ICombinedOCItem {
-    
+
+    /**
+     * 材料1
+     */
     private final OCItems ingredient1;
+
+    /**
+     * 材料2
+     */
     private final OCItems ingredient2;
     
     /**
@@ -18,7 +25,7 @@ public class CombinedOCItem extends OCItem implements ICombinedOCItem {
      * @param name            作りたい固有アイテムの名前(ユーザーが読むので必ず日本語にすること)
      * @param material        作りたい固有アイテムの元となるバニラアイテム
      * @param internalName    作りたい固有アイテムの内部的な名前<br>
-     * @param customModelData
+     * @param customModelData カスタムモデルデータ
      */
     public CombinedOCItem(TextComponent name, Material material, String internalName, int customModelData, OCItems ingredient1, OCItems ingredient2) {
         super(name, material, internalName, customModelData);

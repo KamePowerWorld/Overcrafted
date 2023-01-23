@@ -49,7 +49,7 @@ public class AdminMenuRow1 {
         gui.setItem(2, selectTeamButton);
 
         GuiItem setStartButton;
-        ItemStack setStartItem = new ItemCreator(Material.FURNACE_MINECART).setName(Component.text("チーム" + getData().adminSelectedTeam + "のゲーム開始地点を設定"))
+        ItemStack setStartItem = new ItemCreator(Material.FURNACE_MINECART).setName(Component.text("チーム" + getData().getAdminSelectedTeam() + "のゲーム開始地点を設定"))
                 .addLore(getSetStartButtonStats()).addLore(setStartButtonGuide).create();
         setStartButton = new GuiItem(setStartItem,
                 event -> {
@@ -69,7 +69,7 @@ public class AdminMenuRow1 {
      * @return 初期位置を設定するボタンに表示する現在の状況
      */
     private static TextComponent getSetStartButtonStats() {
-        IOCTeam team = getData().teams.getTeamByName(getData().adminSelectedTeam);
+        IOCTeam team = getData().getTeams().getTeamByName(getData().getAdminSelectedTeam());
         if (team == null) {
             return teamNotSelectedText;
         }
@@ -81,7 +81,7 @@ public class AdminMenuRow1 {
      * 初期位置を設定するボタンを押したときのイベント
      */
     private static void onSetStartButton(InventoryClickEvent event) {
-        IOCTeam team = getData().teams.getTeamByName(getData().adminSelectedTeam);
+        IOCTeam team = getData().getTeams().getTeamByName(getData().getAdminSelectedTeam());
         if (team == null) {
             event.getWhoClicked().sendMessage(teamNotSelectedText);
             return;
@@ -108,19 +108,19 @@ public class AdminMenuRow1 {
             return;
         }
 
-        if (getData().adminSelectedTeam.isEmpty()) {
+        if (getData().getAdminSelectedTeam().isEmpty()) {
             event.getWhoClicked().sendMessage(teamNotSelectedText);
             return;
         }
 
-        IOCTeam team = getData().teams.getTeamByName(getData().adminSelectedTeam);
+        IOCTeam team = getData().getTeams().getTeamByName(getData().getAdminSelectedTeam());
         if (team == null)
             return;
 
         GlobalTeamHandler.removeAllPlayerFromTeam(team, false);
-        getData().teams.removeTeam(getData().adminSelectedTeam);
-        event.getWhoClicked().sendMessage(Component.text("チーム" + getData().adminSelectedTeam + "を削除しました").color(NamedTextColor.WHITE));
-        getData().adminSelectedTeam = "";
+        getData().getTeams().removeTeam(getData().getAdminSelectedTeam());
+        event.getWhoClicked().sendMessage(Component.text("チーム" + getData().getAdminSelectedTeam() + "を削除しました").color(NamedTextColor.WHITE));
+        getData().setAdminSelectedTeam("");
     }
 
     /**
@@ -131,11 +131,11 @@ public class AdminMenuRow1 {
             return gameRunningText;
         }
 
-        if (getData().adminSelectedTeam.equals("")) {
+        if (getData().getAdminSelectedTeam().equals("")) {
             return teamNotSelectedText;
         }
 
-        return Component.text("選択中のチーム:" + getData().adminSelectedTeam)
+        return Component.text("選択中のチーム:" + getData().getAdminSelectedTeam())
                 .color(NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false);
     }
 }

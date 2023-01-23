@@ -11,6 +11,7 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  * ファイルのハッシュ値を計算する
+ * 抜粋元
  * https://qiita.com/yasushi-jp/items/ac8c7ead98794aed9905
  */
 public class HashCalculator {

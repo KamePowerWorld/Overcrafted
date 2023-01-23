@@ -26,10 +26,13 @@ public class OrderHandler {
         return Overcrafted.getInstance().getLogic();
     }
 
+    /**
+     * 全てのチームに向けてランダムな注文のセットを生成する
+     */
     public static void generateRandomOrders() {
         BossBarHandler.hideEverything();
 
-        for (int i = 0; i < getData().teams.getTeamsLength(); i++) {
+        for (int i = 0; i < getData().getTeams().getTeamsLength(); i++) {
             List<ISubmittable> menus = new ArrayList<>();
             for (OCItems item : OCItems.values()){
                 if(item.get() instanceof ISubmittable)
@@ -40,12 +43,16 @@ public class OrderHandler {
             for (int j = 0; j < OCData.ordersOnStart; j++) {
                 orders.add(menus.get(new Random().nextInt(menus.size())));
             }
-            ordersMap.put(getData().teams.getTeam(i), orders);
-            BossBarHandler.displayDishMenu(getData().teams.getTeam(i), orders);
+            ordersMap.put(getData().getTeams().getTeam(i), orders);
+            BossBarHandler.displayDishMenu(getData().getTeams().getTeam(i), orders);
         }
         ScoreBoardHandler.initialize();
     }
 
+    /**
+     * あるチーム用のランダムな注文セットを生成する
+     * @param team チーム
+     */
     public static void generateRandomOrder(IOCTeam team) {
         List<ISubmittable> menus = new ArrayList<>();
         for (OCItems item : OCItems.values()){
@@ -58,6 +65,12 @@ public class OrderHandler {
         BossBarHandler.displayDishMenu(team, orders);
     }
 
+    /**
+     * 提出可能なオブジェクトが注文リストに存在するか確認する
+     * @param team 提出者のチーム
+     * @param submittable オブジェクト
+     * @return 存在するか
+     */
     public static boolean canSatisfyOrder(IOCTeam team, ISubmittable submittable) {
         List<ISubmittable> orders = ordersMap.get(team);
         if (orders.stream().filter(dishMenu -> dishMenu.equals(submittable)).findFirst().orElse(null) != null) {
@@ -67,6 +80,13 @@ public class OrderHandler {
         return false;
     }
 
+    /**
+     * 提出可能なオブジェクトが提出されたら注文を1つ消化して補充する
+     * 
+     * @param team 提出者のチーム
+     * @param submittable オブジェクト
+     * @return 注文が消化できたか
+     */
     public static boolean trySatisfyOrder(IOCTeam team, ISubmittable submittable) {
         if (!canSatisfyOrder(team, submittable))
             return false;
@@ -84,6 +104,9 @@ public class OrderHandler {
         return false;
     }
 
+    /**
+     * 全ての注文を削除する
+     */
     public static void clearOrders() {
         ordersMap.clear();
         ScoreBoardHandler.destroy();

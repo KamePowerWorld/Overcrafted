@@ -10,6 +10,9 @@ import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
 
+/**
+ * プレイヤーインベントリ関係のイベントハンドラ
+ */
 public class InventoryEventHandler implements Listener {
 
     public InventoryEventHandler() {
@@ -33,7 +36,7 @@ public class InventoryEventHandler implements Listener {
         if (!(event.getWhoClicked() instanceof Player))
             return;
 
-        IOCTeam team = getData().teams.getTeamByPlayer((Player) event.getWhoClicked());
+        IOCTeam team = getData().getTeams().getTeamByPlayer((Player) event.getWhoClicked());
         if (team == null)
             return;
 
@@ -96,6 +99,9 @@ public class InventoryEventHandler implements Listener {
 
     }
 
+    /**
+     * アイテムがナンバーキーで大量移動されることを防ぐ
+     */
     private void blockNumberKeyClick(InventoryClickEvent event) {
         ItemStack slotItem = event.getView().getTopInventory().getItem(event.getHotbarButton());
         if ((slotItem == null || slotItem.getType() == Material.AIR)) {
@@ -106,6 +112,9 @@ public class InventoryEventHandler implements Listener {
             event.setCancelled(true);
     }
 
+    /**
+     * アイテムがシフトキーで大量移動されることを防ぐ
+     */
     private void blockShiftKeyClick(InventoryClickEvent event) {
         ItemStack currentItem = event.getCurrentItem();
         if (currentItem == null || currentItem.getType() == Material.AIR) {
@@ -134,6 +143,9 @@ public class InventoryEventHandler implements Listener {
         }
     }
 
+    /**
+     * アイテムが上コンテナでクリックで大量移動されることを防ぐ
+     */
     private void blockTargetInventoryClick(InventoryClickEvent event) {
         ItemStack currentItem = event.getCurrentItem();
         ItemStack cursorItem = event.getCursor();
@@ -175,6 +187,9 @@ public class InventoryEventHandler implements Listener {
             event.setCancelled(true);
     }
 
+    /**
+     * アイテムがプレイヤーインベントリのクリックで大量移動されることを防ぐ
+     */
     private void blockPlayerInventoryClick(InventoryClickEvent event) {
         ItemStack currentItem = event.getCurrentItem();
         ItemStack cursorItem = event.getCursor();
@@ -239,7 +254,7 @@ public class InventoryEventHandler implements Listener {
         if (!(event.getWhoClicked() instanceof Player))
             return;
 
-        IOCTeam team = getData().teams.getTeamByPlayer((Player) event.getWhoClicked());
+        IOCTeam team = getData().getTeams().getTeamByPlayer((Player) event.getWhoClicked());
         if (team == null)
             return;
 

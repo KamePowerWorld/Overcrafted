@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
 import quarri6343.overcrafted.Overcrafted;
-import quarri6343.overcrafted.utils.OvercraftedUtils;
+import quarri6343.overcrafted.utils.OverCraftedUtils;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -90,7 +90,7 @@ public abstract class CommandBase extends BukkitCommand implements CommandExecut
         this.playerOnly = playerOnly;
         setPermission("overcrafted." + command);
 
-        CommandMap commandMap = OvercraftedUtils.getCommandMap();
+        CommandMap commandMap = OverCraftedUtils.getCommandMap();
         if (commandMap != null) {
             if (!commandMap.register(command, "Overcrafted", this))
                 commandMap.getKnownCommands().replace(command, this);
