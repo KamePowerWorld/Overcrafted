@@ -1,5 +1,6 @@
 package quarri6343.overcrafted.impl.block;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -16,6 +17,7 @@ import quarri6343.overcrafted.api.item.interfaces.IOCItem;
 import quarri6343.overcrafted.api.item.interfaces.IProcessedOCItem;
 import quarri6343.overcrafted.common.PlaceItemHandler;
 import quarri6343.overcrafted.common.data.OCData;
+import quarri6343.overcrafted.common.data.OCResourcePackData;
 import quarri6343.overcrafted.impl.item.OCItems;
 
 import java.util.HashMap;
@@ -35,7 +37,7 @@ public class AutomaticBlockProcessor extends BlockTable implements IBlockProcess
 
     public AutomaticBlockProcessor(Material material) {
         super(material);
-        onPickUp.add(this::cancelProcessing);
+        onPickUp.add(block -> cancelProcessing(block, true));
     }
 
     public void onRightClick(PlayerInteractEvent event) {
@@ -103,7 +105,13 @@ public class AutomaticBlockProcessor extends BlockTable implements IBlockProcess
                     armorStand.setCustomNameVisible(true);
                 }
 
-                armorStand.setCustomName(Integer.toString(progression));
+                int filledPercent = progression / (OCData.cookingTime / 10);
+                for (OCResourcePackData.ProgressBarFont font : OCResourcePackData.ProgressBarFont.values()) {
+                    if(font.getFilledPercentage() == filledPercent){
+                        armorStand.customName(Component.text(font.get_char()).font(OCResourcePackData.progressBarFontName));
+                        break;
+                    }
+                }
 
                 if(progression > OCData.cookingTime){
                     cancel();
@@ -132,7 +140,7 @@ public class AutomaticBlockProcessor extends BlockTable implements IBlockProcess
     }
 
     @Override
-    public void cancelProcessing(Block block){
+    public void cancelProcessing(Block block, boolean removeFromMap){
         Location location = block.getLocation();
         location.add(armorStandOffset);
         ArmorStand armorStand = null;
@@ -146,12 +154,14 @@ public class AutomaticBlockProcessor extends BlockTable implements IBlockProcess
 
         if(progressionMap.get(block) != null){
             progressionMap.get(block).cancel();
-            progressionMap.remove(block);
+            if(removeFromMap)
+                progressionMap.remove(block);
         }
     }
     
     @Override
-    public void cancelAllProcess(){
-
+    public void cancelAllProcesses(){
+        progressionMap.forEach((block, task) -> cancelProcessing(block, false));
+        progressionMap.clear();
     }
 }

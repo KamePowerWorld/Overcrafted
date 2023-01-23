@@ -1,12 +1,12 @@
 package quarri6343.overcrafted.impl.block;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.ItemFrame;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import quarri6343.overcrafted.api.block.ISneakEventHandler;
@@ -15,6 +15,7 @@ import quarri6343.overcrafted.api.item.interfaces.IProcessedOCItem;
 import quarri6343.overcrafted.api.item.interfaces.IRightClickEventHandler;
 import quarri6343.overcrafted.common.PlaceItemHandler;
 import quarri6343.overcrafted.common.data.OCData;
+import quarri6343.overcrafted.common.data.OCResourcePackData;
 import quarri6343.overcrafted.impl.item.OCItems;
 
 import java.util.HashMap;
@@ -34,7 +35,7 @@ public class ManualBlockProcessor extends BlockTable implements IBlockProcessor,
     
     public ManualBlockProcessor(Material material) {
         super(material);
-        onPickUp.add(this::cancelProcessing);
+        onPickUp.add(block -> cancelProcessing(block, true));
     }
     
     @Override
@@ -75,10 +76,10 @@ public class ManualBlockProcessor extends BlockTable implements IBlockProcessor,
             }
         }
         
-        Integer progress = progressionMap.get(block);
-        if(progress == null)
-            progress = 0;
-        progress++;
+        Integer progression = progressionMap.get(block);
+        if(progression == null)
+            progression = 0;
+        progression++;
         
         if(armorStand == null || armorStand.getCustomName() == null){
             if(armorStand != null)
@@ -90,10 +91,16 @@ public class ManualBlockProcessor extends BlockTable implements IBlockProcessor,
             armorStand.setCustomNameVisible(true);
         }
         
-        armorStand.setCustomName(Integer.toString(progress));
+        int filledPercent = progression / (OCData.craftingTime / 10);
+        for (OCResourcePackData.ProgressBarFont font : OCResourcePackData.ProgressBarFont.values()) {
+            if(font.getFilledPercentage() == filledPercent){
+                armorStand.customName(Component.text(font.get_char()).font(OCResourcePackData.progressBarFontName));
+                break;
+            }
+        }
         
-        if(progress <= OCData.craftingTime){
-            progressionMap.put(block, progress);
+        if(progression <= OCData.craftingTime){
+            progressionMap.put(block, progression);
         }
         else{
             progressionMap.remove(block);            
@@ -124,23 +131,25 @@ public class ManualBlockProcessor extends BlockTable implements IBlockProcessor,
     }
     
     @Override
-    public void cancelProcessing(Block block){
+    public void cancelProcessing(Block block, boolean removeFromMap){
         Location location = block.getLocation();
         location.add(armorStandOffset);
-        ItemFrame itemFrame = null;
+        ArmorStand armorStand = null;
         for (Entity nearbyEntity : location.getNearbyEntities(0.1, 0.1, 0.1)) {
-            if (nearbyEntity.getType() == EntityType.ITEM_FRAME){
-                itemFrame = (ItemFrame) nearbyEntity;
+            if (nearbyEntity.getType() == EntityType.ARMOR_STAND){
+                armorStand = (ArmorStand) nearbyEntity;
             }
         }
-        if(itemFrame != null)
-            itemFrame.remove();
+        if(armorStand != null)
+            armorStand.remove();
         
-        progressionMap.remove(block);
+        if(removeFromMap)
+            progressionMap.remove(block);
     }
     
     @Override
-    public void cancelAllProcess(){
-        
+    public void cancelAllProcesses(){
+        progressionMap.forEach((block, integer) -> cancelProcessing(block, false));
+        progressionMap.clear();
     }
 }

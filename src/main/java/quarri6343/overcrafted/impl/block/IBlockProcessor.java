@@ -16,7 +16,7 @@ public interface IBlockProcessor {
 
     public void continueProcessing(Block block);
 
-    public void cancelProcessing(Block block);
+    public void cancelProcessing(Block block, boolean removeFromMap);
     
-    public void cancelAllProcess();
+    public void cancelAllProcesses();
 }

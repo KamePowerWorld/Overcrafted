@@ -35,6 +35,9 @@ public class PlaceItemHandler {
 
         if (placedItemMap.containsKey(block))
             return false;
+        
+        if(itemStack == null)
+            return false;
 
         Location location = block.getLocation();
         location.add(0.5, 1.1, 0.5);
