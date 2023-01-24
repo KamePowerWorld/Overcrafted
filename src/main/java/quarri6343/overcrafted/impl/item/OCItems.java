@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.api.item.*;
 import quarri6343.overcrafted.api.item.interfaces.IOCItem;
+import quarri6343.overcrafted.api.item.interfaces.IProcessedOCItem;
 import quarri6343.overcrafted.common.data.OCResourcePackData;
 import quarri6343.overcrafted.impl.block.IBlockProcessor;
 
@@ -30,7 +31,9 @@ public enum OCItems {
     TORCH(new CombinedOCItem(Component.text("松明"), Material.TORCH, "torch", 0, STICK, CHARCOAL)),
     DIRTY_DISH(new OCItem(Component.text("汚い皿"), Material.PAPER, "dirty_dish", 2)),
     DISH(new ProcessedOCItem(Component.text("皿"), Material.PAPER, "dish", 1, (IBlockProcessor)WASHING.get(), DIRTY_DISH)),
-
+    BURNT_CHARCOAL(new BurntOCItem(Component.text("焦げた木炭"), Material.PAPER, "burnt_charcoal", 7, (IProcessedOCItem) CHARCOAL.get())),
+    BURNT_IRON_INGOT(new BurntOCItem(Component.text("焦げた鉄"), Material.PAPER, "burnt_iron_ingot", 8, (IProcessedOCItem) IRON_INGOT.get())),
+    
     DISH_STACKED_1(new StackedDish(Component.text("積まれた皿1"), "dish_stacked_1", 1, 1, StackedDish.StackedDishType.CLEAN)),
     DISH_STACKED_2(new StackedDish(Component.text("積まれた皿2"), "dish_stacked_2", 2, 2, StackedDish.StackedDishType.CLEAN)),
     DISH_STACKED_3(new StackedDish(Component.text("積まれた皿3"), "dish_stacked_3", 3, 3, StackedDish.StackedDishType.CLEAN)),

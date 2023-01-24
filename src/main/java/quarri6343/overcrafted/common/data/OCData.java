@@ -75,6 +75,11 @@ public class OCData {
     public static final int cookingTime = 100;
 
     /**
+     * 時間をかけるクラフトの成果物が燃えるまでの時間(tick)
+     */
+    public static final int burnTime = 100;
+
+    /**
      * インベントリを埋める無効アイテム
      */
     public static final ItemStack invalidItem = new ItemCreator(Material.RED_STAINED_GLASS_PANE).setName(Component.text("")).create();

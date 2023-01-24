@@ -16,9 +16,9 @@ public enum OCBlocks {
     TRASHCAN(new BlockTrashCan()),
     SUPPLIER(new BlockSupplier()),
     TABLE(new BlockTable(Material.DARK_OAK_PLANKS)),
-    CRAFTING(new ManualBlockProcessor(Material.CRAFTING_TABLE)),
-    SMELTING(new AutomaticBlockProcessor(Material.FURNACE)),
-    WASHING(new ManualBlockProcessor(Material.WATER_CAULDRON)),
+    CRAFTING(new BlockManualProcessor(Material.CRAFTING_TABLE)),
+    SMELTING(new BlockAutomaticProcessor(Material.FURNACE)),
+    WASHING(new BlockManualProcessor(Material.WATER_CAULDRON)),
     COUNTER(new BlockCounter(Material.RED_BED));
 
     private final OCBlock ocBlock;

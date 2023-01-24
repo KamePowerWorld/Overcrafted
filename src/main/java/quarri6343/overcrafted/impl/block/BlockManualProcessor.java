@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * アイテムを手動で別のアイテムに加工できるブロック
  */
-public class ManualBlockProcessor extends BlockTable implements IBlockProcessor, IRightClickEventHandler, ISneakEventHandler {
+public class BlockManualProcessor extends BlockTable implements IBlockProcessor, IRightClickEventHandler, ISneakEventHandler {
 
     private static final Vector armorStandOffset = new Vector(0.5,-0.5, 0.5);
     
@@ -33,7 +33,7 @@ public class ManualBlockProcessor extends BlockTable implements IBlockProcessor,
      */
     private static final Map<Block, Integer> progressionMap = new HashMap<>();
     
-    public ManualBlockProcessor(Material material) {
+    public BlockManualProcessor(Material material) {
         super(material);
         onPickUp.add(block -> cancelProcessing(block, true));
     }
@@ -103,23 +103,27 @@ public class ManualBlockProcessor extends BlockTable implements IBlockProcessor,
             progressionMap.put(block, progression);
         }
         else{
-            progressionMap.remove(block);            
-            ItemStack itemStack = PlaceItemHandler.getItem(block);
-            IOCItem iocItem = OCItems.toOCItem(itemStack);
-            
-            for(OCItems ocItems : OCItems.values()){
-                if(!(ocItems.get() instanceof IProcessedOCItem)){
-                    continue;
-                }
+            finishProcessing(block, armorStand);
+        }
+    }
+    
+    private void finishProcessing(Block block, ArmorStand armorStand){
+        progressionMap.remove(block);
+        ItemStack itemStack = PlaceItemHandler.getItem(block);
+        IOCItem iocItem = OCItems.toOCItem(itemStack);
 
-                if(((IProcessedOCItem)ocItems.get()).getProcessType() != this)
-                    continue;
+        for(OCItems ocItems : OCItems.values()){
+            if(!(ocItems.get() instanceof IProcessedOCItem)){
+                continue;
+            }
 
-                if(((IProcessedOCItem)ocItems.get()).getIngredient().get().equals(iocItem)){
-                    armorStand.remove();
-                    PlaceItemHandler.pickUpItem(block);
-                    PlaceItemHandler.placeItem(block, ocItems.get().getItemStack());
-                }
+            if(((IProcessedOCItem)ocItems.get()).getProcessType() != this)
+                continue;
+
+            if(((IProcessedOCItem)ocItems.get()).getIngredient().get().equals(iocItem)){
+                armorStand.remove();
+                PlaceItemHandler.pickUpItem(block);
+                PlaceItemHandler.placeItem(block, ocItems.get().getItemStack());
             }
         }
     }
