@@ -1,6 +1,11 @@
 package quarri6343.overcrafted;
 
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.Nullable;
+import quarri6343.overcrafted.api.CommandBase;
+import quarri6343.overcrafted.common.CursorGui;
 import quarri6343.overcrafted.common.event.ItemEventHandler;
 import quarri6343.overcrafted.common.ConfigHandler;
 import quarri6343.overcrafted.common.data.OCData;
@@ -43,6 +48,22 @@ public final class Overcrafted extends JavaPlugin {
         new CommandForceLeave();
         new CommandReloadResourcePack();
         new CommandOCGive();
+        new CommandBase("show"){
+            @Override
+            public boolean onCommand(CommandSender sender, @Nullable String[] arguments) {
+                if(sender instanceof Player)
+                    CursorGui.show((Player) sender);
+                return true;
+            }
+        };
+        new CommandBase("hide"){
+            @Override
+            public boolean onCommand(CommandSender sender, @Nullable String[] arguments) {
+                if(sender instanceof Player)
+                    CursorGui.hide((Player) sender);
+                return true;
+            }
+        };
 
         playerEventHandler = new PlayerEventHandler();
         new InventoryEventHandler();
@@ -51,6 +72,8 @@ public final class Overcrafted extends JavaPlugin {
         new DishPileInteractEventHandler();
 
         ResourcePackUtil.reloadResourcePack();
+        
+        new CursorGui();
     }
 
     @Override
