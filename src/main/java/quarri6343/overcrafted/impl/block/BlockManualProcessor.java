@@ -1,5 +1,6 @@
 package quarri6343.overcrafted.impl.block;
 
+import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -7,6 +8,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import quarri6343.overcrafted.api.block.ISneakEventHandler;
@@ -17,6 +19,7 @@ import quarri6343.overcrafted.common.PlaceItemHandler;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCResourcePackData;
 import quarri6343.overcrafted.impl.item.OCItems;
+import quarri6343.overcrafted.utils.ItemCreator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,15 +30,18 @@ import java.util.Map;
 public class BlockManualProcessor extends BlockTable implements IBlockProcessor, IRightClickEventHandler, ISneakEventHandler {
 
     private static final Vector armorStandOffset = new Vector(0.5,-0.5, 0.5);
+    @Getter
+    private final String progressionNBTID;
     
     /**
      * ブロックとそのブロックの加工の進捗のmap
      */
     private static final Map<Block, Integer> progressionMap = new HashMap<>();
     
-    public BlockManualProcessor(Material material) {
+    public BlockManualProcessor(Material material, String progressionNBTID) {
         super(material);
-        onPickUp.add(block -> cancelProcessing(block, true));
+        this.progressionNBTID = progressionNBTID;
+        onPickUp.add((block, player) -> cancelProcessing(block, player, true));
     }
     
     @Override
@@ -77,8 +83,11 @@ public class BlockManualProcessor extends BlockTable implements IBlockProcessor,
         }
         
         Integer progression = progressionMap.get(block);
-        if(progression == null)
-            progression = 0;
+        if(progression == null){
+            progression = new ItemCreator(PlaceItemHandler.getItem(block)).getIntNBT(progressionNBTID);
+            if(progression == null)
+                progression = 0;
+        }
         progression++;
         
         if(armorStand == null || armorStand.getCustomName() == null){
@@ -135,7 +144,7 @@ public class BlockManualProcessor extends BlockTable implements IBlockProcessor,
     }
     
     @Override
-    public void cancelProcessing(Block block, boolean removeFromMap){
+    public void cancelProcessing(Block block, Player player, boolean removeFromMap){
         Location location = block.getLocation();
         location.add(armorStandOffset);
         ArmorStand armorStand = null;
@@ -146,6 +155,10 @@ public class BlockManualProcessor extends BlockTable implements IBlockProcessor,
         }
         if(armorStand != null)
             armorStand.remove();
+
+        if(player != null){
+            player.setItemInHand(new ItemCreator(player.getItemInHand()).setIntNBT(progressionNBTID, progressionMap.get(block)).create());
+        }
         
         if(removeFromMap)
             progressionMap.remove(block);
@@ -153,7 +166,7 @@ public class BlockManualProcessor extends BlockTable implements IBlockProcessor,
     
     @Override
     public void cancelAllProcesses(){
-        progressionMap.forEach((block, integer) -> cancelProcessing(block, false));
+        progressionMap.forEach((block, integer) -> cancelProcessing(block, null, false));
         progressionMap.clear();
     }
 }

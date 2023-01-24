@@ -6,7 +6,7 @@ package quarri6343.overcrafted.api.item.interfaces;
 public interface IBurntOCItem {
 
     /**
-     * 加工されすぎる前のアイテム
+     * 加工されすぎる前の、既に加工されたアイテム
      * @return
      */
     public IProcessedOCItem getIngredient();

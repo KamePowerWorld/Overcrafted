@@ -1,6 +1,7 @@
 package quarri6343.overcrafted.impl.block;
 
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 
 /**
  * アイテムを別のブロックに加工できるブロック
@@ -16,7 +17,9 @@ public interface IBlockProcessor {
 
     public void continueProcessing(Block block);
 
-    public void cancelProcessing(Block block, boolean removeFromMap);
+    public void cancelProcessing(Block block, Player player, boolean removeFromMap);
     
     public void cancelAllProcesses();
+    
+    public String getProgressionNBTID();
 }

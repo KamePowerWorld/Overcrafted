@@ -3,6 +3,7 @@ package quarri6343.overcrafted.impl.block;
 import it.unimi.dsi.fastutil.Pair;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
@@ -18,6 +19,7 @@ import quarri6343.overcrafted.impl.item.OCItems;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 /**
@@ -28,7 +30,7 @@ public class BlockTable extends OCBlock implements IRightClickEventHandler {
     /**
      * アイテムが拾われた時に発火されるイベント
      */
-    protected List<Consumer<Block>> onPickUp = new ArrayList<>();
+    protected List<BiConsumer<Block, Player>> onPickUp = new ArrayList<>();
 
     public BlockTable(Material material) {
         super(material);
@@ -67,7 +69,7 @@ public class BlockTable extends OCBlock implements IRightClickEventHandler {
             ItemStack itemStack = PlaceItemHandler.pickUpItem(event.getClickedBlock());
             if (itemStack != null){
                 event.getPlayer().setItemInHand(itemStack);
-                onPickUp.forEach(blockConsumer -> blockConsumer.accept(event.getClickedBlock()));
+                onPickUp.forEach(blockConsumer -> blockConsumer.accept(event.getClickedBlock(), event.getPlayer()));
             }
         }
 
@@ -85,7 +87,7 @@ public class BlockTable extends OCBlock implements IRightClickEventHandler {
                         || (ingredients.left().get().equals(ocItem2) && ingredients.right().get().equals(ocItem1))){
                     PlaceItemHandler.pickUpItem(event.getClickedBlock());
                     event.getPlayer().setItemInHand(ocItem.get().getItemStack());
-                    onPickUp.forEach(blockConsumer -> blockConsumer.accept(event.getClickedBlock()));
+                    onPickUp.forEach(blockConsumer -> blockConsumer.accept(event.getClickedBlock(),event.getPlayer()));
                     return;
                 }
             }
