@@ -42,6 +42,10 @@ public class BlockManualProcessor extends BlockTable implements IBlockProcessor,
         super(material);
         this.progressionNBTID = progressionNBTID;
         onPickUp.add((block, player) -> cancelProcessing(block, player, true));
+        onPlace.add(block -> {
+            if(canProcess(block))
+                continueProcessing(block);
+        });
     }
     
     @Override

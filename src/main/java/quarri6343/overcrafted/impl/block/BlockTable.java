@@ -1,6 +1,9 @@
 package quarri6343.overcrafted.impl.block;
 
 import it.unimi.dsi.fastutil.Pair;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.title.Title;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -31,6 +34,8 @@ public class BlockTable extends OCBlock implements IRightClickEventHandler {
      * アイテムが拾われた時に発火されるイベント
      */
     protected List<BiConsumer<Block, Player>> onPickUp = new ArrayList<>();
+
+    protected List<Consumer<Block>> onPlace = new ArrayList<>();
 
     public BlockTable(Material material) {
         super(material);
@@ -63,6 +68,7 @@ public class BlockTable extends OCBlock implements IRightClickEventHandler {
         
         if(PlaceItemHandler.placeItem(event.getClickedBlock(), event.getItem())) {
             event.getPlayer().setItemInHand(null);
+            onPlace.forEach(blockConsumer -> blockConsumer.accept(event.getClickedBlock()));
         }
 
         if (event.getItem() == null || event.getItem().getType() == Material.AIR) {
