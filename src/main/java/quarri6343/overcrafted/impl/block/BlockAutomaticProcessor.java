@@ -1,6 +1,7 @@
 package quarri6343.overcrafted.impl.block;
 
 import lombok.Getter;
+import net.kyori.adventure.sound.Sound;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -31,15 +32,18 @@ public class BlockAutomaticProcessor extends BlockTable implements IBlockProcess
     public static final Vector armorStandOffset = new Vector(0.5, -0.5, 0.5);
     @Getter
     private final String progressionNBTID;
+    @Getter
+    private final Sound processingSound;
     
     /**
      * ブロックとそのブロックの加工中のタスクのマップ
      */
     private static final Map<Block, AutomaticProcessingRunnable> progressionMap = new HashMap<>();
 
-    public BlockAutomaticProcessor(Material material, String progressionNBTID) {
+    public BlockAutomaticProcessor(Material material, String progressionNBTID, Sound processingSound) {
         super(material);
         this.progressionNBTID = progressionNBTID;
+        this.processingSound = processingSound;
         onPickUp.add((block, player) -> cancelProcessing(block, player, true));
     }
 
@@ -82,7 +86,7 @@ public class BlockAutomaticProcessor extends BlockTable implements IBlockProcess
 
     @Override
     public void continueProcessing(Block block) {
-        AutomaticProcessingRunnable task = new AutomaticProcessingRunnable(block);
+        AutomaticProcessingRunnable task = new AutomaticProcessingRunnable(block, processingSound);
         task.runTaskTimer(Overcrafted.getInstance(),0, 1);
         progressionMap.put(block, task);
     }

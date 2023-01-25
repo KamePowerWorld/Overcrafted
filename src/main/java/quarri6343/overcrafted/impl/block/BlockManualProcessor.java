@@ -1,6 +1,7 @@
 package quarri6343.overcrafted.impl.block;
 
 import lombok.Getter;
+import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -18,6 +19,7 @@ import quarri6343.overcrafted.api.item.interfaces.IRightClickEventHandler;
 import quarri6343.overcrafted.common.PlaceItemHandler;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCResourcePackData;
+import quarri6343.overcrafted.common.data.OCSoundData;
 import quarri6343.overcrafted.impl.item.OCItems;
 import quarri6343.overcrafted.utils.ItemCreator;
 
@@ -32,15 +34,18 @@ public class BlockManualProcessor extends BlockTable implements IBlockProcessor,
     private static final Vector armorStandOffset = new Vector(0.5,-0.5, 0.5);
     @Getter
     private final String progressionNBTID;
+    @Getter
+    private final Sound processingSound;
     
     /**
      * ブロックとそのブロックの加工の進捗のmap
      */
     private static final Map<Block, Integer> progressionMap = new HashMap<>();
     
-    public BlockManualProcessor(Material material, String progressionNBTID) {
+    public BlockManualProcessor(Material material, String progressionNBTID, Sound processingSound) {
         super(material);
         this.progressionNBTID = progressionNBTID;
+        this.processingSound = processingSound;
         onPickUp.add((block, player) -> cancelProcessing(block, player, true));
         onPlace.add(block -> {
             if(canProcess(block))
@@ -108,6 +113,7 @@ public class BlockManualProcessor extends BlockTable implements IBlockProcessor,
         for (OCResourcePackData.ProgressBarFont font : OCResourcePackData.ProgressBarFont.values()) {
             if(font.getFilledPercentage() == filledPercent){
                 armorStand.customName(Component.text(font.get_char()).font(OCResourcePackData.progressBarFontName));
+                armorStand.getWorld().playSound(processingSound, armorStand.getLocation().getX(), armorStand.getLocation().getY(), armorStand.getLocation().getZ());
                 break;
             }
         }

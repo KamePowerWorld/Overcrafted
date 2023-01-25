@@ -1,6 +1,7 @@
 package quarri6343.overcrafted.impl.block;
 
 import lombok.Getter;
+import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -16,6 +17,7 @@ import quarri6343.overcrafted.api.item.interfaces.IProcessedOCItem;
 import quarri6343.overcrafted.common.PlaceItemHandler;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCResourcePackData;
+import quarri6343.overcrafted.common.data.OCSoundData;
 import quarri6343.overcrafted.impl.item.OCItems;
 import quarri6343.overcrafted.utils.ItemCreator;
 
@@ -27,10 +29,12 @@ public class AutomaticProcessingRunnable extends BukkitRunnable {
     private int progression = 0;
     private final Block block;
     private final IBlockProcessor processor;
+    private final Sound processingSound;
 
-    public AutomaticProcessingRunnable(Block block) {
+    public AutomaticProcessingRunnable(Block block, Sound processingSound) {
         this.block = block;
         processor = (IBlockProcessor) OCBlocks.toOCBlock(block);
+        this.processingSound = processingSound;
 
         ItemStack itemStack = PlaceItemHandler.getItem(block);
         if(processor != null){
@@ -80,6 +84,7 @@ public class AutomaticProcessingRunnable extends BukkitRunnable {
         for (OCResourcePackData.ProgressBarFont font : OCResourcePackData.ProgressBarFont.values()) {
             if (font.getFilledPercentage() == filledPercent) {
                 armorStand.customName(Component.text(font.get_char()).font(OCResourcePackData.progressBarFontName));
+                armorStand.getWorld().playSound(processingSound, armorStand.getLocation().getX(), armorStand.getLocation().getY(), armorStand.getLocation().getZ());
                 break;
             }
         }
@@ -124,6 +129,27 @@ public class AutomaticProcessingRunnable extends BukkitRunnable {
         
         if (progression % 5 == 0) {
             block.getWorld().spawnParticle(Particle.SMOKE_NORMAL, block.getLocation().add(0.5, 1.2, 0.5), 1);
+            armorStand.getWorld().playSound(OCSoundData.scorchingSound, armorStand.getLocation().getX(), armorStand.getLocation().getY(), armorStand.getLocation().getZ());
+        }
+        
+        playAlertSound(armorStand);
+    }
+    
+    private void playAlertSound(ArmorStand armorStand){
+        int remainingTime = OCData.cookingTime + OCData.burnTime - progression;
+        float remainingPercentage = (float) remainingTime / (float) OCData.burnTime;
+        if(remainingPercentage <= 0.8 && remainingPercentage > 0.4){
+            if(remainingTime % 10 == 0)
+                armorStand.getWorld().playSound(OCSoundData.overcraftAlertSound, armorStand.getLocation().getX(), armorStand.getLocation().getY(), armorStand.getLocation().getZ());
+                armorStand.playSound(OCSoundData.overcraftAlertSound);
+        }
+        else if(remainingPercentage <= 0.4 && remainingPercentage > 0.2){
+            if(remainingTime % 5 == 0)
+                armorStand.getWorld().playSound(OCSoundData.overcraftAlertSound, armorStand.getLocation().getX(), armorStand.getLocation().getY(), armorStand.getLocation().getZ());
+        }
+        else if(remainingPercentage <= 0.2){
+            if(remainingTime % 2 == 0)
+                armorStand.getWorld().playSound(OCSoundData.overcraftAlertSound, armorStand.getLocation().getX(), armorStand.getLocation().getY(), armorStand.getLocation().getZ());
         }
     }
 

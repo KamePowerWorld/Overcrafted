@@ -1,5 +1,6 @@
 package quarri6343.overcrafted.impl.block;
 
+import net.kyori.adventure.sound.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
@@ -22,4 +23,6 @@ public interface IBlockProcessor {
     public void cancelAllProcesses();
     
     public String getProgressionNBTID();
+    
+    public Sound getProcessingSound();
 }

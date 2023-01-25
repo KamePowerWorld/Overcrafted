@@ -44,4 +44,29 @@ public class OCSoundData {
      * テーブルからアイテムを取った音
      */
     public static final Sound tablePickUpSound = Sound.sound(Key.key("entity.item.pickup"), Sound.Source.BLOCK, 1f, 1f);
+
+    /**
+     * クラフトしている時の音
+     */
+    public static final Sound craftingSound = Sound.sound(Key.key("ui.stonecutter.take_result"), Sound.Source.BLOCK, 1f, 1f);
+
+    /**
+     * 精錬している時の音
+     */
+    public static final Sound smeltingSound = Sound.sound(Key.key("block.campfire.crackle"), Sound.Source.BLOCK, 1f, 1f);
+
+    /**
+     * 焦げている時の音
+     */
+    public static final Sound scorchingSound = Sound.sound(Key.key("block.blastfurnace.fire_crackle"), Sound.Source.BLOCK, 1f, 1f);
+
+    /**
+     * 焦げている時の警告音
+     */
+    public static final Sound overcraftAlertSound = Sound.sound(Key.key("block.note_block.didgeridoo"), Sound.Source.BLOCK, 1f, 1f);
+
+    /**
+     * 洗浄している時の音
+     */
+    public static final Sound washingSound = Sound.sound(Key.key("entity.villager.work_leatherworker"), Sound.Source.BLOCK, 1f, 1f);
 }
