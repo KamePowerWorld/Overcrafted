@@ -1,11 +1,14 @@
 package quarri6343.overcrafted.impl.block;
 
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.api.block.OCBlock;
 import quarri6343.overcrafted.api.item.interfaces.IRightClickEventHandler;
 import quarri6343.overcrafted.common.data.OCData;
+import quarri6343.overcrafted.common.data.OCSoundData;
 import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
 import quarri6343.overcrafted.impl.ui.UISupplyMenu;
@@ -45,6 +48,7 @@ public class BlockSupplier extends OCBlock implements IRightClickEventHandler {
             return;
         }
 
+        event.getPlayer().playSound(OCSoundData.openSupplierSound);
         UISupplyMenu.openUI(event.getPlayer());
     }
 }

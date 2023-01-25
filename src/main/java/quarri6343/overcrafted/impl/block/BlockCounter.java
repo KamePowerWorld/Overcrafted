@@ -1,5 +1,7 @@
 package quarri6343.overcrafted.impl.block;
 
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -8,6 +10,9 @@ import quarri6343.overcrafted.api.block.OCBlock;
 import quarri6343.overcrafted.api.item.interfaces.IOCItem;
 import quarri6343.overcrafted.api.item.interfaces.IRightClickEventHandler;
 import quarri6343.overcrafted.common.data.OCData;
+import quarri6343.overcrafted.common.data.OCSoundData;
+import quarri6343.overcrafted.common.data.OCTeam;
+import quarri6343.overcrafted.common.data.OCTeams;
 import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
 import quarri6343.overcrafted.common.order.OrderHandler;
@@ -56,6 +61,9 @@ public class BlockCounter extends OCBlock implements IRightClickEventHandler {
         if (OrderHandler.trySatisfyOrder(team, (ISubmittable) item)) {
             event.getPlayer().setItemInHand(null);
             team.getDirtyDishPile().addDish();
+            for (int i = 0; i < team.getPlayersSize(); i++) {
+                team.getPlayer(i).playSound(OCSoundData.submitSound);
+            }
         } else {
             event.getPlayer().sendMessage(Component.text("皿に載っているアイテムは誰も注文していないようだ..."));
         }

@@ -13,6 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.common.GlobalTeamHandler;
 import quarri6343.overcrafted.common.data.OCData;
+import quarri6343.overcrafted.common.data.OCSoundData;
 import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 import quarri6343.overcrafted.common.order.OrderHandler;
 
@@ -141,6 +142,9 @@ public class OCLogic {
             subTitle = subTitle.append(playerList.get(i));
         }
         Component finalSubTitle = subTitle;
+        for (int i = 0; i < victoryTeam.getPlayersSize(); i++) {
+            victoryTeam.getPlayer(i).playSound(OCSoundData.victorySound);;
+        }
         Bukkit.getOnlinePlayers().forEach(player ->
                 player.showTitle(Title.title(Component.text("チーム" + victoryTeam.getName() + "の勝利！"), finalSubTitle)));
     }
@@ -149,7 +153,10 @@ public class OCLogic {
      * ゲームが失敗したというタイトルを表示する
      */
     private void displayGameFailureTitle() {
-        Bukkit.getOnlinePlayers().forEach(player -> player.showTitle(Title.title(Component.text("ゲームオーバー"), Component.empty())));
+        Bukkit.getOnlinePlayers().forEach(player -> {
+                    player.playSound(OCSoundData.gameOverSound);
+                    player.showTitle(Title.title(Component.text("ゲームオーバー"), Component.empty()));
+        });
     }
 
     /**

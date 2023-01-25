@@ -145,9 +145,4 @@ public class AutomaticProcessingRunnable extends BukkitRunnable {
             }
         }
     }
-
-    public Integer progressionCancel(){
-        cancel();
-        return progression;
-    }
 }

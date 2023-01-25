@@ -12,10 +12,7 @@ import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.utils.OverCraftedUtils;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class TitleMenu implements Listener {
 
@@ -34,8 +31,11 @@ public class TitleMenu implements Listener {
         }
 
         BukkitRunnable runnable = new BukkitRunnable() {
+            private int count = 0;
+            
             @Override
             public void run() {
+                count ++ ;
                 if (!player.isOnline()) {
                     cancel();
                     return;
@@ -45,13 +45,13 @@ public class TitleMenu implements Listener {
                     cursorMap.put(player, new Cursor(player));
                 cursorMap.get(player).show();
                 int currentHeight = cursorMap.get(player).currentHeight;
-                if (!clickCooldownList.contains(player)){
+                if (!clickCooldownList.contains(player) && count % 10 == 0){
                     //                    player.showTitle(Title.title(Component.text( currentHeight>= 8 && currentHeight <= 11 ? "タイトルを選択中" : "タイトル"), 
 //                            Component.text(currentHeight >= 5 && currentHeight <= 6 ? "サブタイトルを選択中" : "サブタイトル"), 
 //                            Title.Times.times(Duration.ZERO,Duration.ofSeconds(1),Duration.ZERO)));
                     Component subtitle = Component.text("");
                     for (int i = 1; i < 9; i++) {
-                        subtitle = subtitle.append(Component.text(OverCraftedUtils.fixedLengthString("サブタイトルテスト" + i, 12)).font(Key.key("customui_" + i))
+                        subtitle = subtitle.append(Component.text(OverCraftedUtils.fixedLengthString("サブタイトルテスト" + i + new Random().nextInt(10), 12)).font(Key.key("customui_" + i))
                                 .append(Component.text("««  ").font(Key.key("menu"))));
                     }
                     player.showTitle(Title.title(Component.text(""),

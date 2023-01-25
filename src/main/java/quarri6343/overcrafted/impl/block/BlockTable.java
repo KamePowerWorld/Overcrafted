@@ -16,6 +16,7 @@ import quarri6343.overcrafted.api.item.interfaces.IOCItem;
 import quarri6343.overcrafted.api.item.interfaces.IRightClickEventHandler;
 import quarri6343.overcrafted.common.PlaceItemHandler;
 import quarri6343.overcrafted.common.data.OCData;
+import quarri6343.overcrafted.common.data.OCSoundData;
 import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
 import quarri6343.overcrafted.impl.item.OCItems;
@@ -76,6 +77,7 @@ public class BlockTable extends OCBlock implements IRightClickEventHandler {
             if (itemStack != null){
                 event.getPlayer().setItemInHand(itemStack);
                 onPickUp.forEach(blockConsumer -> blockConsumer.accept(event.getClickedBlock(), event.getPlayer()));
+                event.getPlayer().playSound(OCSoundData.pickItemSound);
             }
         }
 
@@ -94,6 +96,7 @@ public class BlockTable extends OCBlock implements IRightClickEventHandler {
                     PlaceItemHandler.pickUpItem(event.getClickedBlock());
                     event.getPlayer().setItemInHand(ocItem.get().getItemStack());
                     onPickUp.forEach(blockConsumer -> blockConsumer.accept(event.getClickedBlock(),event.getPlayer()));
+                    event.getPlayer().playSound(OCSoundData.pickItemSound);
                     return;
                 }
             }
