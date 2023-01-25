@@ -5,13 +5,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.Nullable;
 import quarri6343.overcrafted.api.CommandBase;
-import quarri6343.overcrafted.common.CursorGui;
+import quarri6343.overcrafted.impl.titlegui.Cursor;
 import quarri6343.overcrafted.common.event.ItemEventHandler;
 import quarri6343.overcrafted.common.ConfigHandler;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.event.*;
 import quarri6343.overcrafted.common.logic.OCLogic;
 import quarri6343.overcrafted.impl.command.*;
+import quarri6343.overcrafted.impl.titlegui.TitleMenu;
 import quarri6343.overcrafted.utils.ResourcePackUtil;
 
 public final class Overcrafted extends JavaPlugin {
@@ -52,7 +53,7 @@ public final class Overcrafted extends JavaPlugin {
             @Override
             public boolean onCommand(CommandSender sender, @Nullable String[] arguments) {
                 if(sender instanceof Player)
-                    CursorGui.show((Player) sender);
+                    TitleMenu.show((Player) sender);
                 return true;
             }
         };
@@ -60,7 +61,7 @@ public final class Overcrafted extends JavaPlugin {
             @Override
             public boolean onCommand(CommandSender sender, @Nullable String[] arguments) {
                 if(sender instanceof Player)
-                    CursorGui.hide((Player) sender);
+                    TitleMenu.hide((Player) sender);
                 return true;
             }
         };
@@ -73,7 +74,7 @@ public final class Overcrafted extends JavaPlugin {
 
         ResourcePackUtil.reloadResourcePack();
         
-        new CursorGui();
+        new TitleMenu();
     }
 
     @Override
