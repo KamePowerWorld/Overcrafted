@@ -5,7 +5,10 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.command.CommandMap;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.SimplePluginManager;
@@ -14,6 +17,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * 雑多な関数をまとめたクラス
@@ -98,8 +103,28 @@ public class OverCraftedUtils {
 
         return isXInRange && isZInRange;
     }
-    
+
     public static String fixedLengthString(String string, int length) {
-        return String.format("%1$"+length+ "s", string);
+        return String.format("%1$" + length + "s", string);
+    }
+
+    public static Entity getNearestEntityInSight(Player player, int range) {
+        ArrayList<Entity> entities = (ArrayList<Entity>) player.getNearbyEntities(range, range, range);
+        ArrayList<Block> sightBlock = (ArrayList<Block>) player.getLineOfSight(null, range);
+        ArrayList<Location> sight = new ArrayList<>();
+        for (int i = 0; i < sightBlock.size(); i++)
+            sight.add(sightBlock.get(i).getLocation());
+        for (int i = 0; i < sight.size(); i++) {
+            for (int k = 0; k < entities.size(); k++) {
+                if (Math.abs(entities.get(k).getLocation().getX() - sight.get(i).getX()) < 1.3) {
+                    if (Math.abs(entities.get(k).getLocation().getY() - sight.get(i).getY()) < 1.5) {
+                        if (Math.abs(entities.get(k).getLocation().getZ() - sight.get(i).getZ()) < 1.3) {
+                            return entities.get(k);
+                        }
+                    }
+                }
+            }
+        }
+        return null; //Return null/nothing if no entity was found
     }
 }

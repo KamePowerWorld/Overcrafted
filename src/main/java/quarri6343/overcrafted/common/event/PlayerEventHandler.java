@@ -10,14 +10,11 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
-import quarri6343.overcrafted.api.block.IOCBlock;
 import quarri6343.overcrafted.api.item.interfaces.ICombinedOCItem;
 import quarri6343.overcrafted.api.item.interfaces.IOCItem;
 import quarri6343.overcrafted.api.item.interfaces.ISupplier;
 import quarri6343.overcrafted.common.GlobalTeamHandler;
-import quarri6343.overcrafted.common.PlaceItemHandler;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCResourcePackData;
 import quarri6343.overcrafted.common.data.interfaces.IDishPile;
@@ -226,32 +223,10 @@ public class PlayerEventHandler implements Listener {
 
     @org.bukkit.event.EventHandler
     public void onPlayerPickUp(PlayerAttemptPickupItemEvent event) {
-        blockPickingUpExcessiveItems(event);
-    }
-
-    /**
-     * プレイヤーがアイテムを1個より多く持たないように拾う量を調整する
-     */
-    private void blockPickingUpExcessiveItems(PlayerAttemptPickupItemEvent event) {
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE
                 || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
             return;
-
-        IOCTeam team = getData().getTeams().getTeamByPlayer(event.getPlayer());
-        if (team == null)
-            return;
-
-        if (event.getPlayer().getInventory().getItem(0) != null) {
-            event.setCancelled(true);
-            return;
-        } else if (event.getItem().getItemStack().getAmount() > 1) {
-            ItemStack itemOnGround = event.getItem().getItemStack();
-            itemOnGround.setAmount(itemOnGround.getAmount() - 1);
-            event.getItem().setItemStack(itemOnGround);
-            event.setCancelled(true);
-            itemOnGround.setAmount(1);
-            event.getPlayer().getInventory().addItem(itemOnGround);
-        }
+        event.setCancelled(true);
     }
 
     @org.bukkit.event.EventHandler

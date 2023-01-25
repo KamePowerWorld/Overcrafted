@@ -160,7 +160,7 @@ public class BlockManualProcessor extends BlockTable implements IBlockProcessor,
         if(armorStand != null)
             armorStand.remove();
 
-        if(player != null){
+        if(player != null && progressionMap.get(block) != null){
             player.setItemInHand(new ItemCreator(player.getItemInHand()).setIntNBT(progressionNBTID, progressionMap.get(block)).create());
         }
         
