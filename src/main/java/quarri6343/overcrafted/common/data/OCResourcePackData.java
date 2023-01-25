@@ -67,7 +67,12 @@ public class OCResourcePackData {
         _7("\uE007",7),
         _8("\uE008",8),
         _9("\uE009",9),
-        _10("\uE010",10);
+        _10("\uE010",10),
+        _overheat1("\uE00A",-1),
+        _overheat2("\uE00B",-1),
+        _overheat3("\uE00C",-1),
+        _overheat4("\uE00D",-1);
+        
         
         @Getter
         private final String _char;

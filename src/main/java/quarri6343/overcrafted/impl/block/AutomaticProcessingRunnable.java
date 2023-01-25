@@ -106,7 +106,22 @@ public class AutomaticProcessingRunnable extends BukkitRunnable {
     }
 
     private void burntProcessing(ArmorStand armorStand) {
-        armorStand.customName(Component.text(OCResourcePackData.ProgressBarFont._10.get_char()).font(OCResourcePackData.progressBarFontName));
+        if(progression < OCData.cookingTime + (OCData.burnTime / 5)){
+            armorStand.customName(Component.text(OCResourcePackData.ProgressBarFont._10.get_char()).font(OCResourcePackData.progressBarFontName));
+        }
+        else if(progression < OCData.cookingTime + (OCData.burnTime / 5) * 2){
+            armorStand.customName(Component.text(OCResourcePackData.ProgressBarFont._overheat1.get_char()).font(OCResourcePackData.progressBarFontName));
+        }
+        else if(progression < OCData.cookingTime + (OCData.burnTime / 5) * 3){
+            armorStand.customName(Component.text(OCResourcePackData.ProgressBarFont._overheat2.get_char()).font(OCResourcePackData.progressBarFontName));
+        }
+        else if(progression < OCData.cookingTime + (OCData.burnTime / 5) * 4){
+            armorStand.customName(Component.text(OCResourcePackData.ProgressBarFont._overheat3.get_char()).font(OCResourcePackData.progressBarFontName));
+        }
+        else if(progression < OCData.cookingTime + OCData.burnTime){
+            armorStand.customName(Component.text(OCResourcePackData.ProgressBarFont._overheat4.get_char()).font(OCResourcePackData.progressBarFontName));
+        }
+        
         if (progression % 5 == 0) {
             block.getWorld().spawnParticle(Particle.SMOKE_NORMAL, block.getLocation().add(0.5, 1.2, 0.5), 1);
         }
