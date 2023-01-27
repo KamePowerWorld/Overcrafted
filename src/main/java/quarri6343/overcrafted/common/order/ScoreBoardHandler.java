@@ -25,7 +25,6 @@ public class ScoreBoardHandler {
 
     private static final String objectiveName = "overcrafted";
     private static final Component mainObjectiveDisplayName = Component.text("Overcrafted").color(NamedTextColor.RED);
-    private static final String remainingTime = "残り時間: ";
 
     private static Objective objective;
 
@@ -44,7 +43,7 @@ public class ScoreBoardHandler {
             scores.put(team, 0);
         }
 
-        refresh(OCData.gameLength);
+        refresh();
     }
 
     /**
@@ -57,6 +56,8 @@ public class ScoreBoardHandler {
             return;
 
         scores.put(team, scores.get(team) + value);
+        
+        refresh();
     }
 
     /**
@@ -87,10 +88,8 @@ public class ScoreBoardHandler {
 
     /**
      * スコアボードを更新する
-     *
-     * @param time
      */
-    public static void refresh(int time) {
+    private static void refresh() {
         objective = getBoard().getObjective(objectiveName);
         if (objective == null) {
             objective = getBoard().registerNewObjective(objectiveName, "dummy", mainObjectiveDisplayName);
@@ -99,10 +98,6 @@ public class ScoreBoardHandler {
 
         currentScoreString.forEach(s -> getBoard().resetScores(s));
         currentScoreString.clear();
-
-        Score timeScore = objective.getScore(remainingTime + ChatColor.YELLOW + time);
-        timeScore.setScore(0);
-        currentScoreString.add(timeScore.getEntry());
 
         int i = 1;
         for (Map.Entry<IOCTeam, Integer> entry : scores.entrySet()) {

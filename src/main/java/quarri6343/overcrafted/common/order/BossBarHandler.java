@@ -51,6 +51,20 @@ public class BossBarHandler {
     }
 
     /**
+     * 残り時間を更新する
+     * @param progression
+     */
+    public static void updateRemainingTime(float progression){
+        for (int i = 0; i < getData().getTeams().getTeamsLength(); i++) {
+            IOCTeam team = getData().getTeams().getTeam(i);
+            BossBar bossBar = bossBarMap.get(team);
+            if (bossBar != null) {
+                bossBar.progress(progression);
+            }
+        }
+    }
+
+    /**
      * 全てのプレイヤーからボスバーの全てのオブジェクトを隠す
      */
     public static void hideEverything() {

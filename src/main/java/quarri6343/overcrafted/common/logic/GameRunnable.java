@@ -11,6 +11,7 @@ import quarri6343.overcrafted.api.block.OCBlock;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCTeam;
 import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
+import quarri6343.overcrafted.common.order.BossBarHandler;
 import quarri6343.overcrafted.common.order.ScoreBoardHandler;
 import quarri6343.overcrafted.impl.block.OCBlocks;
 
@@ -35,7 +36,7 @@ public class GameRunnable extends BukkitRunnable {
         count++;
 
         if (count % 20 == 0) {
-            ScoreBoardHandler.refresh(OCData.gameLength - count / 20);
+            BossBarHandler.updateRemainingTime( ((float) OCData.gameLength * 20 - (float)count) / ((float) OCData.gameLength * 20));
         }
 
         if (count >= OCData.gameLength * 20) {
