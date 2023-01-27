@@ -14,7 +14,15 @@ import java.io.File;
  * コンフィグファイルを読み書きする
  */
 public class ConfigHandler {
-
+    
+    private static final String teamNameStr = "team.name.";
+    private static final String teamColorStr = "team.color.";
+    private static final String teamStartLocationStr = "team.startLocation.";
+    private static final String teamJoinLocation1Str = "team.joinLocation1.";
+    private static final String teamJoinLocation2Str = "team.joinLocation2.";
+    private static final String teamCleanDishPileStr = "team.cleanDishPile.";
+    private static final String teamDirtyDishPileStr = "team.dirtyDishPile.";
+    
     public ConfigHandler() {
     }
 
@@ -40,19 +48,19 @@ public class ConfigHandler {
         OCData data = Overcrafted.getInstance().getData();
         data.getTeams().clearTeam();
         for (int i = 0; i < Integer.MAX_VALUE; i++) {
-            String teamName = config.getString("team.name." + i);
-            String teamColor = config.getString("team.color." + i);
+            String teamName = config.getString(teamNameStr + i);
+            String teamColor = config.getString(teamColorStr + i);
             if (teamName == null || teamColor == null) {
                 break;
             }
 
             data.getTeams().addTeam(teamName, teamColor);
             IOCTeam newTeam = data.getTeams().getTeam(i);
-            newTeam.setStartLocation(config.getLocation("team.startLocation." + i));
-            newTeam.setJoinLocation1(config.getLocation("team.joinLocation1." + i));
-            newTeam.setJoinLocation2(config.getLocation("team.joinLocation2." + i));
-            newTeam.getCleanDishPile().setLocation(config.getLocation("team.cleanDishPile." + i));
-            newTeam.getDirtyDishPile().setLocation(config.getLocation("team.dirtyDishPile." + i));
+            newTeam.setStartLocation(config.getLocation(teamStartLocationStr + i));
+            newTeam.setJoinLocation1(config.getLocation(teamJoinLocation1Str + i));
+            newTeam.setJoinLocation2(config.getLocation(teamJoinLocation2Str + i));
+            newTeam.getCleanDishPile().setLocation(config.getLocation(teamCleanDishPileStr + i));
+            newTeam.getDirtyDishPile().setLocation(config.getLocation(teamDirtyDishPileStr + i));
         }
     }
 
@@ -90,13 +98,13 @@ public class ConfigHandler {
     private void saveTeams(FileConfiguration config) {
         OCData data = Overcrafted.getInstance().getData();
         for (int i = 0; i < data.getTeams().getTeamsLength(); i++) {
-            config.set("team.name." + i, data.getTeams().getTeam(i).getName());
-            config.set("team.color." + i, data.getTeams().getTeam(i).getColor());
-            config.set("team.startLocation." + i, data.getTeams().getTeam(i).getStartLocation());
-            config.set("team.joinLocation1." + i, data.getTeams().getTeam(i).getJoinLocation1());
-            config.set("team.joinLocation2." + i, data.getTeams().getTeam(i).getJoinLocation2());
-            config.set("team.cleanDishPile." + i, data.getTeams().getTeam(i).getCleanDishPile().getLocation());
-            config.set("team.dirtyDishPile." + i, data.getTeams().getTeam(i).getDirtyDishPile().getLocation());
+            config.set(teamNameStr + i, data.getTeams().getTeam(i).getName());
+            config.set(teamColorStr + i, data.getTeams().getTeam(i).getColor());
+            config.set(teamStartLocationStr + i, data.getTeams().getTeam(i).getStartLocation());
+            config.set(teamJoinLocation1Str + i, data.getTeams().getTeam(i).getJoinLocation1());
+            config.set(teamJoinLocation2Str + i, data.getTeams().getTeam(i).getJoinLocation2());
+            config.set(teamCleanDishPileStr + i, data.getTeams().getTeam(i).getCleanDishPile().getLocation());
+            config.set(teamDirtyDishPileStr + i, data.getTeams().getTeam(i).getDirtyDishPile().getLocation());
         }
     }
 
