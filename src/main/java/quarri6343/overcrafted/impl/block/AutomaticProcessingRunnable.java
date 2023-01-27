@@ -16,6 +16,7 @@ import quarri6343.overcrafted.api.item.interfaces.IOCItem;
 import quarri6343.overcrafted.api.item.interfaces.IProcessedOCItem;
 import quarri6343.overcrafted.common.PlaceItemHandler;
 import quarri6343.overcrafted.common.data.OCData;
+import quarri6343.overcrafted.common.data.OCParticleData;
 import quarri6343.overcrafted.common.data.OCResourcePackData;
 import quarri6343.overcrafted.common.data.OCSoundData;
 import quarri6343.overcrafted.impl.item.OCItems;
@@ -30,11 +31,13 @@ public class AutomaticProcessingRunnable extends BukkitRunnable {
     private final Block block;
     private final IBlockProcessor processor;
     private final Sound processingSound;
+    private final Particle processingParticle;
 
-    public AutomaticProcessingRunnable(Block block, Sound processingSound) {
+    public AutomaticProcessingRunnable(Block block, Sound processingSound, Particle processingParticle) {
         this.block = block;
         processor = (IBlockProcessor) OCBlocks.toOCBlock(block);
         this.processingSound = processingSound;
+        this.processingParticle = processingParticle;
 
         ItemStack itemStack = PlaceItemHandler.getItem(block);
         if(processor != null){
@@ -88,6 +91,10 @@ public class AutomaticProcessingRunnable extends BukkitRunnable {
                 break;
             }
         }
+
+        if (progression % 5 == 0) {
+            block.getWorld().spawnParticle(processingParticle, block.getLocation().add(0.5, 1.2, 0.5), 3);
+        }
     }
 
     private void finishProcessing() {
@@ -128,7 +135,7 @@ public class AutomaticProcessingRunnable extends BukkitRunnable {
         }
         
         if (progression % 5 == 0) {
-            block.getWorld().spawnParticle(Particle.SMOKE_NORMAL, block.getLocation().add(0.5, 1.2, 0.5), 1);
+            block.getWorld().spawnParticle(OCParticleData.overcraftParticle, block.getLocation().add(0.5, 1.2, 0.5), 3);
             armorStand.getWorld().playSound(OCSoundData.scorchingSound, armorStand.getLocation().getX(), armorStand.getLocation().getY(), armorStand.getLocation().getZ());
         }
         

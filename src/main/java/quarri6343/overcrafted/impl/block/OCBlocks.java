@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import quarri6343.overcrafted.api.block.IOCBlock;
 import quarri6343.overcrafted.api.block.OCBlock;
+import quarri6343.overcrafted.common.data.OCParticleData;
 import quarri6343.overcrafted.common.data.OCSoundData;
 
 import javax.annotation.Nullable;
@@ -17,9 +18,9 @@ public enum OCBlocks {
     TRASHCAN(new BlockTrashCan()),
     SUPPLIER(new BlockSupplier()),
     TABLE(new BlockTable(Material.DARK_OAK_PLANKS)),
-    CRAFTING(new BlockManualProcessor(Material.CRAFTING_TABLE, "crafting_progression", OCSoundData.craftingSound)),
-    SMELTING(new BlockAutomaticProcessor(Material.FURNACE, "smelting_progression", OCSoundData.smeltingSound)),
-    WASHING(new BlockManualProcessor(Material.WATER_CAULDRON, "washing_progression", OCSoundData.washingSound)),
+    CRAFTING(new BlockManualProcessor(Material.CRAFTING_TABLE, "crafting_progression", OCSoundData.craftingSound, OCParticleData.craftParticle)),
+    SMELTING(new BlockAutomaticProcessor(Material.FURNACE, "smelting_progression", OCSoundData.smeltingSound, OCParticleData.smeltingParticle)),
+    WASHING(new BlockManualProcessor(Material.WATER_CAULDRON, "washing_progression", OCSoundData.washingSound, OCParticleData.washingParticle)),
     COUNTER(new BlockCounter(Material.RED_BED));
 
     private final OCBlock ocBlock;

@@ -5,6 +5,7 @@ import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -36,13 +37,15 @@ public class BlockManualProcessor extends BlockTable implements IBlockProcessor,
     private final String progressionNBTID;
     @Getter
     private final Sound processingSound;
+    @Getter
+    private final Particle processingParticle;
     
     /**
      * ブロックとそのブロックの加工の進捗のmap
      */
     private static final Map<Block, Integer> progressionMap = new HashMap<>();
     
-    public BlockManualProcessor(Material material, String progressionNBTID, Sound processingSound) {
+    public BlockManualProcessor(Material material, String progressionNBTID, Sound processingSound, Particle processingParticle) {
         super(material);
         this.progressionNBTID = progressionNBTID;
         this.processingSound = processingSound;
@@ -51,6 +54,7 @@ public class BlockManualProcessor extends BlockTable implements IBlockProcessor,
             if(canProcess(block))
                 continueProcessing(block);
         });
+        this.processingParticle = processingParticle;
     }
     
     @Override
@@ -116,6 +120,10 @@ public class BlockManualProcessor extends BlockTable implements IBlockProcessor,
                 armorStand.getWorld().playSound(processingSound, armorStand.getLocation().getX(), armorStand.getLocation().getY(), armorStand.getLocation().getZ());
                 break;
             }
+        }
+        
+        if(progression % 5 == 0){
+            block.getWorld().spawnParticle(processingParticle, block.getLocation().add(0.5, 1.2, 0.5), 3);
         }
         
         if(progression <= OCData.craftingTime){

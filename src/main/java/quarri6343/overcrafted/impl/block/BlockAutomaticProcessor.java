@@ -5,6 +5,7 @@ import net.kyori.adventure.sound.Sound;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -34,16 +35,19 @@ public class BlockAutomaticProcessor extends BlockTable implements IBlockProcess
     private final String progressionNBTID;
     @Getter
     private final Sound processingSound;
+    @Getter
+    private final Particle processingParticle;
     
     /**
      * ブロックとそのブロックの加工中のタスクのマップ
      */
     private static final Map<Block, AutomaticProcessingRunnable> progressionMap = new HashMap<>();
 
-    public BlockAutomaticProcessor(Material material, String progressionNBTID, Sound processingSound) {
+    public BlockAutomaticProcessor(Material material, String progressionNBTID, Sound processingSound, Particle processingParticle) {
         super(material);
         this.progressionNBTID = progressionNBTID;
         this.processingSound = processingSound;
+        this.processingParticle = processingParticle;
         onPickUp.add((block, player) -> cancelProcessing(block, player, true));
     }
 
@@ -86,7 +90,7 @@ public class BlockAutomaticProcessor extends BlockTable implements IBlockProcess
 
     @Override
     public void continueProcessing(Block block) {
-        AutomaticProcessingRunnable task = new AutomaticProcessingRunnable(block, processingSound);
+        AutomaticProcessingRunnable task = new AutomaticProcessingRunnable(block, processingSound, processingParticle);
         task.runTaskTimer(Overcrafted.getInstance(),0, 1);
         progressionMap.put(block, task);
     }
