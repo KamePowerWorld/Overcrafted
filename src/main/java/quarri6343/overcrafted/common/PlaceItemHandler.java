@@ -1,7 +1,9 @@
 package quarri6343.overcrafted.common;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
@@ -39,6 +41,10 @@ public class PlaceItemHandler {
         if(itemStack == null)
             return false;
 
+        if(block.getRelative(BlockFace.UP).getType() != Material.AIR){
+            return false;
+        }
+        
         Location location = block.getLocation();
         location.add(0.5, 1.1, 0.5);
         Item item = block.getWorld().dropItem(location, itemStack);
