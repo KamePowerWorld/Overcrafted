@@ -5,6 +5,7 @@ import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.api.block.OCBlock;
 import quarri6343.overcrafted.api.item.interfaces.IOCItem;
@@ -60,7 +61,14 @@ public class BlockCounter extends OCBlock implements IRightClickEventHandler {
 
         if (OrderHandler.trySatisfyOrder(team, (ISubmittable) item)) {
             event.getPlayer().setItemInHand(null);
-            team.getDirtyDishPile().addDish();
+            
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    team.getDirtyDishPile().addDish();
+                }
+            }.runTaskLater(Overcrafted.getInstance(), OCData.dishReturnLag);
+            
             for (int i = 0; i < team.getPlayersSize(); i++) {
                 team.getPlayer(i).playSound(OCSoundData.submitSound);
             }

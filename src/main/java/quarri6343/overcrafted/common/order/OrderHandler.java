@@ -100,7 +100,7 @@ public class OrderHandler {
             if (orders.get(i).equals(submittable)) {
                 if(i== 0){
                     float tipsMultiplier = tipsMultiplierMap.get(team);
-                    tipsMultiplier += 0.1;
+                    tipsMultiplier += OCData.tipMultiplierValue;
                     tipsMultiplierMap.put(team, tipsMultiplier);
                     ScoreBoardHandler.addScore(team, (int)(orders.get(i).getScore() * tipsMultiplier));
                     for (int j = 0; j < team.getPlayersSize(); j++) {

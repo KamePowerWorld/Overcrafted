@@ -80,6 +80,16 @@ public class OCData {
     public static final int burnTime = 100;
 
     /**
+     * ゴミ箱に皿を捨てた時それが再び皿置き場に戻るまでの時間
+     */
+    public static final int dishReturnLag = 100;
+
+    /**
+     * 連続して適切な注文を納品されることで追加されるスコアの倍率
+     */
+    public static final float tipMultiplierValue = 0.1f;
+
+    /**
      * インベントリを埋める無効アイテム
      */
     public static final ItemStack invalidItem = new ItemCreator(Material.RED_STAINED_GLASS_PANE).setName(Component.text("")).create();
