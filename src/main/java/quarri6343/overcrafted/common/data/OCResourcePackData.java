@@ -32,6 +32,8 @@ public class OCResourcePackData {
      * ProgressBarFontのリソースパック上での名前
      */
     public static final Key progressBarFontName = Key.key("progressbar");
+    
+    public static final Key bossBarFontName = Key.key("bossbar");
 
     /**
      * リソースパックのmenuFontのカスタムアイコン名とunicodeの対応表

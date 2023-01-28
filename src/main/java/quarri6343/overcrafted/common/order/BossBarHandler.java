@@ -32,7 +32,8 @@ public class BossBarHandler {
      * @param dishMenuList メニューリスト
      */
     public static void displayDishMenu(IOCTeam team, List<ISubmittable> dishMenuList) {
-        Component text = Component.text(MenuFont.BONUS.get_char() + MenuFont.SPACE.get_char()).font(OCResourcePackData.menuFontName);
+        Component text = Component.text("               \uE000««««««««««««««««««").font(OCResourcePackData.bossBarFontName);
+        text = text.append(Component.text(MenuFont.BONUS.get_char() + MenuFont.SPACE.get_char()).font(OCResourcePackData.menuFontName));
         for (ISubmittable dishMenu : dishMenuList) {
             text = text.append(Component.text(dishMenu.toMenuUnicode() + MenuFont.SPACE.get_char() + MenuFont.SPACE.get_char()).font(OCResourcePackData.menuFontName));
         }
