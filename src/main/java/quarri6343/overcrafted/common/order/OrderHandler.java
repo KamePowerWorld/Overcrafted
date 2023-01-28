@@ -1,5 +1,6 @@
 package quarri6343.overcrafted.common.order;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.api.item.OCItem;
@@ -16,7 +17,9 @@ import java.util.*;
  * 注文のハンドラ
  */
 public class OrderHandler {
-    private static Map<IOCTeam, List<ISubmittable>> ordersMap = new HashMap<>();
+    private static final Map<IOCTeam, List<ISubmittable>> ordersMap = new HashMap<>();
+    
+    private static final Map<IOCTeam, Float> tipsMultiplierMap = new HashMap<>();
 
     private static OCData getData() {
         return Overcrafted.getInstance().getData();
@@ -44,6 +47,7 @@ public class OrderHandler {
                 orders.add(menus.get(new Random().nextInt(menus.size())));
             }
             ordersMap.put(getData().getTeams().getTeam(i), orders);
+            tipsMultiplierMap.put(getData().getTeams().getTeam(i), 1f);
             BossBarHandler.displayDishMenu(getData().getTeams().getTeam(i), orders);
         }
         ScoreBoardHandler.initialize();
@@ -94,7 +98,19 @@ public class OrderHandler {
         List<ISubmittable> orders = ordersMap.get(team);
         for (int i = 0; i < orders.size(); i++) {
             if (orders.get(i).equals(submittable)) {
-                ScoreBoardHandler.addScore(team, orders.get(i).getScore());
+                if(i== 0){
+                    float tipsMultiplier = tipsMultiplierMap.get(team);
+                    tipsMultiplier += 0.1;
+                    tipsMultiplierMap.put(team, tipsMultiplier);
+                    ScoreBoardHandler.addScore(team, (int)(orders.get(i).getScore() * tipsMultiplier));
+                    for (int j = 0; j < team.getPlayersSize(); j++) {
+                        team.getPlayer(j).sendMessage(Component.text("チップによるスコア上昇:" + Math.round(tipsMultiplier) + "倍"));
+                    }
+                }
+                else{
+                    tipsMultiplierMap.put(team, 1f);
+                    ScoreBoardHandler.addScore(team, orders.get(i).getScore());
+                }
                 orders.remove(i);
                 generateRandomOrder(team);
                 return true;
@@ -109,6 +125,7 @@ public class OrderHandler {
      */
     public static void clearOrders() {
         ordersMap.clear();
+        tipsMultiplierMap.clear();
         ScoreBoardHandler.destroy();
         BossBarHandler.hideEverything();
     }
