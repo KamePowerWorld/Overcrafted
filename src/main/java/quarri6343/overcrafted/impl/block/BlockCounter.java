@@ -4,6 +4,7 @@ import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
+import org.bukkit.command.BlockCommandSender;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import quarri6343.overcrafted.Overcrafted;
@@ -50,7 +51,7 @@ public class BlockCounter extends OCBlock implements IRightClickEventHandler {
 
         trySubmitOrder(event, team);
     }
-
+    
     /**
      * プレイヤーが手に持っている皿をカウンターに提出することを試みる
      */

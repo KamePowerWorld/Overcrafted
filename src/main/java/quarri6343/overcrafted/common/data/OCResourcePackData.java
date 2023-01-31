@@ -2,9 +2,6 @@ package quarri6343.overcrafted.common.data;
 
 import lombok.Getter;
 import net.kyori.adventure.key.Key;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextDecoration;
-import org.bukkit.Material;
 
 public class OCResourcePackData {
 
@@ -51,6 +48,36 @@ public class OCResourcePackData {
 
         MenuFont(String _char) {
             this._char = _char;
+        }
+    }
+
+    /**
+     * リソースパックのメニューを納品したとき得られるスコアを表した画像
+     */
+    public enum ScoreFont {
+        three(3, "\uE005"),
+        five(5, "\uE006"),
+        ten(10, "\uE007"),
+        fifteen(15, "\uE008");
+        
+        @Getter
+        private final int point;
+        @Getter
+        private final String _char;
+        
+        ScoreFont(int point, String _char){
+            this.point = point;
+            this._char = _char;
+        }
+        
+        public static String scoreToFont(int point){
+            for (ScoreFont scoreFont : ScoreFont.values()) {
+                if(scoreFont.getPoint() == point){
+                    return scoreFont.get_char();
+                }
+            }
+            
+            throw new IllegalArgumentException("ポイントに対応したカスタムアイコンが存在しません！");
         }
     }
 

@@ -61,7 +61,7 @@ public class BlockTrashCan extends OCBlock implements IRightClickEventHandler {
 
         if (ocItem.equals(OCItems.DIRTY_DISH.get())) {
             event.getPlayer().setItemInHand(null);
-            event.getPlayer().sendMessage(Component.text("ゴミ箱に持っている汚い皿を捨ててしまった！"));
+            event.getPlayer().sendActionBar(Component.text("ゴミ箱に持っている汚い皿を捨ててしまった！"));
             new BukkitRunnable() {
                 @Override
                 public void run() {
@@ -73,7 +73,7 @@ public class BlockTrashCan extends OCBlock implements IRightClickEventHandler {
 
         if (ocItem.equals(OCItems.DISH.get()) || ocItem instanceof ISubmittable) {
             event.getPlayer().setItemInHand(null);
-            event.getPlayer().sendMessage(Component.text("ゴミ箱に持っている皿を捨てた！"));
+            event.getPlayer().sendActionBar(Component.text("ゴミ箱に持っている皿を捨てた！"));
             new BukkitRunnable() {
                 @Override
                 public void run() {
@@ -84,6 +84,6 @@ public class BlockTrashCan extends OCBlock implements IRightClickEventHandler {
         }
 
         event.getPlayer().setItemInHand(null);
-        event.getPlayer().sendMessage(Component.text("ゴミ箱に持っているアイテムを捨てた！"));
+        event.getPlayer().sendActionBar(Component.text("ゴミ箱に持っているアイテムを捨てた！"));
     }
 }

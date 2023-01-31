@@ -7,7 +7,6 @@ import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.OCResourcePackData;
 import quarri6343.overcrafted.common.data.OCResourcePackData.MenuFont;
-import quarri6343.overcrafted.common.data.OCTeam;
 import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 import quarri6343.overcrafted.impl.item.ISubmittable;
 
@@ -35,7 +34,7 @@ public class BossBarHandler {
         Component text = Component.text("               \uE000««««««««««««««««««").font(OCResourcePackData.bossBarFontName);
         text = text.append(Component.text(MenuFont.BONUS.get_char() + MenuFont.SPACE.get_char()).font(OCResourcePackData.menuFontName));
         for (ISubmittable dishMenu : dishMenuList) {
-            text = text.append(Component.text(dishMenu.toMenuUnicode() + MenuFont.SPACE.get_char() + MenuFont.SPACE.get_char()).font(OCResourcePackData.menuFontName));
+            text = text.append(Component.text(dishMenu.toMenuUnicode() + OCResourcePackData.ScoreFont.scoreToFont(dishMenu.getScore()) + MenuFont.SPACE.get_char() + MenuFont.SPACE.get_char()).font(OCResourcePackData.menuFontName));
         }
 
         BossBar bossBar = bossBarMap.get(team);
