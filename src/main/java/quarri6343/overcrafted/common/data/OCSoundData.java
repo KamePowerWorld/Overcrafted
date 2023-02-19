@@ -33,7 +33,7 @@ public class OCSoundData {
     /**
      * ゲームオーバーの音
      */
-    public static final Sound gameOverSound = Sound.sound(Key.key("entity.generic.explode"), Sound.Source.AMBIENT, 1f, 1f);
+    public static final Sound gameOverSound = Sound.sound(Key.key("entity.generic.explode"), Sound.Source.AMBIENT, 0.25f, 1f);
 
     /**
      * ゲームに勝利した音
