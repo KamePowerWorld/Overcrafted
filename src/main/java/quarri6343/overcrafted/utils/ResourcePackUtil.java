@@ -21,6 +21,9 @@ public class ResourcePackUtil {
      * リソースパックを再ダウンロードさせ必要ならプレイヤーに再ダウンロードさせる
      */
     public static void reloadResourcePack() {
+        if(isResourcePackReloading)
+            return;
+        
         new BukkitRunnable() {
 
             @Override

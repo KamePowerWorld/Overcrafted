@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
+import quarri6343.overcrafted.common.logic.GameResult;
 import quarri6343.overcrafted.common.logic.OCLogic;
 import quarri6343.overcrafted.utils.OverCraftedUtils;
 
@@ -35,7 +36,7 @@ public class GlobalTeamHandler {
         MCTeams.removePlayerFromMCTeam(player);
 
         if (getLogic().gameStatus == OCLogic.GameStatus.ACTIVE && getData().getTeams().countAllPlayers() == 0) {
-            getLogic().endGame(null, null, OCLogic.GameResult.FAIL, true);
+            getLogic().endGame(null, null, GameResult.FAIL, true);
         }
     }
 

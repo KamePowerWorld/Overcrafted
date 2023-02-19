@@ -33,12 +33,12 @@ public class OCSoundData {
     /**
      * ゲームオーバーの音
      */
-    public static final Sound gameOverSound = Sound.sound(Key.key("entity.generic.explode"), Sound.Source.AMBIENT, 0.25f, 1f);
+    public static final Sound gameOverSound = Sound.sound(Key.key("entity.generic.explode"), Sound.Source.AMBIENT, 1f, 1f);
 
     /**
      * ゲームに勝利した音
      */
-    public static final Sound victorySound = Sound.sound(Key.key("entity.ender_dragon.death"), Sound.Source.BLOCK, 1f, 1f);
+    public static final Sound victorySound = Sound.sound(Key.key("entity.ender_dragon.death"), Sound.Source.BLOCK, 0.25f, 1f);
 
     /**
      * テーブルからアイテムを取った音

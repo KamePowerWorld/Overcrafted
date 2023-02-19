@@ -8,6 +8,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.hanging.HangingBreakByEntityEvent;
+import org.bukkit.event.hanging.HangingBreakEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
 import quarri6343.overcrafted.Overcrafted;
@@ -20,8 +22,6 @@ import quarri6343.overcrafted.common.data.OCResourcePackData;
 import quarri6343.overcrafted.common.data.interfaces.IDishPile;
 import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
-import quarri6343.overcrafted.impl.block.BlockTable;
-import quarri6343.overcrafted.impl.block.OCBlocks;
 import quarri6343.overcrafted.impl.item.OCItems;
 
 import java.util.ArrayList;
@@ -86,33 +86,21 @@ public class PlayerEventHandler implements Listener {
     }
 
     @org.bukkit.event.EventHandler
-    public void onEntityDeath(EntityDeathEvent event) {
-        processDishPileDestruction(event);
+    public void onHangingBreak(HangingBreakEvent event) {
+        stopItemFrameDeathWhileGameIsActive(event);
     }
 
     /**
-     * もし設置されている皿置場が壊された時、注文箱に処理を委譲する
+     * バグを起こさないためゲーム中アイテムフレームの破壊を阻止する
      *
      * @param event
      */
-    private void processDishPileDestruction(EntityDeathEvent event) {
-        for (int i = 0; i < getData().getTeams().getTeamsLength(); i++) {
-            IOCTeam team = getData().getTeams().getTeam(i);
+    private void stopItemFrameDeathWhileGameIsActive(HangingBreakEvent event) {
+        if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE
+                || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
+            return;
 
-            IDishPile cleanDishPile = team.getCleanDishPile();
-            if (event.getEntity().getLocation().getBlock().equals(cleanDishPile.getLocation().getBlock()) && cleanDishPile.isPlaced()) {
-                event.setCancelled(true);
-                cleanDishPile.destroy();
-                return;
-            }
-
-            IDishPile dirtyDishPile = team.getDirtyDishPile();
-            if (event.getEntity().getLocation().getBlock().equals(dirtyDishPile.getLocation().getBlock()) && dirtyDishPile.isPlaced()) {
-                event.setCancelled(true);
-                dirtyDishPile.destroy();
-                return;
-            }
-        }
+        event.setCancelled(true);
     }
 
     @org.bukkit.event.EventHandler
@@ -183,7 +171,7 @@ public class PlayerEventHandler implements Listener {
         IOCItem ocItem = OCItems.toOCItem(event.getItemDrop().getItemStack());
         if (ocItem != null && ocItem.equals(OCItems.ADMIN_MENU.get()))
             return;
-        
+
         for (OCItems ocItems : OCItems.values()) {
             if (ocItems.get() instanceof ISupplier && event.getItemDrop().getItemStack().getType() == ocItems.get().getItemStack().getType())
                 return;
@@ -260,41 +248,39 @@ public class PlayerEventHandler implements Listener {
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE
                 || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
             return;
-        
+
         IOCTeam team = getData().getTeams().getTeamByPlayer(event.getPlayer());
         if (team == null)
             return;
 
-        if (event.getPlayer().getItemInHand().getType() != Material.AIR){
+        if (event.getPlayer().getItemInHand().getType() != Material.AIR) {
             IOCItem ocItem1 = OCItems.toOCItem(event.getPlayer().getItemInHand());
             IOCItem ocItem2;
             if (event.getRightClicked() == team.getCleanDishPile().getDishPileEntity()) {
                 ocItem2 = OCItems.DISH.get();
-            }
-            else{
+            } else {
                 ocItem2 = OCItems.DIRTY_DISH.get();
             }
 
-            for(OCItems ocItem : OCItems.values()){
-                if(!(ocItem.get() instanceof ICombinedOCItem)){
+            for (OCItems ocItem : OCItems.values()) {
+                if (!(ocItem.get() instanceof ICombinedOCItem)) {
                     continue;
                 }
 
-                Pair<OCItems, OCItems> ingredients = ((ICombinedOCItem)ocItem.get()).getIngredients();
-                if((ingredients.left().get().equals(ocItem1) && ingredients.right().get().equals(ocItem2))
-                        || (ingredients.left().get().equals(ocItem2) && ingredients.right().get().equals(ocItem1))){
+                Pair<OCItems, OCItems> ingredients = ((ICombinedOCItem) ocItem.get()).getIngredients();
+                if ((ingredients.left().get().equals(ocItem1) && ingredients.right().get().equals(ocItem2))
+                        || (ingredients.left().get().equals(ocItem2) && ingredients.right().get().equals(ocItem1))) {
                     if (event.getRightClicked() == team.getCleanDishPile().getDishPileEntity()) {
                         if (team.getCleanDishPile().removeDish())
                             event.getPlayer().setItemInHand(ocItem.get().getItemStack());
-                    }
-                    else{
+                    } else {
                         if (team.getDirtyDishPile().removeDish())
                             event.getPlayer().setItemInHand(ocItem.get().getItemStack());
                     }
                     return;
                 }
             }
-            return;   
+            return;
         }
 
         if (event.getRightClicked() == team.getCleanDishPile().getDishPileEntity()) {
@@ -312,19 +298,18 @@ public class PlayerEventHandler implements Listener {
 
     @org.bukkit.event.EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
-        stopTableBreak(event);
+        stopBlockBreakWhileGameIsActive(event);
     }
 
     /**
-     * ゲーム中テーブルが壊れて載っているアイテムが落ちてしまうことを阻止する
+     * バグを起こさないためゲーム中のブロック破壊を阻止する
      */
-    private void stopTableBreak(BlockBreakEvent event){
+    private void stopBlockBreakWhileGameIsActive(BlockBreakEvent event) {
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE
                 || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
             return;
-        
-        if(OCBlocks.toOCBlock(event.getBlock()) instanceof BlockTable){
-            event.setCancelled(true);
-        }
+
+        event.getPlayer().sendMessage(Component.text("ゲーム中はブロックを破壊できません！"));
+        event.setCancelled(true);
     }
 }

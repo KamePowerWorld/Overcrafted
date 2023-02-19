@@ -169,14 +169,6 @@ public class OCLogic {
         INACTIVE
     }
 
-    /**
-     * ゲームの結果(成功/失敗)
-     */
-    public enum GameResult {
-        SUCCESS,
-        FAIL
-    }
-
     private OCData getData() {
         return Overcrafted.getInstance().getData();
     }
