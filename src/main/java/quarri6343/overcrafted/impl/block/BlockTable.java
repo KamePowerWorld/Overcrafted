@@ -77,7 +77,7 @@ public class BlockTable extends OCBlock implements IRightClickEventHandler {
             if (itemStack != null){
                 event.getPlayer().setItemInHand(itemStack);
                 onPickUp.forEach(blockConsumer -> blockConsumer.accept(event.getClickedBlock(), event.getPlayer()));
-                event.getPlayer().playSound(OCSoundData.pickItemSound);
+                event.getPlayer().playSound(OCSoundData.tablePickUpSound);
             }
         }
 
@@ -96,7 +96,7 @@ public class BlockTable extends OCBlock implements IRightClickEventHandler {
                     PlaceItemHandler.pickUpItem(event.getClickedBlock());
                     event.getPlayer().setItemInHand(ocItem.get().getItemStack());
                     onPickUp.forEach(blockConsumer -> blockConsumer.accept(event.getClickedBlock(),event.getPlayer()));
-                    event.getPlayer().playSound(OCSoundData.pickItemSound);
+                    event.getPlayer().playSound(OCSoundData.tablePickUpSound);
                     return;
                 }
             }

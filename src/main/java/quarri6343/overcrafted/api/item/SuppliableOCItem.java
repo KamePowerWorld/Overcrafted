@@ -1,7 +1,5 @@
 package quarri6343.overcrafted.api.item;
 
-import net.kyori.adventure.key.Key;
-import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -24,7 +22,7 @@ public class SuppliableOCItem extends OCItem implements ISupplier {
 
     @Override
     public void onSupply(Player player) {
-        player.playSound(OCSoundData.pickItemSound);
+        player.playSound(OCSoundData.supplyItemSound);
         player.getInventory().addItem(getItemStack());
     }
 }

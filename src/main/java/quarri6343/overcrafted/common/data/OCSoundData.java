@@ -8,7 +8,7 @@ public class OCSoundData {
     /**
      * 補給所からアイテムを取った時の音
      */
-    public static final Sound pickItemSound = Sound.sound(Key.key("block.composter.empty"), Sound.Source.BLOCK, 1f, 1f);
+    public static final Sound supplyItemSound = Sound.sound(Key.key("block.composter.empty"), Sound.Source.BLOCK, 1f, 1f);
 
     /**
      * 補給所を開いた音
@@ -28,12 +28,12 @@ public class OCSoundData {
     /**
      * ゲームが始まった時の音
      */
-    public static final Sound gameBeginSound = Sound.sound(Key.key("entity.ender_dragon.ambient"), Sound.Source.AMBIENT, 1f, 1f);
+    public static final Sound gameBeginSound = Sound.sound(Key.key("entity.ender_dragon.ambient"), Sound.Source.AMBIENT, 0.25f, 1f);
 
     /**
      * ゲームオーバーの音
      */
-    public static final Sound gameOverSound = Sound.sound(Key.key("entity.generic.explode"), Sound.Source.AMBIENT, 0.5f, 1f);
+    public static final Sound gameOverSound = Sound.sound(Key.key("entity.generic.explode"), Sound.Source.AMBIENT, 0.25f, 1f);
 
     /**
      * ゲームに勝利した音
