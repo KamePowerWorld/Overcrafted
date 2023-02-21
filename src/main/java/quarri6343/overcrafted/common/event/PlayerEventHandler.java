@@ -4,8 +4,10 @@ import it.unimi.dsi.fastutil.Pair;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
@@ -159,7 +161,7 @@ public class PlayerEventHandler implements Listener {
 
         event.setCancelled(true);
 
-        event.getPlayer().sendMessage("原料でないアイテムは捨てられません");
+        event.getPlayer().sendActionBar(Component.text("原料でないアイテムは捨てられません"));
     }
 
     /**
@@ -216,28 +218,33 @@ public class PlayerEventHandler implements Listener {
 
     @org.bukkit.event.EventHandler
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
-        tryPickUpDish(event);
+        if(tryPickUpDish(event))
+            return;
+        
+        blockEntityInteraction(event);
     }
 
     /**
      * 皿のエンティティがクリックされた時皿を拾うことを試みる
      */
-    private void tryPickUpDish(PlayerInteractEntityEvent event) {
+    private boolean tryPickUpDish(PlayerInteractEntityEvent event) {
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE
                 || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
-            return;
+            return false;
 
         IOCTeam team = getData().getTeams().getTeamByPlayer(event.getPlayer());
         if (team == null)
-            return;
+            return false;
 
         if (event.getPlayer().getItemInHand().getType() != Material.AIR) {
             IOCItem ocItem1 = OCItems.toOCItem(event.getPlayer().getItemInHand());
             IOCItem ocItem2;
             if (event.getRightClicked() == team.getCleanDishPile().getDishPileEntity()) {
                 ocItem2 = OCItems.DISH.get();
-            } else {
+            } else if(event.getRightClicked() == team.getDirtyDishPile().getDishPileEntity()) {
                 ocItem2 = OCItems.DIRTY_DISH.get();
+            } else{
+                return false;
             }
 
             for (OCItems ocItem : OCItems.values()) {
@@ -248,6 +255,7 @@ public class PlayerEventHandler implements Listener {
                 Pair<OCItems, OCItems> ingredients = ((ICombinedOCItem) ocItem.get()).getIngredients();
                 if ((ingredients.left().get().equals(ocItem1) && ingredients.right().get().equals(ocItem2))
                         || (ingredients.left().get().equals(ocItem2) && ingredients.right().get().equals(ocItem1))) {
+                    event.setCancelled(true);
                     if (event.getRightClicked() == team.getCleanDishPile().getDishPileEntity()) {
                         if (team.getCleanDishPile().removeDish())
                             event.getPlayer().setItemInHand(ocItem.get().getItemStack());
@@ -255,26 +263,59 @@ public class PlayerEventHandler implements Listener {
                         if (team.getDirtyDishPile().removeDish())
                             event.getPlayer().setItemInHand(ocItem.get().getItemStack());
                     }
-                    return;
+                    return true;
                 }
             }
-            return;
+            return true;
         }
         
         if(OverCraftedUtils.getInventoryItemCount(event.getPlayer().getInventory()) > 0)
-            return;
+            return false;
 
         if (event.getRightClicked() == team.getCleanDishPile().getDishPileEntity()) {
             event.setCancelled(true);
             if (team.getCleanDishPile().removeDish())
                 event.getPlayer().setItemInHand(OCItems.DISH.get().getItemStack());
+            return true;
         }
 
         if (event.getRightClicked() == team.getDirtyDishPile().getDishPileEntity()) {
             event.setCancelled(true);
             if (team.getDirtyDishPile().removeDish())
                 event.getPlayer().setItemInHand(OCItems.DIRTY_DISH.get().getItemStack());
+            return true;
         }
+        
+        return false;
+    }
+
+    /**
+     * ゲーム中アイテムフレームの回転を含むエンティティへの干渉を阻止する
+     * @param event
+     */
+    private void blockEntityInteraction(PlayerInteractEntityEvent event){
+        if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE
+                || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
+            return;
+        
+        event.setCancelled(true);
+    }
+
+    @org.bukkit.event.EventHandler
+    public void onPlayerDamageEntity(EntityDamageByEntityEvent event){
+        blockEntityDamage(event);
+    }
+
+    /**
+     * ゲーム中アイテムフレーム内のアイテム取り出しを含むエンティティへの干渉を阻止する
+     * @param event
+     */
+    private void blockEntityDamage(EntityDamageByEntityEvent event){
+        if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE
+                || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
+            return;
+
+        event.setCancelled(true);
     }
 
     @org.bukkit.event.EventHandler
