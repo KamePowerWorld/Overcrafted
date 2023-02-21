@@ -63,11 +63,6 @@ public class OCTeam implements IOCTeam {
         player.getInventory().setContents(new ItemStack[]{});
         player.setSaturation(5f);
         player.setFoodLevel(20);
-
-        for (int i = 0; i < player.getInventory().getSize(); i++) {
-            if (i > 0 && i < 36)
-                player.getInventory().setItem(i, OCData.invalidItem);
-        }
     }
 
     public void addPlayer(Player player) {

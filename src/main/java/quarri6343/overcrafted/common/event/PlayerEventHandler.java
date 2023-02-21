@@ -23,6 +23,7 @@ import quarri6343.overcrafted.common.data.interfaces.IDishPile;
 import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
 import quarri6343.overcrafted.impl.item.OCItems;
+import quarri6343.overcrafted.utils.OverCraftedUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,27 +105,6 @@ public class PlayerEventHandler implements Listener {
     }
 
     @org.bukkit.event.EventHandler
-    public void onPlayerDeath(PlayerDeathEvent event) {
-        removeInvalidItem(event);
-    }
-
-    /**
-     * プレイヤーが死んだときインベントリに入っている無効アイテムがドロップしないようにする
-     *
-     * @param event
-     */
-    private void removeInvalidItem(PlayerDeathEvent event) {
-        if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE)
-            return;
-
-        IOCTeam team = getData().getTeams().getTeamByPlayer(event.getPlayer());
-        if (team == null)
-            return;
-
-        event.getDrops().removeIf(itemStack -> itemStack.getType().equals(OCData.invalidItem.getType()));
-    }
-
-    @org.bukkit.event.EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         resetPlayerStatus(event);
     }
@@ -179,9 +159,7 @@ public class PlayerEventHandler implements Listener {
 
         event.setCancelled(true);
 
-        if (event.getItemDrop().getItemStack().getType() != OCData.invalidItem.getType()) {
-            event.getPlayer().sendMessage("原料でないアイテムは捨てられません");
-        }
+        event.getPlayer().sendMessage("原料でないアイテムは捨てられません");
     }
 
     /**
@@ -282,6 +260,9 @@ public class PlayerEventHandler implements Listener {
             }
             return;
         }
+        
+        if(OverCraftedUtils.getInventoryItemCount(event.getPlayer().getInventory()) > 0)
+            return;
 
         if (event.getRightClicked() == team.getCleanDishPile().getDishPileEntity()) {
             event.setCancelled(true);
@@ -309,7 +290,7 @@ public class PlayerEventHandler implements Listener {
                 || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
             return;
 
-        event.getPlayer().sendMessage(Component.text("ゲーム中はブロックを破壊できません！"));
+        event.getPlayer().sendActionBar(Component.text("ゲーム中はブロックを破壊できません！"));
         event.setCancelled(true);
     }
 }

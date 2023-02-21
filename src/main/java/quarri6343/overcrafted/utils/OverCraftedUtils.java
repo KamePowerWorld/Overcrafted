@@ -10,6 +10,7 @@ import org.bukkit.block.Block;
 import org.bukkit.command.CommandMap;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.SimplePluginManager;
 
@@ -126,5 +127,16 @@ public class OverCraftedUtils {
             }
         }
         return null; //Return null/nothing if no entity was found
+    }
+
+    public static int getInventoryItemCount(Inventory inventory) {
+        int count = 0;
+        ItemStack[] itemStacks = inventory.getContents();
+        for (ItemStack itemStack : itemStacks) {
+            if (itemStack == null || itemStack.getType() == Material.AIR)
+                continue;
+            count += itemStack.getAmount();
+        }
+        return count;
     }
 }

@@ -51,10 +51,6 @@ public class BlockTrashCan extends OCBlock implements IRightClickEventHandler {
             return;
         }
 
-        if (event.getPlayer().getItemInHand().getType() == OCData.invalidItem.getType()) {
-            return;
-        }
-
         IOCItem ocItem = OCItems.toOCItem(event.getPlayer().getItemInHand());
         if(ocItem == null)
             return;

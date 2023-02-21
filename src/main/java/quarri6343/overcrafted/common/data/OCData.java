@@ -89,11 +89,6 @@ public class OCData {
      */
     public static final float tipMultiplierValue = 0.1f;
 
-    /**
-     * インベントリを埋める無効アイテム
-     */
-    public static final ItemStack invalidItem = new ItemCreator(Material.RED_STAINED_GLASS_PANE).setName(Component.text("")).create();
-
     @Getter
     private final IOCTeams teams = new OCTeams();
 }

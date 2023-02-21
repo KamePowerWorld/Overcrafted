@@ -11,6 +11,7 @@ import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
 import quarri6343.overcrafted.impl.item.OCItems;
+import quarri6343.overcrafted.utils.OverCraftedUtils;
 
 /**
  * プレイヤーが皿置き場の下のブロックに素手で触れた時、皿を取る
@@ -76,6 +77,9 @@ public class DishPileInteractEventHandler implements IPlayerInteractEventHandler
             }
             return;
         }
+
+        if(OverCraftedUtils.getInventoryItemCount(event.getPlayer().getInventory()) > 0)
+            return;
 
         if (event.getClickedBlock().getRelative(BlockFace.UP).equals(team.getCleanDishPile().getLocation().getBlock())) {
             if (team.getCleanDishPile().removeDish())

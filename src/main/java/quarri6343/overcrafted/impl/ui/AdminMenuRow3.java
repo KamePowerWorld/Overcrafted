@@ -14,7 +14,6 @@ import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.data.interfaces.IDishPile;
 import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
-import quarri6343.overcrafted.common.logic.GameResult;
 import quarri6343.overcrafted.common.logic.OCLogic;
 import quarri6343.overcrafted.impl.item.OCItems;
 import quarri6343.overcrafted.utils.ItemCreator;
@@ -58,7 +57,7 @@ public class AdminMenuRow3 {
         gui.setItem(24, startButton);
         GuiItem endButton = new GuiItem(new ItemCreator(Material.RED_WOOL).setName(Component.text("ゲームを強制終了")).setLore(getCanTerminateGameDesc()).create(),
                 event -> {
-                    getLogic().endGame((Player) event.getWhoClicked(), null, GameResult.FAIL, true);
+                    getLogic().endGame((Player) event.getWhoClicked(), null, false, true);
                     UIAdminMenu.openUI((Player) event.getWhoClicked());
                 });
         gui.setItem(26, endButton);

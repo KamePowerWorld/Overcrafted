@@ -42,13 +42,13 @@ public class BlockPickUpEventHandler implements IPlayerInteractEventHandler{
         if (team == null)
             return;
 
-        if(event.getPlayer().getInventory().getItem(0) != null)
+        if(OverCraftedUtils.getInventoryItemCount(event.getPlayer().getInventory()) > 0)
             return;
 
         if (((Item)entity).getItemStack().getAmount() == 1){
             entity.remove();
             ItemStack itemOnGround = ((Item)entity).getItemStack();
-            event.getPlayer().getInventory().addItem(itemOnGround);
+            event.getPlayer().setItemInHand(itemOnGround);
         }
         else if(((Item)entity).getItemStack().getAmount() > 1){
             ItemStack itemOnGround = ((Item)entity).getItemStack();
@@ -56,7 +56,7 @@ public class BlockPickUpEventHandler implements IPlayerInteractEventHandler{
             ((Item)entity).setItemStack(itemOnGround);
             event.setCancelled(true);
             itemOnGround.setAmount(1);
-            event.getPlayer().getInventory().addItem(itemOnGround);
+            event.getPlayer().setItemInHand(itemOnGround);
         }
     }
 }

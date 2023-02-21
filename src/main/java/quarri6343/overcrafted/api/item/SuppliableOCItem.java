@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import quarri6343.overcrafted.api.item.interfaces.ISupplier;
 import quarri6343.overcrafted.common.data.OCSoundData;
+import quarri6343.overcrafted.utils.OverCraftedUtils;
 
 public class SuppliableOCItem extends OCItem implements ISupplier {
 
@@ -22,6 +23,9 @@ public class SuppliableOCItem extends OCItem implements ISupplier {
 
     @Override
     public void onSupply(Player player) {
+        if(OverCraftedUtils.getInventoryItemCount(player.getInventory()) > 0)
+            return;
+        
         player.playSound(OCSoundData.supplyItemSound);
         player.getInventory().addItem(getItemStack());
     }

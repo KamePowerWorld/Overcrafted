@@ -77,11 +77,11 @@ public class OCLogic {
         OrderHandler.generateRandomOrders();
 
         gameStatus = GameStatus.ACTIVE;
-        gameRunnable = new GameRunnable(urTeam -> endGame(null, urTeam, GameResult.SUCCESS, true)).runTaskTimer(Overcrafted.getInstance(), 0, 1);
+        gameRunnable = new GameRunnable(urTeam -> endGame(null, urTeam, true, true)).runTaskTimer(Overcrafted.getInstance(), 0, 1);
     }
 
     public void endGame() {
-        endGame(null, null, GameResult.FAIL, false);
+        endGame(null, null, false, false);
     }
 
     /**
@@ -89,9 +89,9 @@ public class OCLogic {
      *
      * @param sender      ゲームを終了した人
      * @param victoryTeam 勝ったチーム
-     * @param gameResult  ゲームの結果
+     * @param isSuccessed  ゲームが成功したかどうか
      */
-    public void endGame(@Nullable Player sender, @Nullable IOCTeam victoryTeam, GameResult gameResult, boolean hasResultScene) {
+    public void endGame(@Nullable Player sender, @Nullable IOCTeam victoryTeam, boolean isSuccessed, boolean hasResultScene) {
         if (gameStatus == GameStatus.INACTIVE) {
             if (sender != null)
                 sender.sendMessage("ゲームが始まっていません！");
@@ -105,9 +105,9 @@ public class OCLogic {
         if (gameEndRunnable != null)
             gameEndRunnable.cancel();
 
-        if (gameResult == GameResult.SUCCESS) {
+        if (isSuccessed) {
             displayGameSuccessTitle(victoryTeam);
-        } else if (gameResult == GameResult.FAIL) {
+        } else {
             displayGameFailureTitle();
         }
 

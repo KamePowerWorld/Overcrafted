@@ -20,6 +20,7 @@ import quarri6343.overcrafted.common.data.OCSoundData;
 import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
 import quarri6343.overcrafted.common.logic.OCLogic;
 import quarri6343.overcrafted.impl.item.OCItems;
+import quarri6343.overcrafted.utils.OverCraftedUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,23 +63,22 @@ public class BlockTable extends OCBlock implements IRightClickEventHandler {
         if (team == null)
             return;
 
-        if (event.getItem() != null && event.getItem().getType() == OCData.invalidItem.getType())
-            return;
-
         event.setCancelled(true);
         
         if(PlaceItemHandler.placeItem(event.getClickedBlock(), event.getItem())) {
             event.getPlayer().setItemInHand(null);
             onPlace.forEach(blockConsumer -> blockConsumer.accept(event.getClickedBlock()));
+            return;
         }
 
-        if (event.getItem() == null || event.getItem().getType() == Material.AIR) {
+        if ((event.getItem() == null || event.getItem().getType() == Material.AIR) && OverCraftedUtils.getInventoryItemCount(event.getPlayer().getInventory()) == 0) {
             ItemStack itemStack = PlaceItemHandler.pickUpItem(event.getClickedBlock());
             if (itemStack != null){
                 event.getPlayer().setItemInHand(itemStack);
                 onPickUp.forEach(blockConsumer -> blockConsumer.accept(event.getClickedBlock(), event.getPlayer()));
                 event.getPlayer().playSound(OCSoundData.tablePickUpSound);
             }
+            return;
         }
 
         if(PlaceItemHandler.getItem(event.getClickedBlock()) != null){
