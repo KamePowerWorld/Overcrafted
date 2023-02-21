@@ -18,7 +18,7 @@ import static quarri6343.overcrafted.impl.block.OCBlocks.*;
  * アイテムレジストリ
  */
 public enum OCItems {
-    WOOD(new SuppliableOCItem(Component.text("原木"), Material.OAK_WOOD, "wood", 0)),
+    WOOD(new SuppliableOCItem(Component.text("原木"), Material.OAK_LOG, "wood", 0)),
     COBBLESTONE(new SuppliableOCItem(Component.text("丸石"), Material.COBBLESTONE, "cobblestone", 0)),
     IRON_ORE(new SuppliableOCItem(Component.text("鉄鉱石"), Material.IRON_ORE, "iron_ore", 0)),
 
@@ -52,13 +52,13 @@ public enum OCItems {
 
     ADMIN_MENU(new AdminMenu());
 
-    private final OCItem ocItem;
+    private final IOCItem ocItem;
 
-    OCItems(OCItem ocItem) {
+    OCItems(IOCItem ocItem) {
         this.ocItem = ocItem;
     }
 
-    public OCItem get() {
+    public IOCItem get() {
         return ocItem;
     }
 

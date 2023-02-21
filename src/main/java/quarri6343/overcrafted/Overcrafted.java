@@ -4,8 +4,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import quarri6343.overcrafted.common.ConfigHandler;
 import quarri6343.overcrafted.common.data.OCData;
 import quarri6343.overcrafted.common.event.*;
+import quarri6343.overcrafted.common.logic.GameEndRunnable;
 import quarri6343.overcrafted.common.logic.OCLogic;
 import quarri6343.overcrafted.impl.command.*;
+import quarri6343.overcrafted.utils.OverCraftedUtils;
 import quarri6343.overcrafted.utils.ResourcePackUtil;
 
 public final class Overcrafted extends JavaPlugin {
@@ -51,6 +53,8 @@ public final class Overcrafted extends JavaPlugin {
         new BlockPickUpEventHandler();
 
         ResourcePackUtil.reloadResourcePack();
+
+        OverCraftedUtils.forceInit(GameEndRunnable.class);
     }
 
     @Override
