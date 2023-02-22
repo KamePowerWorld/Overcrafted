@@ -3,9 +3,9 @@ package quarri6343.overcrafted.impl.block;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import quarri6343.overcrafted.api.block.IOCBlock;
-import quarri6343.overcrafted.api.block.OCBlock;
-import quarri6343.overcrafted.common.data.OCParticleData;
-import quarri6343.overcrafted.common.data.OCSoundData;
+import quarri6343.overcrafted.core.OCBlock;
+import quarri6343.overcrafted.core.data.constant.OCParticleData;
+import quarri6343.overcrafted.core.data.constant.OCSoundData;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;

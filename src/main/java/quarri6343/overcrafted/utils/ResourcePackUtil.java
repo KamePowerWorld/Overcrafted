@@ -2,7 +2,7 @@ package quarri6343.overcrafted.utils;
 
 import org.bukkit.scheduler.BukkitRunnable;
 import quarri6343.overcrafted.Overcrafted;
-import quarri6343.overcrafted.common.data.OCResourcePackData;
+import quarri6343.overcrafted.core.data.constant.OCResourcePackData;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

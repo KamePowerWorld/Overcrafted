@@ -1,21 +1,25 @@
 package quarri6343.overcrafted;
 
 import org.bukkit.plugin.java.JavaPlugin;
-import quarri6343.overcrafted.common.ConfigHandler;
-import quarri6343.overcrafted.common.data.OCData;
-import quarri6343.overcrafted.common.event.*;
-import quarri6343.overcrafted.common.logic.GameEndRunnable;
-import quarri6343.overcrafted.common.logic.OCLogic;
+import quarri6343.overcrafted.core.handler.Config;
+import quarri6343.overcrafted.core.data.OCVariableData;
+import quarri6343.overcrafted.impl.event.*;
+import quarri6343.overcrafted.impl.task.game.GameEndTask;
+import quarri6343.overcrafted.core.OCLogic;
 import quarri6343.overcrafted.impl.command.*;
-import quarri6343.overcrafted.utils.OverCraftedUtils;
+import quarri6343.overcrafted.impl.event.interact.BlockEventHandler;
+import quarri6343.overcrafted.impl.event.interact.BlockPickUpEventHandler;
+import quarri6343.overcrafted.impl.event.interact.DishPileInteractEventHandler;
+import quarri6343.overcrafted.impl.event.interact.ItemEventHandler;
+import quarri6343.overcrafted.utils.OverCraftedUtil;
 import quarri6343.overcrafted.utils.ResourcePackUtil;
 
 public final class Overcrafted extends JavaPlugin {
 
-    private OCData data;
+    private OCVariableData data;
     private OCLogic logic;
 
-    private ConfigHandler config;
+    private Config config;
 
     private PlayerEventHandler playerEventHandler;
 
@@ -34,8 +38,8 @@ public final class Overcrafted extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        data = new OCData();
-        config = new ConfigHandler();
+        data = new OCVariableData();
+        config = new Config();
         config.loadConfig();
         logic = new OCLogic();
 
@@ -54,7 +58,7 @@ public final class Overcrafted extends JavaPlugin {
 
         ResourcePackUtil.reloadResourcePack();
 
-        OverCraftedUtils.forceInit(GameEndRunnable.class);
+        OverCraftedUtil.forceInit(GameEndTask.class);
     }
 
     @Override
@@ -66,7 +70,7 @@ public final class Overcrafted extends JavaPlugin {
         }
     }
 
-    public OCData getData() {
+    public OCVariableData getData() {
         return data;
     }
 

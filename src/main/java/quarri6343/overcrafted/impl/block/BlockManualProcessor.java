@@ -13,14 +13,14 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
+import quarri6343.overcrafted.api.block.IBlockProcessor;
 import quarri6343.overcrafted.api.block.ISneakEventHandler;
-import quarri6343.overcrafted.api.item.interfaces.IOCItem;
-import quarri6343.overcrafted.api.item.interfaces.IProcessedOCItem;
-import quarri6343.overcrafted.api.item.interfaces.IRightClickEventHandler;
-import quarri6343.overcrafted.common.PlaceItemHandler;
-import quarri6343.overcrafted.common.data.OCData;
-import quarri6343.overcrafted.common.data.OCResourcePackData;
-import quarri6343.overcrafted.common.data.OCSoundData;
+import quarri6343.overcrafted.api.item.IOCItem;
+import quarri6343.overcrafted.api.item.IProcessedOCItem;
+import quarri6343.overcrafted.api.item.IRightClickEventHandler;
+import quarri6343.overcrafted.core.handler.PlaceItemHandler;
+import quarri6343.overcrafted.core.data.constant.OCCommonData;
+import quarri6343.overcrafted.core.data.constant.OCResourcePackData;
 import quarri6343.overcrafted.impl.item.OCItems;
 import quarri6343.overcrafted.utils.ItemCreator;
 
@@ -113,7 +113,7 @@ public class BlockManualProcessor extends BlockTable implements IBlockProcessor,
             armorStand.setCustomNameVisible(true);
         }
         
-        int filledPercent = progression / (OCData.craftingTime / 10);
+        int filledPercent = progression / (OCCommonData.craftingTime / 10);
         for (OCResourcePackData.ProgressBarFont font : OCResourcePackData.ProgressBarFont.values()) {
             if(font.getFilledPercentage() == filledPercent){
                 armorStand.customName(Component.text(font.get_char()).font(OCResourcePackData.progressBarFontName));
@@ -126,7 +126,7 @@ public class BlockManualProcessor extends BlockTable implements IBlockProcessor,
             block.getWorld().spawnParticle(processingParticle, block.getLocation().add(0.5, 1.2, 0.5), 3);
         }
         
-        if(progression <= OCData.craftingTime){
+        if(progression <= OCCommonData.craftingTime){
             progressionMap.put(block, progression);
         }
         else{

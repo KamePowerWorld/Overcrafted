@@ -5,9 +5,8 @@ import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import quarri6343.overcrafted.Overcrafted;
-import quarri6343.overcrafted.api.CommandBase;
-import quarri6343.overcrafted.common.data.OCData;
-import quarri6343.overcrafted.common.logic.OCLogic;
+import quarri6343.overcrafted.core.data.OCVariableData;
+import quarri6343.overcrafted.core.OCLogic;
 import quarri6343.overcrafted.utils.ResourcePackUtil;
 
 /**
@@ -21,7 +20,7 @@ public class CommandReloadResourcePack extends CommandBase {
         super(commandName, 0, 0, true);
     }
 
-    private static OCData getData() {
+    private static OCVariableData getData() {
         return Overcrafted.getInstance().getData();
     }
 

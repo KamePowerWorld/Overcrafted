@@ -1,24 +1,20 @@
 package quarri6343.overcrafted.impl.block;
 
-import net.kyori.adventure.key.Key;
-import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
-import org.bukkit.command.BlockCommandSender;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import quarri6343.overcrafted.Overcrafted;
-import quarri6343.overcrafted.api.block.OCBlock;
-import quarri6343.overcrafted.api.item.interfaces.IOCItem;
-import quarri6343.overcrafted.api.item.interfaces.IRightClickEventHandler;
-import quarri6343.overcrafted.common.data.OCData;
-import quarri6343.overcrafted.common.data.OCSoundData;
-import quarri6343.overcrafted.common.data.OCTeam;
-import quarri6343.overcrafted.common.data.OCTeams;
-import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
-import quarri6343.overcrafted.common.logic.OCLogic;
-import quarri6343.overcrafted.common.order.OrderHandler;
-import quarri6343.overcrafted.impl.item.ISubmittable;
+import quarri6343.overcrafted.api.item.IOCItem;
+import quarri6343.overcrafted.api.item.IRightClickEventHandler;
+import quarri6343.overcrafted.core.OCBlock;
+import quarri6343.overcrafted.core.data.OCVariableData;
+import quarri6343.overcrafted.core.data.constant.OCCommonData;
+import quarri6343.overcrafted.core.data.constant.OCSoundData;
+import quarri6343.overcrafted.api.IOCTeam;
+import quarri6343.overcrafted.core.OCLogic;
+import quarri6343.overcrafted.core.handler.OrderHandler;
+import quarri6343.overcrafted.api.item.ISubmittableOCItem;
 import quarri6343.overcrafted.impl.item.OCItems;
 
 /**
@@ -30,7 +26,7 @@ public class BlockCounter extends OCBlock implements IRightClickEventHandler {
         super(material);
     }
 
-    private static OCData getData() {
+    private static OCVariableData getData() {
         return Overcrafted.getInstance().getData();
     }
 
@@ -57,10 +53,10 @@ public class BlockCounter extends OCBlock implements IRightClickEventHandler {
      */
     private void trySubmitOrder(PlayerInteractEvent event, IOCTeam team) {
         IOCItem item = OCItems.toOCItem(event.getItem());
-        if (!(item instanceof ISubmittable))
+        if (!(item instanceof ISubmittableOCItem))
             return;
 
-        if (OrderHandler.trySatisfyOrder(team, (ISubmittable) item)) {
+        if (OrderHandler.trySatisfyOrder(team, (ISubmittableOCItem) item)) {
             event.getPlayer().setItemInHand(null);
             
             new BukkitRunnable() {
@@ -68,7 +64,7 @@ public class BlockCounter extends OCBlock implements IRightClickEventHandler {
                 public void run() {
                     team.getDirtyDishPile().addDish();
                 }
-            }.runTaskLater(Overcrafted.getInstance(), OCData.dishReturnLag);
+            }.runTaskLater(Overcrafted.getInstance(), OCCommonData.dishReturnLag);
             
             for (int i = 0; i < team.getPlayersSize(); i++) {
                 team.getPlayer(i).playSound(OCSoundData.submitSound);

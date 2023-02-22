@@ -5,8 +5,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import quarri6343.overcrafted.Overcrafted;
-import quarri6343.overcrafted.api.CommandBase;
-import quarri6343.overcrafted.api.item.interfaces.IOCItem;
+import quarri6343.overcrafted.api.item.IOCItem;
 import quarri6343.overcrafted.impl.item.OCItems;
 
 import java.util.ArrayList;

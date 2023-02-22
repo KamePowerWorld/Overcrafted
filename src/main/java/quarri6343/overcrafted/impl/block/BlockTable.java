@@ -1,26 +1,23 @@
 package quarri6343.overcrafted.impl.block;
 
 import it.unimi.dsi.fastutil.Pair;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
-import net.kyori.adventure.title.Title;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
-import quarri6343.overcrafted.api.block.OCBlock;
-import quarri6343.overcrafted.api.item.interfaces.ICombinedOCItem;
-import quarri6343.overcrafted.api.item.interfaces.IOCItem;
-import quarri6343.overcrafted.api.item.interfaces.IRightClickEventHandler;
-import quarri6343.overcrafted.common.PlaceItemHandler;
-import quarri6343.overcrafted.common.data.OCData;
-import quarri6343.overcrafted.common.data.OCSoundData;
-import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
-import quarri6343.overcrafted.common.logic.OCLogic;
+import quarri6343.overcrafted.api.item.ICombinedOCItem;
+import quarri6343.overcrafted.api.item.IOCItem;
+import quarri6343.overcrafted.api.item.IRightClickEventHandler;
+import quarri6343.overcrafted.core.OCBlock;
+import quarri6343.overcrafted.core.handler.PlaceItemHandler;
+import quarri6343.overcrafted.core.data.OCVariableData;
+import quarri6343.overcrafted.core.data.constant.OCSoundData;
+import quarri6343.overcrafted.api.IOCTeam;
+import quarri6343.overcrafted.core.OCLogic;
 import quarri6343.overcrafted.impl.item.OCItems;
-import quarri6343.overcrafted.utils.OverCraftedUtils;
+import quarri6343.overcrafted.utils.OverCraftedUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +40,7 @@ public class BlockTable extends OCBlock implements IRightClickEventHandler {
         super(material);
     }
 
-    private static OCData getData() {
+    private static OCVariableData getData() {
         return Overcrafted.getInstance().getData();
     }
 
@@ -71,7 +68,7 @@ public class BlockTable extends OCBlock implements IRightClickEventHandler {
             return;
         }
 
-        if ((event.getItem() == null || event.getItem().getType() == Material.AIR) && OverCraftedUtils.getInventoryItemCount(event.getPlayer().getInventory()) == 0) {
+        if ((event.getItem() == null || event.getItem().getType() == Material.AIR) && OverCraftedUtil.getInventoryItemCount(event.getPlayer().getInventory()) == 0) {
             ItemStack itemStack = PlaceItemHandler.pickUpItem(event.getClickedBlock());
             if (itemStack != null){
                 event.getPlayer().setItemInHand(itemStack);

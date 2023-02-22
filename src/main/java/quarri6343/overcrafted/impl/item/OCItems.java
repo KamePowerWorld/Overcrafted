@@ -3,11 +3,11 @@ package quarri6343.overcrafted.impl.item;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import quarri6343.overcrafted.api.item.*;
-import quarri6343.overcrafted.api.item.interfaces.IOCItem;
-import quarri6343.overcrafted.api.item.interfaces.IProcessedOCItem;
-import quarri6343.overcrafted.common.data.OCResourcePackData;
-import quarri6343.overcrafted.impl.block.IBlockProcessor;
+import quarri6343.overcrafted.api.item.IOCItem;
+import quarri6343.overcrafted.api.item.IProcessedOCItem;
+import quarri6343.overcrafted.core.OCItem;
+import quarri6343.overcrafted.core.data.constant.OCResourcePackData;
+import quarri6343.overcrafted.api.block.IBlockProcessor;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;

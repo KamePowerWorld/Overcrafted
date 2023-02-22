@@ -2,9 +2,9 @@ package quarri6343.overcrafted.impl.item;
 
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Material;
-import quarri6343.overcrafted.api.item.CombinedOCItem;
+import quarri6343.overcrafted.api.item.ISubmittableOCItem;
 
-public class SubmittableOCItem extends CombinedOCItem implements ISubmittable{
+public class SubmittableOCItem extends CombinedOCItem implements ISubmittableOCItem {
     
     /**
      * メニューを納品した時に得られるスコア

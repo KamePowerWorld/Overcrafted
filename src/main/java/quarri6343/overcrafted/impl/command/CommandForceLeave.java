@@ -8,11 +8,10 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import quarri6343.overcrafted.Overcrafted;
-import quarri6343.overcrafted.api.CommandBase;
-import quarri6343.overcrafted.common.GlobalTeamHandler;
-import quarri6343.overcrafted.common.data.OCData;
-import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
-import quarri6343.overcrafted.common.logic.OCLogic;
+import quarri6343.overcrafted.core.handler.GlobalTeamHandler;
+import quarri6343.overcrafted.core.data.OCVariableData;
+import quarri6343.overcrafted.api.IOCTeam;
+import quarri6343.overcrafted.core.OCLogic;
 
 /**
  * プレイヤーを強制的にチームから外すコマンド。ゲーム中しか実行できない
@@ -25,7 +24,7 @@ public class CommandForceLeave extends CommandBase {
         super(commandName, 1, 1, true);
     }
 
-    private static OCData getData() {
+    private static OCVariableData getData() {
         return Overcrafted.getInstance().getData();
     }
 

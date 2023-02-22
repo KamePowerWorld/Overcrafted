@@ -5,13 +5,14 @@ import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import quarri6343.overcrafted.Overcrafted;
-import quarri6343.overcrafted.api.block.OCBlock;
-import quarri6343.overcrafted.api.item.interfaces.IOCItem;
-import quarri6343.overcrafted.api.item.interfaces.IRightClickEventHandler;
-import quarri6343.overcrafted.common.data.OCData;
-import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
-import quarri6343.overcrafted.common.logic.OCLogic;
-import quarri6343.overcrafted.impl.item.ISubmittable;
+import quarri6343.overcrafted.api.item.IOCItem;
+import quarri6343.overcrafted.api.item.IRightClickEventHandler;
+import quarri6343.overcrafted.core.OCBlock;
+import quarri6343.overcrafted.core.data.OCVariableData;
+import quarri6343.overcrafted.api.IOCTeam;
+import quarri6343.overcrafted.core.OCLogic;
+import quarri6343.overcrafted.api.item.ISubmittableOCItem;
+import quarri6343.overcrafted.core.data.constant.OCCommonData;
 import quarri6343.overcrafted.impl.item.OCItems;
 
 /**
@@ -22,7 +23,7 @@ public class BlockTrashCan extends OCBlock implements IRightClickEventHandler {
         super(Material.DROPPER);
     }
     
-    private static OCData getData() {
+    private static OCVariableData getData() {
         return Overcrafted.getInstance().getData();
     }
 
@@ -63,11 +64,11 @@ public class BlockTrashCan extends OCBlock implements IRightClickEventHandler {
                 public void run() {
                     team.getDirtyDishPile().addDish();
                 }
-            }.runTaskLater(Overcrafted.getInstance(), OCData.dishReturnLag);
+            }.runTaskLater(Overcrafted.getInstance(), OCCommonData.dishReturnLag);
             return;
         }
 
-        if (ocItem.equals(OCItems.DISH.get()) || ocItem instanceof ISubmittable) {
+        if (ocItem.equals(OCItems.DISH.get()) || ocItem instanceof ISubmittableOCItem) {
             event.getPlayer().setItemInHand(null);
             event.getPlayer().sendActionBar(Component.text("ゴミ箱に持っている皿を捨てた！"));
             new BukkitRunnable() {
@@ -75,7 +76,7 @@ public class BlockTrashCan extends OCBlock implements IRightClickEventHandler {
                 public void run() {
                     team.getCleanDishPile().addDish();
                 }
-            }.runTaskLater(Overcrafted.getInstance(), OCData.dishReturnLag);
+            }.runTaskLater(Overcrafted.getInstance(), OCCommonData.dishReturnLag);
             return;
         }
 

@@ -1,6 +1,5 @@
 package quarri6343.overcrafted.impl.block;
 
-import it.unimi.dsi.fastutil.Pair;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
@@ -8,20 +7,15 @@ import org.bukkit.entity.ItemFrame;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
-import quarri6343.overcrafted.api.block.OCBlock;
-import quarri6343.overcrafted.api.item.interfaces.ICombinedOCItem;
-import quarri6343.overcrafted.api.item.interfaces.IRightClickEventHandler;
-import quarri6343.overcrafted.api.item.interfaces.IStackedDish;
-import quarri6343.overcrafted.api.item.interfaces.ISupplier;
-import quarri6343.overcrafted.common.data.OCData;
-import quarri6343.overcrafted.common.data.OCSoundData;
-import quarri6343.overcrafted.common.data.interfaces.IOCTeam;
-import quarri6343.overcrafted.common.logic.OCLogic;
+import quarri6343.overcrafted.api.item.IRightClickEventHandler;
+import quarri6343.overcrafted.api.item.ISupplier;
+import quarri6343.overcrafted.core.OCBlock;
+import quarri6343.overcrafted.core.data.OCVariableData;
+import quarri6343.overcrafted.api.IOCTeam;
+import quarri6343.overcrafted.core.OCLogic;
 import quarri6343.overcrafted.impl.item.OCItems;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * アイテムをプレイヤーに供給するブロック
@@ -32,7 +26,7 @@ public class BlockSupplier extends OCBlock implements IRightClickEventHandler {
         super(Material.BARREL);
     }
 
-    private static OCData getData() {
+    private static OCVariableData getData() {
         return Overcrafted.getInstance().getData();
     }
 

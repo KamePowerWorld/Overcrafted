@@ -2,7 +2,6 @@ package quarri6343.overcrafted.impl.block;
 
 import lombok.Getter;
 import net.kyori.adventure.sound.Sound;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -15,11 +14,13 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import quarri6343.overcrafted.Overcrafted;
-import quarri6343.overcrafted.api.item.interfaces.IBurntOCItem;
-import quarri6343.overcrafted.api.item.interfaces.IOCItem;
-import quarri6343.overcrafted.api.item.interfaces.IProcessedOCItem;
-import quarri6343.overcrafted.common.PlaceItemHandler;
+import quarri6343.overcrafted.api.block.IBlockProcessor;
+import quarri6343.overcrafted.api.item.IBurntOCItem;
+import quarri6343.overcrafted.api.item.IOCItem;
+import quarri6343.overcrafted.api.item.IProcessedOCItem;
+import quarri6343.overcrafted.core.handler.PlaceItemHandler;
 import quarri6343.overcrafted.impl.item.OCItems;
+import quarri6343.overcrafted.impl.task.AutomaticProcessingRunnable;
 import quarri6343.overcrafted.utils.ItemCreator;
 
 import java.util.HashMap;
