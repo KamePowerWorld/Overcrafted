@@ -5,7 +5,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import quarri6343.overcrafted.api.IOCPlayer;
+import quarri6343.overcrafted.api.object.IOCPlayer;
 
 import javax.annotation.Nonnull;
 

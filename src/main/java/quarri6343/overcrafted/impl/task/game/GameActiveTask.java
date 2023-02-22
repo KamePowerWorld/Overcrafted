@@ -5,7 +5,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import quarri6343.overcrafted.Overcrafted;
-import quarri6343.overcrafted.api.IOCTeam;
+import quarri6343.overcrafted.api.object.IOCTeam;
 import quarri6343.overcrafted.api.block.IOCBlock;
 import quarri6343.overcrafted.api.block.ISneakEventHandler;
 import quarri6343.overcrafted.core.data.OCVariableData;

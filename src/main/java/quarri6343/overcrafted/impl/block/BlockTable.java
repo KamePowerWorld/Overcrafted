@@ -14,7 +14,7 @@ import quarri6343.overcrafted.core.OCBlock;
 import quarri6343.overcrafted.core.handler.PlaceItemHandler;
 import quarri6343.overcrafted.core.data.OCVariableData;
 import quarri6343.overcrafted.core.data.constant.OCSoundData;
-import quarri6343.overcrafted.api.IOCTeam;
+import quarri6343.overcrafted.api.object.IOCTeam;
 import quarri6343.overcrafted.core.OCLogic;
 import quarri6343.overcrafted.impl.item.OCItems;
 import quarri6343.overcrafted.utils.OverCraftedUtil;

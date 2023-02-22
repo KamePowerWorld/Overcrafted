@@ -1,4 +1,4 @@
-package quarri6343.overcrafted.api;
+package quarri6343.overcrafted.api.object;
 
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;

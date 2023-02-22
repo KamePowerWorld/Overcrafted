@@ -1,4 +1,4 @@
-package quarri6343.overcrafted.api;
+package quarri6343.overcrafted.api.object;
 
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Location;

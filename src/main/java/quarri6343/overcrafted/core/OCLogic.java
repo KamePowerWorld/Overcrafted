@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.core.data.OCVariableData;
 import quarri6343.overcrafted.core.data.constant.OCSoundData;
-import quarri6343.overcrafted.api.IOCTeam;
+import quarri6343.overcrafted.api.object.IOCTeam;
 import quarri6343.overcrafted.core.handler.GlobalTeamHandler;
 import quarri6343.overcrafted.impl.task.game.GameBeginTask;
 import quarri6343.overcrafted.impl.task.game.GameEndTask;

@@ -6,7 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.*;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.core.data.OCVariableData;
-import quarri6343.overcrafted.api.IOCTeam;
+import quarri6343.overcrafted.api.object.IOCTeam;
 import quarri6343.overcrafted.core.OCLogic;
 
 /**

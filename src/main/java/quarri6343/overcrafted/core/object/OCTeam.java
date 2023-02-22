@@ -10,9 +10,9 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.impl.item.StackedDish;
-import quarri6343.overcrafted.api.IDishPile;
-import quarri6343.overcrafted.api.IOCPlayer;
-import quarri6343.overcrafted.api.IOCTeam;
+import quarri6343.overcrafted.api.object.IDishPile;
+import quarri6343.overcrafted.api.object.IOCPlayer;
+import quarri6343.overcrafted.api.object.IOCTeam;
 import quarri6343.overcrafted.utils.OverCraftedUtil;
 
 import java.util.ArrayList;

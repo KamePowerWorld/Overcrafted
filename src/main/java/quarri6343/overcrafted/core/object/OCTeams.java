@@ -3,8 +3,8 @@ package quarri6343.overcrafted.core.object;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import quarri6343.overcrafted.api.IOCTeam;
-import quarri6343.overcrafted.api.IOCTeams;
+import quarri6343.overcrafted.api.object.IOCTeam;
+import quarri6343.overcrafted.api.object.IOCTeams;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;

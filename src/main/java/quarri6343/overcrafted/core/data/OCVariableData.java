@@ -2,7 +2,7 @@ package quarri6343.overcrafted.core.data;
 
 import lombok.Getter;
 import lombok.Setter;
-import quarri6343.overcrafted.api.IOCTeams;
+import quarri6343.overcrafted.api.object.IOCTeams;
 import quarri6343.overcrafted.core.object.OCTeams;
 
 /**

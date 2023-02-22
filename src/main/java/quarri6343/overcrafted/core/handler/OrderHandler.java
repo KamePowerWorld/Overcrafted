@@ -3,7 +3,7 @@ package quarri6343.overcrafted.core.handler;
 import net.kyori.adventure.text.Component;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.core.data.OCVariableData;
-import quarri6343.overcrafted.api.IOCTeam;
+import quarri6343.overcrafted.api.object.IOCTeam;
 import quarri6343.overcrafted.core.OCLogic;
 import quarri6343.overcrafted.api.item.ISubmittableOCItem;
 import quarri6343.overcrafted.core.data.constant.OCCommonData;

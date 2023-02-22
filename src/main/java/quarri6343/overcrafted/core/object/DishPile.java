@@ -13,7 +13,7 @@ import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.core.data.constant.OCCommonData;
 import quarri6343.overcrafted.impl.item.StackedDish;
 import quarri6343.overcrafted.api.item.IStackedDish;
-import quarri6343.overcrafted.api.IDishPile;
+import quarri6343.overcrafted.api.object.IDishPile;
 import quarri6343.overcrafted.impl.item.OCItems;
 
 import java.util.Collection;

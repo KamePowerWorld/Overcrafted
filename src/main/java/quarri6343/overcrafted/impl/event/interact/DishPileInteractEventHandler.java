@@ -9,7 +9,7 @@ import quarri6343.overcrafted.api.IPlayerInteractEventHandler;
 import quarri6343.overcrafted.api.item.ICombinedOCItem;
 import quarri6343.overcrafted.api.item.IOCItem;
 import quarri6343.overcrafted.core.data.OCVariableData;
-import quarri6343.overcrafted.api.IOCTeam;
+import quarri6343.overcrafted.api.object.IOCTeam;
 import quarri6343.overcrafted.core.OCLogic;
 import quarri6343.overcrafted.impl.item.OCItems;
 import quarri6343.overcrafted.utils.OverCraftedUtil;

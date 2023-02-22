@@ -11,7 +11,7 @@ import quarri6343.overcrafted.api.item.IRightClickEventHandler;
 import quarri6343.overcrafted.api.item.ISupplier;
 import quarri6343.overcrafted.core.OCBlock;
 import quarri6343.overcrafted.core.data.OCVariableData;
-import quarri6343.overcrafted.api.IOCTeam;
+import quarri6343.overcrafted.api.object.IOCTeam;
 import quarri6343.overcrafted.core.OCLogic;
 import quarri6343.overcrafted.impl.item.OCItems;
 

@@ -7,7 +7,7 @@ import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.core.data.OCVariableData;
 import quarri6343.overcrafted.core.data.constant.OCResourcePackData;
 import quarri6343.overcrafted.core.data.constant.OCResourcePackData.MenuFont;
-import quarri6343.overcrafted.api.IOCTeam;
+import quarri6343.overcrafted.api.object.IOCTeam;
 import quarri6343.overcrafted.api.item.ISubmittableOCItem;
 
 import java.util.HashMap;
