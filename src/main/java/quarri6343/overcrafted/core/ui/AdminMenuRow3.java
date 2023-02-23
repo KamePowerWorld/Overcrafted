@@ -49,7 +49,10 @@ public class AdminMenuRow3 {
                 event -> gui.close(event.getWhoClicked()));
         gui.setItem(22, closeButton);
 
-        GuiItem startButton = new GuiItem(new ItemCreator(Material.GREEN_WOOL).setName(Component.text("ゲームを開始")).setLore(getCanStartGameDesc()).create(),
+        GuiItem startButton = new GuiItem(new ItemCreator(Material.GREEN_WOOL)
+                .setName(Component.text(getData().getSelectedStage() != null ? getData().getSelectedStage().get().getName() : "ゲーム").color(NamedTextColor.YELLOW)
+                        .append(Component.text("を開始").color(NamedTextColor.WHITE)))
+                .setLore(getCanStartGameDesc()).create(),
                 event -> {
                     getLogic().startGame((Player) event.getWhoClicked());
                     UIAdminMenu.openUI((Player) event.getWhoClicked());

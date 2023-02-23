@@ -48,7 +48,12 @@ public class OCLogic {
      */
     public void startGame(@NotNull Player gameMaster) {
         if (gameStatus != GameStatus.INACTIVE) {
-            gameMaster.sendMessage("ゲームが進行中です！");
+            gameMaster.sendMessage(Component.text("ゲームが進行中です！"));
+            return;
+        }
+
+        if(getData().getSelectedStage() == null){
+            gameMaster.sendMessage(Component.text("プレイするステージが選択されていません！"));
             return;
         }
 
@@ -77,7 +82,7 @@ public class OCLogic {
 
             team.getCleanDishPile().setUp();
         }
-        Bukkit.getOnlinePlayers().forEach(player -> player.showTitle(Title.title(Component.text("ゲームスタート"), Component.empty())));
+        Bukkit.getOnlinePlayers().forEach(player -> player.showTitle(Title.title(Component.text(Overcrafted.getInstance().getData().getSelectedStage().get().getName()).color(NamedTextColor.YELLOW), Component.empty())));
         OrderHandler.generateRandomOrders();
 
         gameStatus = GameStatus.ACTIVE;

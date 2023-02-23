@@ -57,7 +57,7 @@ public class AdminMenuRow1 {
         ItemStack selectStageItem = new ItemCreator(Material.CARTOGRAPHY_TABLE).setName(Component.text("ステージを選択"))
                 .create();
         GuiItem selectStageButton = new GuiItem(selectStageItem,
-                event -> UIAdminSelectStage.openUI(player));
+                AdminMenuRow1::onSelectStageButton);
         gui.setItem(6, selectStageButton);
 
         GuiItem setStartButton;
@@ -143,5 +143,18 @@ public class AdminMenuRow1 {
 
         return Component.text("選択中のチーム:" + getData().getAdminSelectedTeam())
                 .color(NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false);
+    }
+
+    /**
+     * ステージを設定するボタンを押したときのイベント
+     * @param event
+     */
+    private static void onSelectStageButton(InventoryClickEvent event){
+        if (getLogic().gameStatus != OCLogic.GameStatus.INACTIVE) {
+            event.getWhoClicked().sendMessage(gameRunningText);
+            return;
+        }
+
+        UIAdminSelectStage.openUI((Player) event.getWhoClicked());
     }
 }
