@@ -17,15 +17,29 @@ import quarri6343.overcrafted.core.OCLogic;
 import quarri6343.overcrafted.utils.ItemCreator;
 import quarri6343.overcrafted.utils.UIUtility;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static quarri6343.overcrafted.utils.UIUtility.*;
 
 public class AdminMenuRow2 {
-    private static final TextComponent joinTeamButtonGuide = Component.text("コマンド/forcejoin {プレイヤー名}を使用してください")
-            .color(NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false);
-    private static final TextComponent leaveTeamButtonGuide = Component.text("コマンド/forceleave {プレイヤー名}を使用してください")
-            .color(NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false);
-    private static final TextComponent setJoinLocationButtonGuide = Component.text("ゲームが始まった時このエリア内にいる人は選択中のチームに参加できます")
-            .color(NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false);
+    private static final List<Component> joinTeamButtonGuide = Arrays.asList(
+            Component.text("コマンド/forcejoin {プレイヤー名}")
+                    .color(NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false),
+            Component.text("を使用してください")
+                    .color(NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false));
+    private static final List<Component> leaveTeamButtonGuide = Arrays.asList(
+            Component.text("コマンド/forceleave {プレイヤー名}")
+                    .color(NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false),
+            Component.text("を使用してください")
+                    .color(NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false));
+    private static final List<Component> setJoinLocationButtonGuide = Arrays.asList(
+            Component.text("ゲームが始まった時、")
+                    .color(NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false),
+            Component.text("このエリア内にいる人は")
+                    .color(NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false),
+            Component.text("選択中のチームに参加できます")
+                    .color(NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false));
 
     private static OCVariableData getData() {
         return Overcrafted.getInstance().getData();
@@ -37,19 +51,19 @@ public class AdminMenuRow2 {
 
     public static void addElements(PaginatedGui gui, Player player) {
         ItemStack forceJoinItem = new ItemCreator(Material.GREEN_BANNER).setName(Component.text("選択中のチームにプレイヤーを強制加入させる"))
-                .setLore(joinTeamButtonGuide).create();
+                .setLores(joinTeamButtonGuide).create();
         GuiItem forceJoinButton = new GuiItem(forceJoinItem, event -> {
         });
         gui.setItem(9, forceJoinButton);
 
         ItemStack forceLeaveItem = new ItemCreator(Material.RED_BANNER).setName(Component.text("プレイヤーをチームから外す"))
-                .setLore(leaveTeamButtonGuide).create();
+                .setLores(leaveTeamButtonGuide).create();
         GuiItem forceLeaveButton = new GuiItem(forceLeaveItem, event -> {
         });
         gui.setItem(11, forceLeaveButton);
 
         ItemStack setJoinLocation1Item = new ItemCreator(Material.STRUCTURE_BLOCK).setName(Component.text("チーム" + getData().getAdminSelectedTeam() + "の参加エリアの始点を選ぶ"))
-                .addLore(getSetJoinLocation1ButtonStats()).addLore(setJoinLocationButtonGuide).create();
+                .addLore(getSetJoinLocation1ButtonStats()).setLores(setJoinLocationButtonGuide).create();
         GuiItem setJoinLocation1Button = new GuiItem(setJoinLocation1Item,
                 event -> {
                     onSetJoinLocationButton(event, true);
@@ -58,7 +72,7 @@ public class AdminMenuRow2 {
         gui.setItem(13, setJoinLocation1Button);
 
         ItemStack setJoinLocation2Item = new ItemCreator(Material.STRUCTURE_BLOCK).setName(Component.text("チーム" + getData().getAdminSelectedTeam() + "の参加エリアの終点を選ぶ"))
-                .setLore(getSetJoinLocation2ButtonStats()).addLore(setJoinLocationButtonGuide).create();
+                .setLore(getSetJoinLocation2ButtonStats()).setLores(setJoinLocationButtonGuide).create();
         GuiItem setJoinLocation2Button = new GuiItem(setJoinLocation2Item,
                 event -> {
                     onSetJoinLocationButton(event, false);
@@ -77,6 +91,7 @@ public class AdminMenuRow2 {
 
     /**
      * 加入エリアの始点の登録状況を返す
+     *
      * @return 登録状況
      */
     private static TextComponent getSetJoinLocation1ButtonStats() {
@@ -90,6 +105,7 @@ public class AdminMenuRow2 {
 
     /**
      * 加入エリアの終点の登録状況を返す
+     *
      * @return 登録状況
      */
     private static TextComponent getSetJoinLocation2ButtonStats() {

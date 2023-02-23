@@ -3,6 +3,7 @@ package quarri6343.overcrafted;
 import org.bukkit.plugin.java.JavaPlugin;
 import quarri6343.overcrafted.core.handler.Config;
 import quarri6343.overcrafted.core.data.OCVariableData;
+import quarri6343.overcrafted.core.handler.PlaceItemHandler;
 import quarri6343.overcrafted.impl.event.*;
 import quarri6343.overcrafted.impl.task.game.GameEndTask;
 import quarri6343.overcrafted.core.OCLogic;
@@ -59,6 +60,7 @@ public final class Overcrafted extends JavaPlugin {
         ResourcePackUtil.reloadResourcePack();
 
         OverCraftedUtil.forceInit(GameEndTask.class);
+        OverCraftedUtil.forceInit(PlaceItemHandler.class);
     }
 
     @Override

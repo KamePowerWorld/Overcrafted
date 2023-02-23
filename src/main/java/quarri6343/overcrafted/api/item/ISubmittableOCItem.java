@@ -3,7 +3,7 @@ package quarri6343.overcrafted.api.item;
 /**
  * 提出してスコアに変換可能なアイテム
  */
-public interface ISubmittableOCItem {
+public interface ISubmittableOCItem extends IOCItem {
 
     /**
      * 提出した時のスコア

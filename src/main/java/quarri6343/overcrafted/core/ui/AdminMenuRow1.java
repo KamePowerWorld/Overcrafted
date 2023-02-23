@@ -42,11 +42,23 @@ public class AdminMenuRow1 {
                 event -> UICreateTeam.openUI(player));
         gui.setItem(0, createTeamButton);
 
+        GuiItem removeTeamButton;
+        ItemStack removeTeamItem = new ItemCreator(Material.BLACK_BANNER).setName(Component.text("選択中のチームを削除"))
+                .setLore(getRemoveTeamDesc()).create();
+        removeTeamButton = new GuiItem(removeTeamItem, AdminMenuRow1::onRemoveTeamButton);
+        gui.setItem(2, removeTeamButton);
+
         ItemStack selectTeamItem = new ItemCreator(Material.RESPAWN_ANCHOR).setName(Component.text("設定変更するチームを選択"))
                 .create();
         GuiItem selectTeamButton = new GuiItem(selectTeamItem,
                 event -> UIAdminSelectTeam.openUI(player));
-        gui.setItem(2, selectTeamButton);
+        gui.setItem(4, selectTeamButton);
+
+        ItemStack selectStageItem = new ItemCreator(Material.CARTOGRAPHY_TABLE).setName(Component.text("ステージを選択"))
+                .create();
+        GuiItem selectStageButton = new GuiItem(selectStageItem,
+                event -> UIAdminSelectStage.openUI(player));
+        gui.setItem(6, selectStageButton);
 
         GuiItem setStartButton;
         ItemStack setStartItem = new ItemCreator(Material.FURNACE_MINECART).setName(Component.text("チーム" + getData().getAdminSelectedTeam() + "のゲーム開始地点を設定"))
@@ -56,13 +68,7 @@ public class AdminMenuRow1 {
                     onSetStartButton(event);
                     UIAdminMenu.openUI((Player) event.getWhoClicked());
                 });
-        gui.setItem(4, setStartButton);
-
-        GuiItem removeTeamButton;
-        ItemStack removeTeamItem = new ItemCreator(Material.BLACK_BANNER).setName(Component.text("選択中のチームを削除"))
-                .setLore(getRemoveTeamDesc()).create();
-        removeTeamButton = new GuiItem(removeTeamItem, AdminMenuRow1::onRemoveTeamButton);
-        gui.setItem(8, removeTeamButton);
+        gui.setItem(8, setStartButton);
     }
 
     /**
