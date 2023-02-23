@@ -36,11 +36,7 @@ public class OrderHandler {
         BossBarHandler.hideEverything();
 
         for (int i = 0; i < getData().getTeams().getTeamsLength(); i++) {
-            List<ISubmittableOCItem> menus = new ArrayList<>();
-            for (OCItems item : OCItems.values()){
-                if(item.get() instanceof ISubmittableOCItem)
-                    menus.add((ISubmittableOCItem) item.get());
-            }
+            List<ISubmittableOCItem> menus = getData().getSelectedStage().get().getProducts();
 
             List<ISubmittableOCItem> orders = new ArrayList<>();
             for (int j = 0; j < OCCommonData.ordersOnStart; j++) {
@@ -58,11 +54,7 @@ public class OrderHandler {
      * @param team チーム
      */
     public static void generateRandomOrder(IOCTeam team) {
-        List<ISubmittableOCItem> menus = new ArrayList<>();
-        for (OCItems item : OCItems.values()){
-            if(item.get() instanceof ISubmittableOCItem)
-                menus.add((ISubmittableOCItem) item.get());
-        }
+        List<ISubmittableOCItem> menus = getData().getSelectedStage().get().getProducts();;
 
         List<ISubmittableOCItem> orders = ordersMap.get(team);
         orders.add(menus.get(new Random().nextInt(menus.size())));

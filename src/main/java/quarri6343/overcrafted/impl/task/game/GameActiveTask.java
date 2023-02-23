@@ -35,10 +35,10 @@ public class GameActiveTask extends BukkitRunnable {
         count++;
 
         if (count % 20 == 0) {
-            BossBarHandler.updateRemainingTime( ((float) OCCommonData.gameLength * 20 - (float)count) / ((float) OCCommonData.gameLength * 20));
+            BossBarHandler.updateRemainingTime( ((float) getData().getSelectedStage().get().getTime() * 20 - (float)count) / ((float) getData().getSelectedStage().get().getTime() * 20));
         }
 
-        if (count >= OCCommonData.gameLength * 20) {
+        if (count >= getData().getSelectedStage().get().getTime() * 20) {
             onGameSuccess.accept(ScoreBoardHandler.getHighestScoreTeam());
             cancel();
         }

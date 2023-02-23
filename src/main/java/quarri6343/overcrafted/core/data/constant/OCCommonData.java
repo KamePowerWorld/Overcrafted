@@ -13,11 +13,6 @@ public class OCCommonData {
     public static final int gameBeginCountdownLength = 100;
 
     /**
-     * ゲームの長さ(秒)
-     */
-    public static final int gameLength = 300;
-
-    /**
      * ゲームのリザルトシーンの長さ(tick)
      */
     public static final int gameResultSceneLength = 100;
