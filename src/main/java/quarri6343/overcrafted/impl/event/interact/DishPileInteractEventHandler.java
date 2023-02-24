@@ -30,6 +30,10 @@ public class DishPileInteractEventHandler implements IPlayerInteractEventHandler
     private static OCLogic getLogic() {
         return Overcrafted.getInstance().getLogic();
     }
+    
+    private static int getStageID(){
+        return getData().getSelectedStage().ordinal();
+    }
 
     @Override
     public void onPlayerInteract(PlayerInteractEvent event) {
@@ -50,7 +54,7 @@ public class DishPileInteractEventHandler implements IPlayerInteractEventHandler
         if (event.getItem() != null && event.getItem().getType() != Material.AIR){
             IOCItem ocItem1 = OCItems.toOCItem(event.getPlayer().getItemInHand());
             IOCItem ocItem2;
-            if (event.getClickedBlock().getRelative(BlockFace.UP).equals(team.getCleanDishPile().getLocation().getBlock())) {
+            if (event.getClickedBlock().getRelative(BlockFace.UP).equals(team.getCleanDishPiles().get(getStageID()).getLocation().getBlock())) {
                 ocItem2 = OCItems.DISH.get();
             }
             else{
@@ -65,12 +69,12 @@ public class DishPileInteractEventHandler implements IPlayerInteractEventHandler
                 Pair<OCItems, OCItems> ingredients = ((ICombinedOCItem)ocItem.get()).getIngredients();
                 if((ingredients.left().get().equals(ocItem1) && ingredients.right().get().equals(ocItem2))
                         || (ingredients.left().get().equals(ocItem2) && ingredients.right().get().equals(ocItem1))){
-                    if (event.getClickedBlock().getRelative(BlockFace.UP).equals(team.getCleanDishPile().getLocation().getBlock())) {
-                        if (team.getCleanDishPile().removeDish())
+                    if (event.getClickedBlock().getRelative(BlockFace.UP).equals(team.getCleanDishPiles().get(getStageID()).getLocation().getBlock())) {
+                        if (team.getCleanDishPiles().get(getStageID()).removeDish())
                             event.getPlayer().setItemInHand(ocItem.get().getItemStack());
                     }
                     else{
-                        if (team.getDirtyDishPile().removeDish())
+                        if (team.getDirtyDishPiles().get(getStageID()).removeDish())
                             event.getPlayer().setItemInHand(ocItem.get().getItemStack());
                     }
                     return;
@@ -82,11 +86,11 @@ public class DishPileInteractEventHandler implements IPlayerInteractEventHandler
         if(OverCraftedUtil.getInventoryItemCount(event.getPlayer().getInventory()) > 0)
             return;
 
-        if (event.getClickedBlock().getRelative(BlockFace.UP).equals(team.getCleanDishPile().getLocation().getBlock())) {
-            if (team.getCleanDishPile().removeDish())
+        if (event.getClickedBlock().getRelative(BlockFace.UP).equals(team.getCleanDishPiles().get(getStageID()).getLocation().getBlock())) {
+            if (team.getCleanDishPiles().get(getStageID()).removeDish())
                 event.getPlayer().setItemInHand(OCItems.DISH.get().getItemStack());
-        } else if (event.getClickedBlock().getRelative(BlockFace.UP).equals(team.getDirtyDishPile().getLocation().getBlock())) {
-            if (team.getDirtyDishPile().removeDish())
+        } else if (event.getClickedBlock().getRelative(BlockFace.UP).equals(team.getDirtyDishPiles().get(getStageID()).getLocation().getBlock())) {
+            if (team.getDirtyDishPiles().get(getStageID()).removeDish())
                 event.getPlayer().setItemInHand(OCItems.DIRTY_DISH.get().getItemStack());
         }
     }

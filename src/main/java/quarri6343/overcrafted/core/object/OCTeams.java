@@ -81,10 +81,10 @@ public class OCTeams implements IOCTeams {
         return playerCount;
     }
 
-    public void clearDishPile() {
+    public void clearDishPile(int stageID) {
         for (int i = 0; i < getTeamsLength(); i++) {
-            getTeam(i).getCleanDishPile().destroy();
-            getTeam(i).getDirtyDishPile().destroy();
+            getTeam(i).getCleanDishPiles().get(stageID).destroy();
+            getTeam(i).getDirtyDishPiles().get(stageID).destroy();
         }
     }
     

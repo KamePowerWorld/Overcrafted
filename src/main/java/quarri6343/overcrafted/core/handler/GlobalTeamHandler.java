@@ -72,11 +72,11 @@ public class GlobalTeamHandler {
                 gameMaster.sendMessage("チーム" + team.getName() + "の開始地点を設定してください");
                 return false;
             }
-            if (team.getCleanDishPile().getLocation() == null) {
+            if (team.getCleanDishPiles().get(getData().getSelectedStage().ordinal()).getLocation() == null) {
                 gameMaster.sendMessage("チーム" + team.getName() + "の綺麗な皿置き場の地点を設定してください");
                 return false;
             }
-            if (team.getDirtyDishPile().getLocation() == null) {
+            if (team.getDirtyDishPiles().get(getData().getSelectedStage().ordinal()).getLocation() == null) {
                 gameMaster.sendMessage("チーム" + team.getName() + "の汚い皿置き場の地点を設定してください");
                 return false;
             }

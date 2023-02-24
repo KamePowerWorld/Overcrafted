@@ -6,6 +6,8 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -29,16 +31,24 @@ public class AdminMenuRow3 {
     private static OCLogic getLogic() {
         return Overcrafted.getInstance().getLogic();
     }
+    
+    private static int getStageID(){
+        return getData().getSelectedStage().ordinal();
+    }
 
     public static void addElements(PaginatedGui gui, Player player) {
-        ItemStack placeCleanDishPileItem = new ItemCreator(OCItems.DISH.get().getItemStack()).setName(Component.text("チーム" + getData().getAdminSelectedTeam() + "の綺麗な皿置場座標を設定")
+        ItemStack placeCleanDishPileItem = new ItemCreator(OCItems.DISH.get().getItemStack()).setName(
+                Component.text(ChatColor.YELLOW + (getData().getSelectedStage() != null ? getData().getSelectedStage().get().getName() : "ステージ?")
+                                + ChatColor.RESET + "でのチーム" + getData().getAdminSelectedTeam() + "の綺麗な皿置場の座標を設定")
                         .color(NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false))
                 .addLore(getCleanDishPileLocationStats()).create();
         GuiItem placeCleanDishPileButton = new GuiItem(placeCleanDishPileItem,
                 AdminMenuRow3::setUpCleanDishPile);
         gui.setItem(18, placeCleanDishPileButton);
 
-        ItemStack placeDirtyDishPileItem = new ItemCreator(OCItems.DIRTY_DISH.get().getItemStack()).setName(Component.text("チーム" + getData().getAdminSelectedTeam() + "の汚い皿置場座標を設定")
+        ItemStack placeDirtyDishPileItem = new ItemCreator(OCItems.DIRTY_DISH.get().getItemStack()).setName(
+                        Component.text(ChatColor.YELLOW + (getData().getSelectedStage() != null ? getData().getSelectedStage().get().getName() : "ステージ?")
+                                        + ChatColor.RESET + "でのチーム" + getData().getAdminSelectedTeam() + "の汚い皿置場の座標を設定")
                         .color(NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false))
                 .addLore(getDirtyDishPileLocationStats()).create();
         GuiItem placeDirtyDishPileButton = new GuiItem(placeDirtyDishPileItem,
@@ -93,8 +103,12 @@ public class AdminMenuRow3 {
         if (team == null) {
             return teamNotSelectedText;
         }
+        
+        if(getData().getSelectedStage() == null){
+            return stageNotSelectedText;
+        }
 
-        return getLocDesc(team.getCleanDishPile().getLocation());
+        return getLocDesc(team.getCleanDishPiles().get(getStageID()).getLocation());
     }
 
 
@@ -107,7 +121,11 @@ public class AdminMenuRow3 {
             return teamNotSelectedText;
         }
 
-        return getLocDesc(team.getDirtyDishPile().getLocation());
+        if(getData().getSelectedStage() == null){
+            return stageNotSelectedText;
+        }
+
+        return getLocDesc(team.getDirtyDishPiles().get(getStageID()).getLocation());
     }
 
     /**
@@ -116,9 +134,15 @@ public class AdminMenuRow3 {
      * @param event
      */
     public static void setUpCleanDishPile(InventoryClickEvent event) {
+        Location playerLoc = event.getWhoClicked().getLocation();
         IOCTeam playerTeam = getData().getTeams().getTeamByName(getData().getAdminSelectedTeam());
         if (playerTeam == null) {
             event.getWhoClicked().sendMessage(teamNotSelectedText);
+            return;
+        }
+        
+        if(getData().getSelectedStage() == null){
+            event.getWhoClicked().sendMessage(stageNotSelectedText);
             return;
         }
 
@@ -130,21 +154,21 @@ public class AdminMenuRow3 {
         for (int i = 0; i < getData().getTeams().getTeamsLength(); i++) {
             IOCTeam team = getData().getTeams().getTeam(i);
             
-            if(team != playerTeam && team.getCleanDishPile().getLocation() != null
-                    && team.getCleanDishPile().getLocation().getBlock().equals(event.getWhoClicked().getLocation().getBlock())){
+            if(team != playerTeam && team.getCleanDishPiles().get(getStageID()).getLocation() != null
+                    && team.getCleanDishPiles().get(getStageID()).getLocation().getBlock().equals(playerLoc.getBlock())){
                 event.getWhoClicked().sendMessage(Component.text("チーム" + team + "の綺麗な皿置場と場所が被っています"));
                 return;
             }
-            if(team.getDirtyDishPile().getLocation() != null
-                    && team.getDirtyDishPile().getLocation().getBlock().equals(event.getWhoClicked().getLocation().getBlock())){
+            if(team.getDirtyDishPiles().get(getStageID()).getLocation() != null
+                    && team.getDirtyDishPiles().get(getStageID()).getLocation().getBlock().equals(playerLoc.getBlock())){
                 event.getWhoClicked().sendMessage(Component.text("チーム" + team + "の汚い皿置場と場所が被っています"));
                 return;
             }
         }
         
-        IDishPile cleanDishPile = playerTeam.getCleanDishPile();
-        cleanDishPile.setLocation(event.getWhoClicked().getLocation());
-        event.getWhoClicked().sendMessage(Component.text("綺麗な皿置場を" + locationBlockPostoString(event.getWhoClicked().getLocation()) + "で登録しました"));
+        IDishPile cleanDishPile = playerTeam.getCleanDishPiles().get(getStageID());
+        cleanDishPile.setLocation(playerLoc);
+        event.getWhoClicked().sendMessage(Component.text("綺麗な皿置場を" + locationBlockPostoString(playerLoc) + "で登録しました"));
         UIAdminMenu.openUI((Player) event.getWhoClicked());
     }
 
@@ -154,9 +178,15 @@ public class AdminMenuRow3 {
      * @param event
      */
     public static void setUpDirtyDishPile(InventoryClickEvent event) {
+        Location playerLoc = event.getWhoClicked().getLocation();
         IOCTeam playerTeam = getData().getTeams().getTeamByName(getData().getAdminSelectedTeam());
         if (playerTeam == null) {
             event.getWhoClicked().sendMessage(teamNotSelectedText);
+            return;
+        }
+
+        if(getData().getSelectedStage() == null){
+            event.getWhoClicked().sendMessage(stageNotSelectedText);
             return;
         }
 
@@ -168,21 +198,21 @@ public class AdminMenuRow3 {
         for (int i = 0; i < getData().getTeams().getTeamsLength(); i++) {
             IOCTeam team = getData().getTeams().getTeam(i);
 
-            if(team.getCleanDishPile().getLocation() != null
-                    && team.getCleanDishPile().getLocation().getBlock().equals(event.getWhoClicked().getLocation().getBlock())){
+            if(team.getCleanDishPiles().get(getStageID()).getLocation() != null
+                    && team.getCleanDishPiles().get(getStageID()).getLocation().getBlock().equals(playerLoc.getBlock())){
                 event.getWhoClicked().sendMessage(Component.text("チーム" + team.getName() + "の綺麗な皿置場と場所が被っています"));
                 return;
             }
-            if(team != playerTeam && team.getDirtyDishPile().getLocation() != null
-                    && team.getDirtyDishPile().getLocation().getBlock().equals(event.getWhoClicked().getLocation().getBlock())){
+            if(team != playerTeam && team.getDirtyDishPiles().get(getStageID()).getLocation() != null
+                    && team.getDirtyDishPiles().get(getStageID()).getLocation().getBlock().equals(playerLoc.getBlock())){
                 event.getWhoClicked().sendMessage(Component.text("チーム" + team.getName() + "の汚い皿置場と場所が被っています"));
                 return;
             }
         }
 
-        IDishPile dirtyDishPile = playerTeam.getDirtyDishPile();
-        dirtyDishPile.setLocation(event.getWhoClicked().getLocation());
-        event.getWhoClicked().sendMessage(Component.text("汚い皿置場を" + locationBlockPostoString(event.getWhoClicked().getLocation()) + "で登録しました"));
+        IDishPile dirtyDishPile = playerTeam.getDirtyDishPiles().get(getStageID());
+        dirtyDishPile.setLocation(playerLoc);
+        event.getWhoClicked().sendMessage(Component.text("汚い皿置場を" + locationBlockPostoString(playerLoc) + "で登録しました"));
         UIAdminMenu.openUI((Player) event.getWhoClicked());
     }
 }

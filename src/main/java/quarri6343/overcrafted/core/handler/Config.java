@@ -4,10 +4,12 @@ import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import quarri6343.overcrafted.Overcrafted;
+import quarri6343.overcrafted.api.object.IDishPile;
 import quarri6343.overcrafted.core.data.OCVariableData;
 import quarri6343.overcrafted.api.object.IOCTeam;
-import quarri6343.overcrafted.core.object.OCStage;
+import quarri6343.overcrafted.core.object.DishPile;
 import quarri6343.overcrafted.impl.OCStages;
+import quarri6343.overcrafted.impl.item.StackedDish;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.File;
@@ -62,15 +64,17 @@ public class Config {
 
             data.getTeams().addTeam(teamName, teamColor);
             IOCTeam newTeam = data.getTeams().getTeam(i);
-            List<Location> locations = new ArrayList<>();
+            List<Location> startLocations = new ArrayList<>();
             for (int j = 0; j < OCStages.values().length; j++) {
-                locations.add(config.getLocation(teamStartLocationStr + i + teamStageStr + j));
+                startLocations.add(config.getLocation(teamStartLocationStr + i + teamStageStr + j));
             }
-            newTeam.setStartLocations(locations);
+            newTeam.setStartLocations(startLocations);
             newTeam.setJoinLocation1(config.getLocation(teamJoinLocation1Str + i));
             newTeam.setJoinLocation2(config.getLocation(teamJoinLocation2Str + i));
-            newTeam.getCleanDishPile().setLocation(config.getLocation(teamCleanDishPileStr + i));
-            newTeam.getDirtyDishPile().setLocation(config.getLocation(teamDirtyDishPileStr + i));
+            for (int j = 0; j < OCStages.values().length; j++) {
+                newTeam.getCleanDishPiles().get(j).setLocation(config.getLocation(teamCleanDishPileStr + i + teamStageStr + j));
+                newTeam.getDirtyDishPiles().get(j).setLocation(config.getLocation(teamDirtyDishPileStr + i + teamStageStr + j));
+            }
         }
     }
 
@@ -117,8 +121,10 @@ public class Config {
             }
             config.set(teamJoinLocation1Str + i, data.getTeams().getTeam(i).getJoinLocation1());
             config.set(teamJoinLocation2Str + i, data.getTeams().getTeam(i).getJoinLocation2());
-            config.set(teamCleanDishPileStr + i, data.getTeams().getTeam(i).getCleanDishPile().getLocation());
-            config.set(teamDirtyDishPileStr + i, data.getTeams().getTeam(i).getDirtyDishPile().getLocation());
+            for (int j = 0; j < OCStages.values().length; j++) {
+                config.set(teamCleanDishPileStr + i + teamStageStr + j, data.getTeams().getTeam(i).getCleanDishPiles().get(j).getLocation());
+                config.set(teamDirtyDishPileStr + i + teamStageStr + j, data.getTeams().getTeam(i).getDirtyDishPiles().get(j).getLocation());
+            }
         }
     }
 

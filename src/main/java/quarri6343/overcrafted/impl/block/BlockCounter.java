@@ -63,10 +63,10 @@ public class BlockCounter extends OCBlock implements IRightClickEventHandler {
                 @Override
                 public void run() {
                     if(getData().getSelectedStage().get().isEnableDishGettingDirty()){
-                        team.getDirtyDishPile().addDish();
+                        team.getDirtyDishPiles().get(getData().getSelectedStage().ordinal()).addDish();
                     }
                     else{
-                        team.getCleanDishPile().addDish();
+                        team.getCleanDishPiles().get(getData().getSelectedStage().ordinal()).addDish();
                     }
                 }
             }.runTaskLater(Overcrafted.getInstance(), OCCommonData.dishReturnLag);

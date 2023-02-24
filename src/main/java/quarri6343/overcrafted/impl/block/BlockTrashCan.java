@@ -62,7 +62,7 @@ public class BlockTrashCan extends OCBlock implements IRightClickEventHandler {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    team.getDirtyDishPile().addDish();
+                    team.getDirtyDishPiles().get(getData().getSelectedStage().ordinal()).addDish();
                 }
             }.runTaskLater(Overcrafted.getInstance(), OCCommonData.dishReturnLag);
             return;
@@ -74,7 +74,7 @@ public class BlockTrashCan extends OCBlock implements IRightClickEventHandler {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    team.getCleanDishPile().addDish();
+                    team.getCleanDishPiles().get(getData().getSelectedStage().ordinal()).addDish();
                 }
             }.runTaskLater(Overcrafted.getInstance(), OCCommonData.dishReturnLag);
             return;

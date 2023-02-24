@@ -43,6 +43,10 @@ public class PlayerEventHandler implements Listener {
         return Overcrafted.getInstance().getLogic();
     }
 
+    private static int getStageID(){
+        return getData().getSelectedStage().ordinal();
+    }
+
     @org.bukkit.event.EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         setResourcePack(event);
@@ -236,9 +240,9 @@ public class PlayerEventHandler implements Listener {
         if (event.getPlayer().getItemInHand().getType() != Material.AIR) {
             IOCItem ocItem1 = OCItems.toOCItem(event.getPlayer().getItemInHand());
             IOCItem ocItem2;
-            if (event.getRightClicked() == team.getCleanDishPile().getDishPileEntity()) {
+            if (event.getRightClicked() == team.getCleanDishPiles().get(getStageID()).getDishPileEntity()) {
                 ocItem2 = OCItems.DISH.get();
-            } else if(event.getRightClicked() == team.getDirtyDishPile().getDishPileEntity()) {
+            } else if(event.getRightClicked() == team.getDirtyDishPiles().get(getStageID()).getDishPileEntity()) {
                 ocItem2 = OCItems.DIRTY_DISH.get();
             } else{
                 return false;
@@ -253,11 +257,11 @@ public class PlayerEventHandler implements Listener {
                 if ((ingredients.left().get().equals(ocItem1) && ingredients.right().get().equals(ocItem2))
                         || (ingredients.left().get().equals(ocItem2) && ingredients.right().get().equals(ocItem1))) {
                     event.setCancelled(true);
-                    if (event.getRightClicked() == team.getCleanDishPile().getDishPileEntity()) {
-                        if (team.getCleanDishPile().removeDish())
+                    if (event.getRightClicked() == team.getCleanDishPiles().get(getStageID()).getDishPileEntity()) {
+                        if (team.getCleanDishPiles().get(getStageID()).removeDish())
                             event.getPlayer().setItemInHand(ocItem.get().getItemStack());
                     } else {
-                        if (team.getDirtyDishPile().removeDish())
+                        if (team.getDirtyDishPiles().get(getStageID()).removeDish())
                             event.getPlayer().setItemInHand(ocItem.get().getItemStack());
                     }
                     return true;
@@ -269,16 +273,16 @@ public class PlayerEventHandler implements Listener {
         if(OverCraftedUtil.getInventoryItemCount(event.getPlayer().getInventory()) > 0)
             return false;
 
-        if (event.getRightClicked() == team.getCleanDishPile().getDishPileEntity()) {
+        if (event.getRightClicked() == team.getCleanDishPiles().get(getStageID()).getDishPileEntity()) {
             event.setCancelled(true);
-            if (team.getCleanDishPile().removeDish())
+            if (team.getCleanDishPiles().get(getStageID()).removeDish())
                 event.getPlayer().setItemInHand(OCItems.DISH.get().getItemStack());
             return true;
         }
 
-        if (event.getRightClicked() == team.getDirtyDishPile().getDishPileEntity()) {
+        if (event.getRightClicked() == team.getDirtyDishPiles().get(getStageID()).getDishPileEntity()) {
             event.setCancelled(true);
-            if (team.getDirtyDishPile().removeDish())
+            if (team.getDirtyDishPiles().get(getStageID()).removeDish())
                 event.getPlayer().setItemInHand(OCItems.DIRTY_DISH.get().getItemStack());
             return true;
         }

@@ -87,7 +87,7 @@ public interface IOCTeams {
     /**
      * 全てのチームの皿置場の中身を消去する
      */
-    public void clearDishPile();
+    public void clearDishPile(int StageID);
 
     /**
      * 全てのチームのプレイヤーが持ちすぎているアイテムをドロップさせる

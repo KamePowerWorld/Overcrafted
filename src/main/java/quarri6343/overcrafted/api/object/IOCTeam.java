@@ -27,9 +27,9 @@ public interface IOCTeam {
 
     public void setJoinLocation2(Location location);
 
-    public IDishPile getCleanDishPile();
+    public List<IDishPile> getCleanDishPiles();
 
-    public IDishPile getDirtyDishPile();
+    public List<IDishPile> getDirtyDishPiles();
 
     /**
      * チームに所属しているプレイヤーの環境をゲーム開始に適した状態に変更する

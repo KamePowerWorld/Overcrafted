@@ -82,7 +82,7 @@ public class OCLogic {
                 team.setUpGameEnvforPlayer(team.getPlayer(j), getData().getSelectedStage().ordinal());
             }
 
-            team.getCleanDishPile().setUp();
+            team.getCleanDishPiles().get(getData().getSelectedStage().ordinal()).setUp();
         }
         Bukkit.getOnlinePlayers().forEach(player -> player.showTitle(Title.title(Component.text(Overcrafted.getInstance().getData().getSelectedStage().get().getName()).color(NamedTextColor.YELLOW), Component.empty())));
         OrderHandler.generateRandomOrders();

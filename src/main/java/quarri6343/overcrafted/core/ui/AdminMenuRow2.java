@@ -12,10 +12,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
+import quarri6343.overcrafted.api.object.IDishPile;
 import quarri6343.overcrafted.core.data.OCVariableData;
 import quarri6343.overcrafted.api.object.IOCTeam;
 import quarri6343.overcrafted.core.OCLogic;
+import quarri6343.overcrafted.core.object.DishPile;
 import quarri6343.overcrafted.impl.OCStages;
+import quarri6343.overcrafted.impl.item.StackedDish;
 import quarri6343.overcrafted.utils.ItemCreator;
 import quarri6343.overcrafted.utils.UIUtility;
 
@@ -138,9 +141,17 @@ public class AdminMenuRow2 {
             return;
         }
 
-        team.setStartLocations(new ArrayList<Location>(Collections.nCopies(OCStages.values().length, null)));
+        team.setStartLocations(new ArrayList<>(Collections.nCopies(OCStages.values().length, null)));
         team.setJoinLocation1(null);
         team.setJoinLocation2(null);
+
+        team.getCleanDishPiles().clear();
+        team.getDirtyDishPiles().clear();
+        for (int i = 0; i < OCStages.values().length; i++) {
+            team.getCleanDishPiles().add(new DishPile(StackedDish.StackedDishType.CLEAN));
+            team.getDirtyDishPiles().add(new DishPile(StackedDish.StackedDishType.DIRTY));
+        }
+        
         event.getWhoClicked().sendMessage(Component.text("チーム" + team.getName() + "の設定をリセットしました"));
     }
 

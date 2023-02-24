@@ -28,7 +28,7 @@ public class OCTeam implements IOCTeam {
     private final String color;
 
     @Getter
-    private List<Location> startLocations = new ArrayList<Location>(Collections.nCopies(OCStages.values().length, null));
+    private List<Location> startLocations = new ArrayList<>(Collections.nCopies(OCStages.values().length, null));
 
     @Getter @Setter
     private Location joinLocation1;
@@ -37,9 +37,9 @@ public class OCTeam implements IOCTeam {
     private Location joinLocation2;
 
     @Getter
-    private final IDishPile cleanDishPile = new DishPile(StackedDish.StackedDishType.CLEAN);
+    private final List<IDishPile> cleanDishPiles = new ArrayList<>();
     @Getter
-    private final IDishPile dirtyDishPile = new DishPile(StackedDish.StackedDishType.DIRTY);
+    private final List<IDishPile> dirtyDishPiles = new ArrayList<>();
 
     private final List<IOCPlayer> players = new ArrayList<>();
 
@@ -54,6 +54,11 @@ public class OCTeam implements IOCTeam {
 
         this.name = name;
         this.color = color;
+
+        for (int i = 0; i < OCStages.values().length; i++) {
+            cleanDishPiles.add(new DishPile(StackedDish.StackedDishType.CLEAN));
+            dirtyDishPiles.add(new DishPile(StackedDish.StackedDishType.DIRTY));
+        }
     }
 
     public void setUpGameEnvforPlayer(Player player, int stageID) {
