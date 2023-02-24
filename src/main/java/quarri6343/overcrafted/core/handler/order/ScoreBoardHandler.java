@@ -71,7 +71,9 @@ public class ScoreBoardHandler {
 
         for (int i = 0; i < getData().getTeams().getTeamsLength(); i++) {
             IOCTeam team = getData().getTeams().getTeam(i);
-            int score = scores.get(team);
+            Integer score = scores.get(team);
+            if(score == null)
+                continue;
 
             if (score > highestScore) {
                 highestTeam = team;
@@ -83,6 +85,28 @@ public class ScoreBoardHandler {
         }
 
         return draw ? null : highestTeam;
+    }
+
+    /**
+     * 最もスコアの高いチームを取得する
+     *
+     * @return 最もスコアの高いチーム、もしチームが存在しないまたは複数存在した場合null
+     */
+    public static int getHighestScore() {
+        int highestScore = 0;
+
+        for (int i = 0; i < getData().getTeams().getTeamsLength(); i++) {
+            IOCTeam team = getData().getTeams().getTeam(i);
+            Integer score = scores.get(team);
+            if(score == null)
+                continue;
+
+            if (score > highestScore) {
+                highestScore = score;
+            }
+        }
+
+        return highestScore;
     }
 
     /**

@@ -36,4 +36,9 @@ public class OCStage {
      * ステージに登場する原材料
      */
     private final List<ISupplier> materials;
+
+    /**
+     * このステージのハイスコア
+     */
+    private int highScore = 0;
 }

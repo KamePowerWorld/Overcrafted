@@ -60,6 +60,10 @@ public class UIAdminSelectStage {
                     .color(NamedTextColor.YELLOW).decoration(TextDecoration.ITALIC, false)
                     .append(Component.text(OCStages.values()[i].get().isEnableDishGettingDirty() ? "あり" : "なし").color(NamedTextColor.WHITE)));
             
+            lores.add(Component.text("ハイスコア: ")
+                    .color(NamedTextColor.RED).decoration(TextDecoration.ITALIC, false)
+                    .append(Component.text(OCStages.values()[i].get().getHighScore()).color(NamedTextColor.WHITE)));
+            
             ItemStack stageSelectItem = new ItemCreator(Material.WHITE_WOOL)
                     .setName(Component.text(OCStages.values()[i].get().getName()).color(NamedTextColor.YELLOW).append(Component.text(" を選択").color(NamedTextColor.WHITE)))
                     .setLores(lores).create();

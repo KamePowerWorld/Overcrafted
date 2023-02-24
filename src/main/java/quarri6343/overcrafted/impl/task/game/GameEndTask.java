@@ -7,6 +7,8 @@ import quarri6343.overcrafted.core.handler.PlaceItemHandler;
 import quarri6343.overcrafted.core.data.OCVariableData;
 import quarri6343.overcrafted.core.handler.OrderHandler;
 import quarri6343.overcrafted.api.block.IBlockProcessor;
+import quarri6343.overcrafted.core.handler.order.ScoreBoardHandler;
+import quarri6343.overcrafted.impl.OCStages;
 import quarri6343.overcrafted.impl.block.OCBlocks;
 
 /**
@@ -25,6 +27,8 @@ public class GameEndTask extends BukkitRunnable {
     public void run() {
         getData().getTeams().teleportTeamToLobby();
         getData().getTeams().clearDishPile();
+        if(ScoreBoardHandler.getHighestScore() > getData().getSelectedStage().get().getHighScore())
+            getData().getSelectedStage().get().setHighScore(ScoreBoardHandler.getHighestScore());
         OrderHandler.clearOrders();
         GlobalTeamHandler.resetTeams(true);
         PlaceItemHandler.clear();
@@ -32,6 +36,7 @@ public class GameEndTask extends BukkitRunnable {
             if(blocks.get() instanceof IBlockProcessor)
                 ((IBlockProcessor)blocks.get()).cancelAllProcesses();
         }
+        
         additionalAction.run();
         if (isScheduled)
             cancel();

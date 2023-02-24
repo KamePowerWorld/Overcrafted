@@ -5,6 +5,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.core.data.OCVariableData;
 import quarri6343.overcrafted.api.object.IOCTeam;
+import quarri6343.overcrafted.core.object.OCStage;
+import quarri6343.overcrafted.impl.OCStages;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.File;
@@ -21,6 +23,7 @@ public class Config {
     private static final String teamJoinLocation2Str = "team.joinLocation2.";
     private static final String teamCleanDishPileStr = "team.cleanDishPile.";
     private static final String teamDirtyDishPileStr = "team.dirtyDishPile.";
+    private static final String highScoreStr = "highScore.";
     
     public Config() {
     }
@@ -70,7 +73,9 @@ public class Config {
      */
     @ParametersAreNonnullByDefault
     private void loadMisc(FileConfiguration config) {
-
+        for (int i = 0; i < OCStages.values().length; i++) {
+            OCStages.values()[i].get().setHighScore(config.getInt(highScoreStr + i));
+        }
     }
 
     /**
@@ -114,6 +119,9 @@ public class Config {
      */
     @ParametersAreNonnullByDefault
     private void saveMisc(FileConfiguration config) {
+        for (int i = 0; i < OCStages.values().length; i++) {
+            config.set(highScoreStr + i, OCStages.values()[i].get().getHighScore());
+        }
     }
 
     /**
