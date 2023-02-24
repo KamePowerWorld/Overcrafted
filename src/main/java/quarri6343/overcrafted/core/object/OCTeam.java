@@ -27,7 +27,7 @@ public class OCTeam implements IOCTeam {
     @Getter
     private final String color;
 
-    @Getter @Setter
+    @Getter
     private List<Location> startLocations = new ArrayList<Location>(Collections.nCopies(OCStages.values().length, null));
 
     @Getter @Setter
@@ -122,5 +122,12 @@ public class OCTeam implements IOCTeam {
         for (int j = 0; j < getPlayersSize(); j++) {
             getPlayer(j).teleport(centerLocation);
         }
+    }
+    
+    public void setStartLocations(List<Location> locations){
+        if(locations.size() != OCStages.values().length)
+            throw new IllegalArgumentException();
+        
+        this.startLocations = locations;
     }
 }
