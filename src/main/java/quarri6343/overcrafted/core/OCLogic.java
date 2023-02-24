@@ -1,5 +1,6 @@
 package quarri6343.overcrafted.core;
 
+import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -34,7 +35,8 @@ public class OCLogic {
     public World gameWorld = null;
     private BukkitTask gameInactiveRunnable;
     private BukkitTask gameBeginRunnable;
-    private BukkitTask gameRunnable;
+    @Getter
+    private GameActiveTask gameRunnable;
     private BukkitTask gameEndRunnable;
 
     public OCLogic() {
@@ -86,7 +88,8 @@ public class OCLogic {
         OrderHandler.generateRandomOrders();
 
         gameStatus = GameStatus.ACTIVE;
-        gameRunnable = new GameActiveTask(urTeam -> endGame(null, urTeam, true, true)).runTaskTimer(Overcrafted.getInstance(), 0, 1);
+        gameRunnable = new GameActiveTask(urTeam -> endGame(null, urTeam, true, true));
+        gameRunnable.runTaskTimer(Overcrafted.getInstance(), 0, 1);
     }
 
     public void endGame() {

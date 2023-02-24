@@ -49,6 +49,7 @@ public final class Overcrafted extends JavaPlugin {
         new CommandForceLeave();
         new CommandReloadResourcePack();
         new CommandOCGive();
+        new CommandLeftTime();
 
         playerEventHandler = new PlayerEventHandler();
         new InventoryEventHandler();

@@ -69,6 +69,13 @@ public class GameActiveTask extends BukkitRunnable {
             }
         }
     }
+    
+    public void setCount(int count){
+        if(count < 0 || count > getData().getSelectedStage().get().getTime() * 20){
+            throw new IllegalArgumentException();
+        }
+        this.count = count;
+    }
 
     private OCVariableData getData() {
         return Overcrafted.getInstance().getData();
