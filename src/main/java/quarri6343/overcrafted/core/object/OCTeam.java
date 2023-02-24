@@ -9,6 +9,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import quarri6343.overcrafted.impl.OCStages;
 import quarri6343.overcrafted.impl.item.StackedDish;
 import quarri6343.overcrafted.api.object.IDishPile;
 import quarri6343.overcrafted.api.object.IOCPlayer;
@@ -26,7 +27,7 @@ public class OCTeam implements IOCTeam {
     private final String color;
 
     @Getter @Setter
-    private Location startLocation;
+    private List<Location> startLocations = new ArrayList<>(OCStages.values().length);
 
     @Getter @Setter
     private Location joinLocation1;
@@ -54,11 +55,11 @@ public class OCTeam implements IOCTeam {
         this.color = color;
     }
 
-    public void setUpGameEnvforPlayer(Player player) {
+    public void setUpGameEnvforPlayer(Player player, int stageID) {
         if (!containsPlayer(player))
             return;
 
-        player.teleport(startLocation);
+        player.teleport(startLocations.get(stageID));
         player.setGameMode(GameMode.ADVENTURE);
         player.getInventory().setContents(new ItemStack[]{});
         player.setSaturation(5f);

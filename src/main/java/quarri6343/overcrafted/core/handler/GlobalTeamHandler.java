@@ -68,19 +68,17 @@ public class GlobalTeamHandler {
         for (int i = 0; i < getData().getTeams().getTeamsLength(); i++) {
             IOCTeam team = getData().getTeams().getTeam(i);
 
-            if (team.getPlayersSize() > 0) {
-                if (team.getStartLocation() == null) {
-                    gameMaster.sendMessage("チーム" + team.getName() + "の開始地点を設定してください");
-                    return false;
-                }
-                if (team.getCleanDishPile().getLocation() == null) {
-                    gameMaster.sendMessage("チーム" + team.getName() + "の綺麗な皿置き場の地点を設定してください");
-                    return false;
-                }
-                if (team.getDirtyDishPile().getLocation() == null) {
-                    gameMaster.sendMessage("チーム" + team.getName() + "の汚い皿置き場の地点を設定してください");
-                    return false;
-                }
+            if (team.getStartLocations().get(getData().getSelectedStage().ordinal()) == null) {
+                gameMaster.sendMessage("チーム" + team.getName() + "の開始地点を設定してください");
+                return false;
+            }
+            if (team.getCleanDishPile().getLocation() == null) {
+                gameMaster.sendMessage("チーム" + team.getName() + "の綺麗な皿置き場の地点を設定してください");
+                return false;
+            }
+            if (team.getDirtyDishPile().getLocation() == null) {
+                gameMaster.sendMessage("チーム" + team.getName() + "の汚い皿置き場の地点を設定してください");
+                return false;
             }
         }
 

@@ -77,7 +77,7 @@ public class OCLogic {
                 continue;
 
             for (int j = 0; j < team.getPlayersSize(); j++) {
-                team.setUpGameEnvforPlayer(team.getPlayer(j));
+                team.setUpGameEnvforPlayer(team.getPlayer(j), getData().getSelectedStage().ordinal());
             }
 
             team.getCleanDishPile().setUp();

@@ -1,5 +1,6 @@
 package quarri6343.overcrafted.core.handler;
 
+import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import quarri6343.overcrafted.Overcrafted;
@@ -10,6 +11,8 @@ import quarri6343.overcrafted.impl.OCStages;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * コンフィグファイルを読み書きする
@@ -24,6 +27,7 @@ public class Config {
     private static final String teamCleanDishPileStr = "team.cleanDishPile.";
     private static final String teamDirtyDishPileStr = "team.dirtyDishPile.";
     private static final String highScoreStr = "highScore.";
+    private static final String teamStageStr = ".stage.";
     
     public Config() {
     }
@@ -58,7 +62,11 @@ public class Config {
 
             data.getTeams().addTeam(teamName, teamColor);
             IOCTeam newTeam = data.getTeams().getTeam(i);
-            newTeam.setStartLocation(config.getLocation(teamStartLocationStr + i));
+            List<Location> locations = new ArrayList<>();
+            for (int j = 0; j < OCStages.values().length; j++) {
+                locations.add(config.getLocation(teamStartLocationStr + i + teamStageStr + j));
+            }
+            newTeam.setStartLocations(locations);
             newTeam.setJoinLocation1(config.getLocation(teamJoinLocation1Str + i));
             newTeam.setJoinLocation2(config.getLocation(teamJoinLocation2Str + i));
             newTeam.getCleanDishPile().setLocation(config.getLocation(teamCleanDishPileStr + i));
@@ -104,7 +112,9 @@ public class Config {
         for (int i = 0; i < data.getTeams().getTeamsLength(); i++) {
             config.set(teamNameStr + i, data.getTeams().getTeam(i).getName());
             config.set(teamColorStr + i, data.getTeams().getTeam(i).getColor());
-            config.set(teamStartLocationStr + i, data.getTeams().getTeam(i).getStartLocation());
+            for (int j = 0; j < OCStages.values().length; j++) {
+                config.set(teamStartLocationStr + i + teamStageStr + j, data.getTeams().getTeam(i).getStartLocations().get(j));
+            }
             config.set(teamJoinLocation1Str + i, data.getTeams().getTeam(i).getJoinLocation1());
             config.set(teamJoinLocation2Str + i, data.getTeams().getTeam(i).getJoinLocation2());
             config.set(teamCleanDishPileStr + i, data.getTeams().getTeam(i).getCleanDishPile().getLocation());

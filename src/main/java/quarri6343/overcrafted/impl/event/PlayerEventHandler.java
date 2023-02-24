@@ -121,7 +121,7 @@ public class PlayerEventHandler implements Listener {
         if (team == null)
             return;
 
-        team.setUpGameEnvforPlayer(event.getPlayer());
+        team.setUpGameEnvforPlayer(event.getPlayer(), getData().getSelectedStage().ordinal());
     }
 
     @org.bukkit.event.EventHandler

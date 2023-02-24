@@ -14,9 +14,11 @@ import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.core.data.OCVariableData;
 import quarri6343.overcrafted.api.object.IOCTeam;
 import quarri6343.overcrafted.core.OCLogic;
+import quarri6343.overcrafted.impl.OCStages;
 import quarri6343.overcrafted.utils.ItemCreator;
 import quarri6343.overcrafted.utils.UIUtility;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -134,7 +136,7 @@ public class AdminMenuRow2 {
             return;
         }
 
-        team.setStartLocation(null);
+        team.setStartLocations(new ArrayList<>(OCStages.values().length));
         team.setJoinLocation1(null);
         team.setJoinLocation2(null);
         event.getWhoClicked().sendMessage(Component.text("チーム" + team.getName() + "の設定をリセットしました"));

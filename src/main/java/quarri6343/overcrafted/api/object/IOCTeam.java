@@ -15,9 +15,9 @@ public interface IOCTeam {
 
     public String getColor();
 
-    public Location getStartLocation();
+    public List<Location> getStartLocations();
 
-    public void setStartLocation(Location location);
+    public void setStartLocations(List<Location> location);
 
     public Location getJoinLocation1();
 
@@ -36,7 +36,7 @@ public interface IOCTeam {
      *
      * @param player チームに所属しているプレイヤー
      */
-    public void setUpGameEnvforPlayer(Player player);
+    public void setUpGameEnvforPlayer(Player player, int stageID);
 
     /**
      * チームにプレイヤーを追加

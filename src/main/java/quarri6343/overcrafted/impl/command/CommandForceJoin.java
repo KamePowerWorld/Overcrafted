@@ -60,7 +60,7 @@ public class CommandForceJoin extends CommandBase {
         GlobalTeamHandler.addPlayerToTeam(player, team);
         sender.sendMessage(arguments[0] + "をチーム" + getData().getAdminSelectedTeam() + "に加入させました");
 
-        team.setUpGameEnvforPlayer(player);
+        team.setUpGameEnvforPlayer(player, getData().getSelectedStage().ordinal());
 
         return true;
     }

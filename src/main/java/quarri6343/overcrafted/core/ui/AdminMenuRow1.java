@@ -6,6 +6,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -61,7 +62,8 @@ public class AdminMenuRow1 {
         gui.setItem(6, selectStageButton);
 
         GuiItem setStartButton;
-        ItemStack setStartItem = new ItemCreator(Material.FURNACE_MINECART).setName(Component.text("チーム" + getData().getAdminSelectedTeam() + "のゲーム開始地点を設定"))
+        ItemStack setStartItem = new ItemCreator(Material.FURNACE_MINECART).setName(Component.text(
+                ChatColor.YELLOW + (getData().getSelectedStage() != null ? getData().getSelectedStage().get().getName() : "ステージ?") + ChatColor.RESET + "でのチーム" + getData().getAdminSelectedTeam() + "のゲーム開始地点を設定"))
                 .addLore(getSetStartButtonStats()).addLore(setStartButtonGuide).create();
         setStartButton = new GuiItem(setStartItem,
                 event -> {
@@ -80,7 +82,7 @@ public class AdminMenuRow1 {
             return teamNotSelectedText;
         }
 
-        return getLocDesc(team.getStartLocation());
+        return getLocDesc(team.getStartLocations().get(getData().getSelectedStage().ordinal()));
     }
 
     /**
@@ -100,7 +102,7 @@ public class AdminMenuRow1 {
 
         Location startLocation = event.getWhoClicked().getLocation();
 
-        team.setStartLocation(startLocation);
+        team.getStartLocations().set(getData().getSelectedStage().ordinal(), startLocation);
         event.getWhoClicked().sendMessage(Component.text("開始地点を" + UIUtility.locationBlockPostoString(startLocation) + "に設定しました"));
         UIAdminMenu.openUI((Player) event.getWhoClicked());
     }
