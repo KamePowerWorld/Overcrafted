@@ -6,6 +6,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -20,6 +21,7 @@ import quarri6343.overcrafted.utils.UIUtility;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static quarri6343.overcrafted.utils.UIUtility.*;
@@ -136,7 +138,7 @@ public class AdminMenuRow2 {
             return;
         }
 
-        team.setStartLocations(new ArrayList<>(OCStages.values().length));
+        team.setStartLocations(new ArrayList<Location>(Collections.nCopies(OCStages.values().length, null)));
         team.setJoinLocation1(null);
         team.setJoinLocation2(null);
         event.getWhoClicked().sendMessage(Component.text("チーム" + team.getName() + "の設定をリセットしました"));

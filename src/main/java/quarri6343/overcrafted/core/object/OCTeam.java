@@ -17,6 +17,7 @@ import quarri6343.overcrafted.api.object.IOCTeam;
 import quarri6343.overcrafted.utils.OverCraftedUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class OCTeam implements IOCTeam {
@@ -27,7 +28,7 @@ public class OCTeam implements IOCTeam {
     private final String color;
 
     @Getter @Setter
-    private List<Location> startLocations = new ArrayList<>(OCStages.values().length);
+    private List<Location> startLocations = new ArrayList<Location>(Collections.nCopies(OCStages.values().length, null));
 
     @Getter @Setter
     private Location joinLocation1;

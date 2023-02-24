@@ -82,6 +82,10 @@ public class AdminMenuRow1 {
             return teamNotSelectedText;
         }
 
+        if(getData().getSelectedStage() == null){
+            return stageNotSelectedText;
+        }
+        
         return getLocDesc(team.getStartLocations().get(getData().getSelectedStage().ordinal()));
     }
 
@@ -125,10 +129,7 @@ public class AdminMenuRow1 {
         if (team == null)
             return;
 
-        GlobalTeamHandler.removeAllPlayerFromTeam(team, false);
-        getData().getTeams().removeTeam(getData().getAdminSelectedTeam());
-        event.getWhoClicked().sendMessage(Component.text("チーム" + getData().getAdminSelectedTeam() + "を削除しました").color(NamedTextColor.WHITE));
-        getData().setAdminSelectedTeam("");
+        UIRemoveTeam.openUI((Player) event.getWhoClicked());
     }
 
     /**

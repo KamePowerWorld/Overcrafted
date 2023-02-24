@@ -13,6 +13,8 @@ public class UIUtility {
     public static final TextComponent gameRunningText = Component.text("ゲームが進行中です！").color(NamedTextColor.RED).decoration(TextDecoration.ITALIC, false);
     public static final TextComponent teamNotSelectedText = Component.text("チームが選択されていません")
             .color(NamedTextColor.RED).decoration(TextDecoration.ITALIC, false);
+    public static final TextComponent stageNotSelectedText = Component.text("ステージが選択されていません")
+            .color(NamedTextColor.RED).decoration(TextDecoration.ITALIC, false);
 
     /**
      * Locationの状況を文章に変換する

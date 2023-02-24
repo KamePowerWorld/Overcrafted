@@ -6,7 +6,9 @@ import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.entity.Player;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.core.data.OCVariableData;
+import quarri6343.overcrafted.impl.OCStages;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
