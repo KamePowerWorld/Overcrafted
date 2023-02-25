@@ -73,7 +73,7 @@ public class AdminMenuRow2 {
         gui.setItem(11, forceLeaveButton);
 
         ItemStack setJoinLocation1Item = new ItemCreator(Material.STRUCTURE_BLOCK).setName(Component.text("チーム" + getData().getAdminSelectedTeam() + "の参加エリアの始点を選ぶ"))
-                .addLore(getSetJoinLocation1ButtonStats()).setLores(setJoinLocationButtonGuide).create();
+                .setLores(setJoinLocationButtonGuide).addLore(getSetJoinLocation1ButtonStats()).create();
         GuiItem setJoinLocation1Button = new GuiItem(setJoinLocation1Item,
                 event -> {
                     onSetJoinLocationButton(event, true);
@@ -82,7 +82,7 @@ public class AdminMenuRow2 {
         gui.setItem(13, setJoinLocation1Button);
 
         ItemStack setJoinLocation2Item = new ItemCreator(Material.STRUCTURE_BLOCK).setName(Component.text("チーム" + getData().getAdminSelectedTeam() + "の参加エリアの終点を選ぶ"))
-                .setLore(getSetJoinLocation2ButtonStats()).setLores(setJoinLocationButtonGuide).create();
+                .setLores(setJoinLocationButtonGuide).addLore(getSetJoinLocation2ButtonStats()).create();
         GuiItem setJoinLocation2Button = new GuiItem(setJoinLocation2Item,
                 event -> {
                     onSetJoinLocationButton(event, false);
