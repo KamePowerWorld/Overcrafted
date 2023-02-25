@@ -8,6 +8,9 @@ import quarri6343.overcrafted.core.OCItem;
 import quarri6343.overcrafted.core.data.constant.OCSoundData;
 import quarri6343.overcrafted.utils.OverCraftedUtil;
 
+/**
+ * プレイヤーに供給できるOCItem
+ */
 public class SuppliableOCItem extends OCItem implements ISupplier {
 
     /**

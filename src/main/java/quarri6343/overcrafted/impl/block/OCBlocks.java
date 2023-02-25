@@ -33,6 +33,11 @@ public enum OCBlocks {
         return ocBlock;
     }
 
+    /**
+     * バニラのブロックからそれに対応したプラグイン独自の機能のクラスを求める
+     * @param block バニラブロック
+     * @return カスタム機能
+     */
     @Nullable
     public static IOCBlock toOCBlock(Block block) {
         OCBlocks ocBlock = Arrays.stream(OCBlocks.values()).filter(ocBlocks -> ocBlocks.ocBlock.getMaterial() == block.getType()).findFirst().orElse(null);

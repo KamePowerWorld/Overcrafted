@@ -29,6 +29,9 @@ import java.util.List;
 
 import static quarri6343.overcrafted.utils.UIUtility.*;
 
+/**
+ * 管理メニューの2行目
+ */
 public class AdminMenuRow2 {
     private static final List<Component> joinTeamButtonGuide = Arrays.asList(
             Component.text("コマンド/forcejoin {プレイヤー名}")

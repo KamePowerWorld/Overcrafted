@@ -7,6 +7,9 @@ import org.bukkit.Material;
 import quarri6343.overcrafted.api.item.ICombinedOCItem;
 import quarri6343.overcrafted.core.OCItem;
 
+/**
+ * 二種類のアイテムを机で組み合わせることでできるOCItem
+ */
 public class CombinedOCItem extends OCItem implements ICombinedOCItem {
 
     /**

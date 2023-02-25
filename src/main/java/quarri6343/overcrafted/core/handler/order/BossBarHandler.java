@@ -52,7 +52,7 @@ public class BossBarHandler {
 
     /**
      * 残り時間を更新する
-     * @param progression
+     * @param progression 設定したい残り時間
      */
     public static void updateRemainingTime(float progression){
         for (int i = 0; i < getData().getTeams().getTeamsLength(); i++) {

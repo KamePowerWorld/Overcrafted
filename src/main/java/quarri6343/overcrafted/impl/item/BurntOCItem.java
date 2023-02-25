@@ -7,6 +7,9 @@ import quarri6343.overcrafted.api.item.IBurntOCItem;
 import quarri6343.overcrafted.api.item.IProcessedOCItem;
 import quarri6343.overcrafted.core.OCItem;
 
+/**
+ * 加工しすぎた状態を表すOCItem
+ */
 public class BurntOCItem extends OCItem implements IBurntOCItem {
     
     @Getter

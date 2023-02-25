@@ -15,6 +15,9 @@ import quarri6343.overcrafted.impl.event.interact.ItemEventHandler;
 import quarri6343.overcrafted.utils.OverCraftedUtil;
 import quarri6343.overcrafted.utils.ResourcePackUtil;
 
+/**
+ * メインクラス
+ */
 public final class Overcrafted extends JavaPlugin {
 
     private OCVariableData data;

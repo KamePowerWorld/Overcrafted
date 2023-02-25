@@ -22,22 +22,45 @@ import java.util.List;
 
 public class OCTeam implements IOCTeam {
 
+    /**
+     * チームの名前
+     */
     @Getter
     private final String name;
+
+    /**
+     * チームの色
+     */
     @Getter
     private final String color;
 
+    /**
+     * チームのステージごとのゲーム開始地点
+     */
     @Getter
     private List<Location> startLocations = new ArrayList<>(Collections.nCopies(OCStages.values().length, null));
 
+    /**
+     * チームの参加エリアの始点
+     */
     @Getter @Setter
     private Location joinLocation1;
-    
+
+    /**
+     * チームの参加エリアの終点
+     */
     @Getter @Setter
     private Location joinLocation2;
 
+    /**
+     * チームのステージごとの綺麗な皿置き場
+     */
     @Getter
     private final List<IDishPile> cleanDishPiles = new ArrayList<>();
+
+    /**
+     * チームのステージごとの汚い皿置き場
+     */
     @Getter
     private final List<IDishPile> dirtyDishPiles = new ArrayList<>();
 

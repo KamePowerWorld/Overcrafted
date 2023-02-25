@@ -15,6 +15,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class MCTeams {
 
+    /**
+     * プレイヤーをマイクラのチームに追加する
+     * @param player プレイヤー
+     * @param urTeam プレイヤーの所属するOCTeam
+     */
     public static void addPlayerToMCTeam(Player player, IOCTeam urTeam) {
         Team team = getBoard().getTeam(urTeam.getName());
         if (team == null)

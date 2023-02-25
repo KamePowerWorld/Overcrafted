@@ -7,6 +7,9 @@ import quarri6343.overcrafted.api.block.IOCBlock;
 
 public class OCBlock implements IOCBlock {
 
+    /**
+     * 機能を追加したいバニラブロック
+     */
     @Getter
     private final Material material;
     

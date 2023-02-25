@@ -31,11 +31,26 @@ import java.util.Map;
  */
 public class BlockAutomaticProcessor extends BlockTable implements IBlockProcessor {
 
+    /**
+     * 加工状況を表すアーマースタンドのオフセット
+     */
     public static final Vector armorStandOffset = new Vector(0.5, -0.5, 0.5);
+    
+    /**
+     * 進捗を表すNBTタグのID
+     */
     @Getter
     private final String progressionNBTID;
+
+    /**
+     * 加工音
+     */
     @Getter
     private final Sound processingSound;
+
+    /**
+     * 加工のパーティクル
+     */
     @Getter
     private final Particle processingParticle;
     
@@ -52,6 +67,7 @@ public class BlockAutomaticProcessor extends BlockTable implements IBlockProcess
         onPickUp.add((block, player) -> cancelProcessing(block, player, true));
     }
 
+    @Override
     public void onRightClick(PlayerInteractEvent event) {
         super.onRightClick(event);
 

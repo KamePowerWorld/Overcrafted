@@ -22,6 +22,9 @@ import quarri6343.overcrafted.utils.UIUtility;
 
 import static quarri6343.overcrafted.utils.UIUtility.*;
 
+/**
+ * 管理メニューの1行目
+ */
 public class AdminMenuRow1 {
     private static final TextComponent setStartButtonGuide = Component.text("現在立っている場所が開始地点になります")
             .color(NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false);

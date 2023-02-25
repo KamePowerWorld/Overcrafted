@@ -11,6 +11,9 @@ import javax.annotation.Nonnull;
 
 public class OCPlayer implements IOCPlayer {
 
+    /**
+     * プレイヤーのエンティティ
+     */
     @Getter
     private final Player entity;
 

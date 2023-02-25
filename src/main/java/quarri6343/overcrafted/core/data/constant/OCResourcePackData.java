@@ -29,7 +29,10 @@ public class OCResourcePackData {
      * ProgressBarFontのリソースパック上での名前
      */
     public static final Key progressBarFontName = Key.key("progressbar");
-    
+
+    /**
+     * bossBarFontのリソースパック上での名前
+     */
     public static final Key bossBarFontName = Key.key("bossbar");
 
     /**

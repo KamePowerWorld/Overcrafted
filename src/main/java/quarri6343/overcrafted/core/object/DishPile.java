@@ -29,6 +29,9 @@ public class DishPile implements IDishPile {
 
     private final StackedDish.StackedDishType type;
 
+    /**
+     * 皿置場のエンティティ
+     */
     @Getter
     private Entity dishPileEntity;
 

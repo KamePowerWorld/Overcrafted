@@ -11,6 +11,9 @@ import quarri6343.overcrafted.core.handler.GlobalTeamHandler;
 
 import java.util.List;
 
+/**
+ * 管理者がチームを削除するときの確認画面
+ */
 public class UIRemoveTeam {
 
     private static OCVariableData getData() {

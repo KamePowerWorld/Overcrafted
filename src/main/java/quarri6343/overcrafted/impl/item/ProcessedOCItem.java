@@ -7,6 +7,9 @@ import quarri6343.overcrafted.api.item.IProcessedOCItem;
 import quarri6343.overcrafted.api.block.IBlockProcessor;
 import quarri6343.overcrafted.core.OCItem;
 
+/**
+ * 加工された後のOCItem
+ */
 public class ProcessedOCItem extends OCItem implements IProcessedOCItem {
 
     /**

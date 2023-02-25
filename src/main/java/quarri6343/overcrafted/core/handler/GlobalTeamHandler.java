@@ -40,7 +40,9 @@ public class GlobalTeamHandler {
     }
 
     /**
-     * 全てのプレイヤーをUR, MC両方のチームから退出させる
+     * あるチームの全てのプレイヤーをUR, MC両方のチームから退出させる
+     *
+     * @param restoreStats プレイヤーのインベントリを復元するかどうか
      */
     public static void removeAllPlayerFromTeam(IOCTeam team, boolean restoreStats) {
         for (int i = 0; i < team.getPlayersSize(); i++) {
@@ -48,6 +50,11 @@ public class GlobalTeamHandler {
         }
     }
 
+    /**
+     * 全てのチームの全てのプレイヤーをUR, MC両方のチームから退出させる
+     *
+     * @param restoreStats プレイヤーのインベントリを復元するかどうか
+     */
     public static void resetTeams(boolean restoreStats) {
         MCTeams.deleteMinecraftTeams();
         getData().getTeams().disbandTeams(restoreStats);

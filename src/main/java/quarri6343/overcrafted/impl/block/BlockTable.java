@@ -34,6 +34,9 @@ public class BlockTable extends OCBlock implements IRightClickEventHandler {
      */
     protected List<BiConsumer<Block, Player>> onPickUp = new ArrayList<>();
 
+    /**
+     * アイテムが置かれた時に発火されるイベント
+     */
     protected List<Consumer<Block>> onPlace = new ArrayList<>();
 
     public BlockTable(Material material) {

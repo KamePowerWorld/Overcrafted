@@ -4,6 +4,9 @@ import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Material;
 import quarri6343.overcrafted.api.item.ISubmittableOCItem;
 
+/**
+ * 完成品として納品可能なOCItem
+ */
 public class SubmittableOCItem extends CombinedOCItem implements ISubmittableOCItem {
     
     /**

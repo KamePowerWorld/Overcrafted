@@ -26,6 +26,9 @@ import quarri6343.overcrafted.utils.ItemCreator;
 
 import static quarri6343.overcrafted.impl.block.BlockAutomaticProcessor.armorStandOffset;
 
+/**
+ * ブロックによる自動加工のタスク
+ */
 public class AutomaticProcessingRunnable extends BukkitRunnable {
     
     @Getter

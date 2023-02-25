@@ -27,6 +27,9 @@ import quarri6343.overcrafted.utils.OverCraftedUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * プレイヤーに起こるイベントをキャッチするクラス
+ */
 public class PlayerEventHandler implements Listener {
 
     private final List<IPlayerInteractEventHandler> playerInteractEventHandlers = new ArrayList<>();

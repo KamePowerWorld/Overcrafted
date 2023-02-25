@@ -10,6 +10,9 @@ import quarri6343.overcrafted.core.data.OCVariableData;
 
 import java.util.List;
 
+/**
+ * ゲームの残り時間を変更する、デバッグコマンド
+ */
 public class CommandLeftTime implements Listener {
 
     private final String commandName = "lefttime";

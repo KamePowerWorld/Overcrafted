@@ -22,6 +22,9 @@ import quarri6343.overcrafted.utils.ItemCreator;
 
 import static quarri6343.overcrafted.utils.UIUtility.*;
 
+/**
+ * 管理メニューの3行目
+ */
 public class AdminMenuRow3 {
 
     private static OCVariableData getData() {

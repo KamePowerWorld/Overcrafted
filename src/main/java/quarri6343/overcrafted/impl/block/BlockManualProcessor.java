@@ -33,10 +33,22 @@ import java.util.Map;
 public class BlockManualProcessor extends BlockTable implements IBlockProcessor, IRightClickEventHandler, ISneakEventHandler {
 
     private static final Vector armorStandOffset = new Vector(0.5,-0.5, 0.5);
+
+    /**
+     * 進捗を表すNBTタグのID
+     */
     @Getter
     private final String progressionNBTID;
+
+    /**
+     * 加工音
+     */
     @Getter
     private final Sound processingSound;
+
+    /**
+     * 加工のパーティクル
+     */
     @Getter
     private final Particle processingParticle;
     

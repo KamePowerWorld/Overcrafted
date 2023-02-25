@@ -6,6 +6,9 @@ import org.bukkit.Material;
 import quarri6343.overcrafted.api.item.IStackedDish;
 import quarri6343.overcrafted.core.OCItem;
 
+/**
+ * 積まれた皿の3Dモデルを表示するアイテム
+ */
 public class StackedDish extends OCItem implements IStackedDish {
 
     /**

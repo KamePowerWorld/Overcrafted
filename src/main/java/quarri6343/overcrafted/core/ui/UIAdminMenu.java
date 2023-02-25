@@ -7,7 +7,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 
 /**
- * プラグインの管理パネル
+ * プラグインの管理メニュー
  */
 public class UIAdminMenu {
     
