@@ -128,7 +128,8 @@ public class PlayerEventHandler implements Listener {
         if (team == null)
             return;
 
-        team.setUpGameEnvforPlayer(event.getPlayer(), getData().getSelectedStage().ordinal());
+        Location respawnLocation = team.initializeRespawnedPlayer(event.getPlayer(), getData().getSelectedStage().ordinal());
+        event.setRespawnLocation(respawnLocation);
     }
 
     @org.bukkit.event.EventHandler

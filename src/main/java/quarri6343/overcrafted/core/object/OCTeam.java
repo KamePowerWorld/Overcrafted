@@ -10,6 +10,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.impl.OCStages;
+import quarri6343.overcrafted.impl.item.OCItems;
 import quarri6343.overcrafted.impl.item.StackedDish;
 import quarri6343.overcrafted.api.object.IDishPile;
 import quarri6343.overcrafted.api.object.IOCPlayer;
@@ -94,6 +95,31 @@ public class OCTeam implements IOCTeam {
         player.setSaturation(5f);
         player.setFoodLevel(20);
     }
+    
+    public Location initializeRespawnedPlayer(Player player, int stageID){
+        if (!containsPlayer(player))
+            return null;
+        
+        returnPlayerDish(player, stageID);
+        player.getInventory().setContents(new ItemStack[]{});
+        
+        player.setSaturation(5f);
+        player.setFoodLevel(20);
+        
+        return startLocations.get(stageID);
+    }
+    
+    public void returnPlayerDish(Player player, int stageID){
+        if (!containsPlayer(player))
+            return;
+        
+        if(player.getInventory().contains(OCItems.DISH.get().getItemStack())){
+            cleanDishPiles.get(stageID).addDish();
+        }
+        else if(player.getInventory().contains(OCItems.DIRTY_DISH.get().getItemStack())){
+            dirtyDishPiles.get(stageID).addDish();
+        }
+    }
 
     public void addPlayer(Player player) {
         if (containsPlayer(player))
@@ -142,7 +168,7 @@ public class OCTeam implements IOCTeam {
         players.forEach(IOCPlayer::dropExcessiveItems);
     }
 
-    public void teleportPlayerToLobby() {
+    public void teleportPlayersToLobby() {
         if (joinLocation1 == null || joinLocation2 == null)
             return;
 
@@ -150,6 +176,17 @@ public class OCTeam implements IOCTeam {
         for (int j = 0; j < getPlayersSize(); j++) {
             getPlayer(j).teleport(centerLocation);
         }
+    }
+
+    public void teleportPlayerToLobby(Player player) {
+        if(!containsPlayer(player))
+            return;
+        
+        if (joinLocation1 == null || joinLocation2 == null)
+            return;
+
+        Location centerLocation = OverCraftedUtil.getCenterLocation(joinLocation1, joinLocation2);
+        player.teleport(centerLocation);
     }
     
     public void setStartLocations(List<Location> locations){

@@ -96,7 +96,7 @@ public class OCTeams implements IOCTeams {
 
     public void teleportTeamToLobby() {
         for (int i = 0; i < getTeamsLength(); i++) {
-            getTeam(i).teleportPlayerToLobby();
+            getTeam(i).teleportPlayersToLobby();
         }
     }
 }

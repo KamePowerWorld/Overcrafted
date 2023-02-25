@@ -39,6 +39,21 @@ public interface IOCTeam {
     public void setUpGameEnvforPlayer(Player player, int stageID);
 
     /**
+     * チームに所属しているプレイヤーがリスポーンした時、適した状態に変更する
+     * @param player チームのプレイヤー
+     * @param stageID ステージのID
+     * @return リスポーンする場所
+     */
+    public Location initializeRespawnedPlayer(Player player, int stageID);
+    
+    /**
+     * プレイヤーの持っている皿を皿置き場に返還する
+     * @param player プレイヤー
+     * @param stageID ステージの番号
+     */
+    public void returnPlayerDish(Player player, int stageID);
+    
+    /**
      * チームにプレイヤーを追加
      *
      * @param player プレイヤーエンティティ
@@ -98,5 +113,11 @@ public interface IOCTeam {
     /**
      * チームの全てのプレイヤーを参加地点に飛ばす
      */
-    public void teleportPlayerToLobby();
+    public void teleportPlayersToLobby();
+
+    /**
+     * チームの特定のプレイヤーを参加地点に飛ばす
+     * @param player
+     */
+    public void teleportPlayerToLobby(Player player);
 }

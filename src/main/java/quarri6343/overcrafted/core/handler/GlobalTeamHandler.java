@@ -30,6 +30,11 @@ public class GlobalTeamHandler {
     public static void removePlayerFromTeam(Player player, boolean restoreStats) {
         IOCTeam team = getData().getTeams().getTeamByPlayer(player);
         if (team != null) {
+            if(getLogic().gameStatus == OCLogic.GameStatus.ACTIVE){
+                team.returnPlayerDish(player, getData().getSelectedStage().ordinal());
+                team.teleportPlayerToLobby(player);
+            }
+            
             team.removePlayer(player, restoreStats);
         }
         MCTeams.removePlayerFromMCTeam(player);
