@@ -9,7 +9,6 @@ import quarri6343.overcrafted.api.item.ISubmittableOCItem;
 import quarri6343.overcrafted.core.data.constant.OCCommonData;
 import quarri6343.overcrafted.core.handler.order.BossBarHandler;
 import quarri6343.overcrafted.core.handler.order.ScoreBoardHandler;
-import quarri6343.overcrafted.impl.item.OCItems;
 
 import java.util.*;
 
@@ -33,7 +32,7 @@ public class OrderHandler {
      * 全てのチームに向けてランダムな注文のセットを生成する
      */
     public static void generateRandomOrders() {
-        BossBarHandler.hideEverything();
+        BossBarHandler.hideBossBarFromEveryTeam();
 
         for (int i = 0; i < getData().getTeams().getTeamsLength(); i++) {
             List<ISubmittableOCItem> menus = getData().getSelectedStage().get().getProducts();
@@ -44,7 +43,7 @@ public class OrderHandler {
             }
             ordersMap.put(getData().getTeams().getTeam(i), orders);
             tipsMultiplierMap.put(getData().getTeams().getTeam(i), 1f);
-            BossBarHandler.displayDishMenu(getData().getTeams().getTeam(i), orders);
+            BossBarHandler.registerOrUpdateBossBar(getData().getTeams().getTeam(i), orders);
         }
         ScoreBoardHandler.initialize();
     }
@@ -58,7 +57,7 @@ public class OrderHandler {
 
         List<ISubmittableOCItem> orders = ordersMap.get(team);
         orders.add(menus.get(new Random().nextInt(menus.size())));
-        BossBarHandler.displayDishMenu(team, orders);
+        BossBarHandler.registerOrUpdateBossBar(team, orders);
     }
 
     /**
@@ -119,6 +118,6 @@ public class OrderHandler {
         ordersMap.clear();
         tipsMultiplierMap.clear();
         ScoreBoardHandler.destroy();
-        BossBarHandler.hideEverything();
+        BossBarHandler.hideBossBarFromEveryTeam();
     }
 }

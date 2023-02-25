@@ -6,6 +6,7 @@ import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.core.OCLogic;
 import quarri6343.overcrafted.core.data.OCVariableData;
 import quarri6343.overcrafted.api.object.IOCTeam;
+import quarri6343.overcrafted.core.handler.order.BossBarHandler;
 import quarri6343.overcrafted.utils.OverCraftedUtil;
 
 /**
@@ -22,6 +23,9 @@ public class GlobalTeamHandler {
     public static void addPlayerToTeam(Player player, IOCTeam team) {
         team.addPlayer(player);
         MCTeams.addPlayerToMCTeam(player, team);
+        if(getLogic().gameStatus == OCLogic.GameStatus.ACTIVE){
+            BossBarHandler.showBossBar(player);
+        }
     }
 
     /**
@@ -33,6 +37,7 @@ public class GlobalTeamHandler {
             if(getLogic().gameStatus == OCLogic.GameStatus.ACTIVE){
                 team.returnPlayerDish(player, getData().getSelectedStage().ordinal());
                 team.teleportPlayerToLobby(player);
+                BossBarHandler.hideBossBar(player);
             }
             
             team.removePlayer(player, restoreStats);
