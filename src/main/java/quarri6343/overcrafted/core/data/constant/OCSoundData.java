@@ -69,4 +69,14 @@ public class OCSoundData {
      * 洗浄している時の音
      */
     public static final Sound washingSound = Sound.sound(Key.key("entity.villager.work_leatherworker"), Sound.Source.BLOCK, 1f, 1f);
+
+    /**
+     * 金床で叩いている時の音
+     */
+    public static final Sound forgingSound = Sound.sound(Key.key("block.anvil.use"), Sound.Source.BLOCK, 1f, 1f);
+
+    /**
+     * エンチャントしている時の音
+     */
+    public static final Sound enchantingSound = Sound.sound(Key.key("block.enchantment_table.use"), Sound.Source.BLOCK, 1f, 1f);
 }

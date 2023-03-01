@@ -52,6 +52,7 @@ public class PlaceItemHandler {
         item.setVelocity(new Vector().zero());
         item.setCanPlayerPickup(false);
         item.setCanMobPickup(false);
+        item.setGravity(false);
 
         placedItemMap.put(block, itemStack);
 

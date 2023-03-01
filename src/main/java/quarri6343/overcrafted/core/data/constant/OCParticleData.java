@@ -26,4 +26,14 @@ public class OCParticleData {
      * プレイヤーが加工しすぎた時のパーティクル
      */
     public static final Particle overcraftParticle = Particle.SMOKE_NORMAL;
+
+    /**
+     * プレイヤーが鍛造した時のパーティクル
+     */
+    public static final Particle forgingParticle = Particle.SMOKE_NORMAL;
+
+    /**
+     * プレイヤーがエンチャントした時のパーティクル
+     */
+    public static final Particle enchantingParticle = Particle.ENCHANTMENT_TABLE;
 }

@@ -21,6 +21,10 @@ public enum OCItems {
     WOOD(new SuppliableOCItem(Component.text("原木"), Material.OAK_LOG, "wood", 0)),
     COBBLESTONE(new SuppliableOCItem(Component.text("丸石"), Material.COBBLESTONE, "cobblestone", 0)),
     IRON_ORE(new SuppliableOCItem(Component.text("鉄鉱石"), Material.IRON_ORE, "iron_ore", 0)),
+    GOLD_ORE(new SuppliableOCItem(Component.text("金鉱石"), Material.GOLD_ORE, "gold_ore", 0)),
+    LEAVES(new SuppliableOCItem(Component.text("葉"), Material.OAK_LEAVES, "leaves", 0)),
+    SOUL_SAND(new SuppliableOCItem(Component.text("ソウルサンド"), Material.SOUL_SAND, "soul_sand", 0)),
+    WITHER_SKULL(new SuppliableOCItem(Component.text("ウィザースケルトンの頭"), Material.WITHER_SKELETON_SKULL, "wither_skull", 0)),
 
     FURNACE(new ProcessedOCItem(Component.text("かまど"), Material.FURNACE, "furnace", 0, (IBlockProcessor)CRAFTING.get(), COBBLESTONE)),
     IRON_INGOT(new ProcessedOCItem(Component.text("鉄インゴット"), Material.IRON_INGOT, "iron_ingot", 0, (IBlockProcessor)SMELTING.get(), IRON_ORE)),
@@ -33,6 +37,18 @@ public enum OCItems {
     DISH(new ProcessedOCItem(Component.text("皿"), Material.PAPER, "dish", 1, (IBlockProcessor)WASHING.get(), DIRTY_DISH)),
     BURNT_CHARCOAL(new BurntOCItem(Component.text("焦げた木炭"), Material.PAPER, "burnt_charcoal", 7, (IProcessedOCItem) CHARCOAL.get())),
     BURNT_IRON_INGOT(new BurntOCItem(Component.text("焦げた鉄"), Material.PAPER, "burnt_iron_ingot", 8, (IProcessedOCItem) IRON_INGOT.get())),
+    IRON_AND_STICK(new CombinedOCItem(Component.text("鉄と棒"), Material.PAPER, "iron_and_stick", 16, STICK, IRON_INGOT)),
+    IRON_SWORD(new ProcessedOCItem(Component.text("鉄の剣"), Material.IRON_SWORD, "iron_sword", 0, (IBlockProcessor)FORGING.get(), IRON_AND_STICK)),
+    GOLD_INGOT(new ProcessedOCItem(Component.text("金インゴット"), Material.GOLD_INGOT, "gold_ingot", 0, (IBlockProcessor)SMELTING.get(), GOLD_ORE)),
+    BURNT_GOLD_INGOT(new BurntOCItem(Component.text("焦げた金"), Material.PAPER, "burnt_gold_ingot", 10, (IProcessedOCItem) GOLD_INGOT.get())),
+    APPLE(new ProcessedOCItem(Component.text("りんご"), Material.APPLE, "apple", 0, (IBlockProcessor)CRAFTING.get(), LEAVES)),
+    APPLE_AND_GOLD(new CombinedOCItem(Component.text("りんごと金"), Material.PAPER, "apple_and_gold", 9, APPLE, GOLD_INGOT)),
+    GOLDEN_APPLE(new ProcessedOCItem(Component.text("金のりんご"), Material.GOLDEN_APPLE, "golden_apple", 0, (IBlockProcessor)ENCHANTING.get(), APPLE_AND_GOLD)),
+    BURNT_GOLDEN_APPLE(new BurntOCItem(Component.text("溶けた金りんご"), Material.PAPER, "burnt_golden_apple", 17, (IProcessedOCItem) GOLDEN_APPLE.get())),
+    SOUL_SAND_BASE(new ProcessedOCItem(Component.text("ソウルサンドの台"), Material.PAPER, "soul_sand_base", 18, (IBlockProcessor)CRAFTING.get(), SOUL_SAND)),
+    WITHER(new CombinedOCItem(Component.text("ウィザー"), Material.PAPER, "wither", 19, SOUL_SAND_BASE, WITHER_SKULL)),
+    NETHER_STAR(new ProcessedOCItem(Component.text("ネザースター"), Material.NETHER_STAR, "nether_star", 0, (IBlockProcessor)ENCHANTING.get(), WITHER)),
+    BURNT_NETHER_STAR(new BurntOCItem(Component.text("溶けたネザースター"), Material.PAPER, "burnt_nether_star", 11, (IProcessedOCItem) NETHER_STAR.get())),
     
     DISH_STACKED_1(new StackedDish(Component.text("積まれた皿1"), "dish_stacked_1", 1, 1, StackedDish.StackedDishType.CLEAN)),
     DISH_STACKED_2(new StackedDish(Component.text("積まれた皿2"), "dish_stacked_2", 2, 2, StackedDish.StackedDishType.CLEAN)),
@@ -49,7 +65,11 @@ public enum OCItems {
     DISH_IRON_INGOT(new SubmittableOCItem(Component.text("鉄インゴットの載った皿"), Material.PAPER, "dish_iron_ingot", 4, DISH, IRON_INGOT, 3, OCResourcePackData.MenuFont.IRON.get_char())),
     DISH_MINECART(new SubmittableOCItem(Component.text("トロッコの載った皿"), Material.PAPER, "dish_minecart", 5, DISH, MINECART, 15, OCResourcePackData.MenuFont.MINECART.get_char())),
     DISH_TORCH(new SubmittableOCItem(Component.text("松明の載った皿"), Material.PAPER, "dish_torch", 6, DISH, TORCH, 5, OCResourcePackData.MenuFont.TORCH.get_char())),
-
+    DISH_IRON_SWORD(new SubmittableOCItem(Component.text("鉄の剣の載った皿"), Material.PAPER, "dish_iron_sword", 14, DISH, IRON_SWORD, 5, OCResourcePackData.MenuFont.IRON_SWORD.get_char())),
+    DISH_GOLDEN_APPLE(new SubmittableOCItem(Component.text("金りんごの載った皿"), Material.PAPER, "dish_golden_apple", 13, DISH, GOLDEN_APPLE, 5, OCResourcePackData.MenuFont.GOLDEN_APPLE.get_char())),
+    DISH_APPLE(new SubmittableOCItem(Component.text("りんごの載った皿"), Material.PAPER, "dish_apple", 12, DISH, APPLE, 5, OCResourcePackData.MenuFont.APPLE.get_char())),
+    DISH_NETHER_STAR(new SubmittableOCItem(Component.text("ネザースターの載った皿"), Material.PAPER, "dish_nether_star", 15, DISH, NETHER_STAR, 5, OCResourcePackData.MenuFont.NETHER_STAR.get_char())),
+    
     ADMIN_MENU(new AdminMenu());
 
     private final IOCItem ocItem;

@@ -44,7 +44,11 @@ public class OCResourcePackData {
         FURNACE("\uE001"),
         IRON("\uE002"),
         MINECART("\uE003"),
-        BONUS("\uE004");
+        BONUS("\uE004"),
+        IRON_SWORD("\uE009"),
+        GOLDEN_APPLE("\uE00A"),
+        APPLE("\uE00B"),
+        NETHER_STAR("\uE00C");
 
         @Getter
         private final String _char;

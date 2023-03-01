@@ -21,6 +21,8 @@ public enum OCBlocks {
     CRAFTING(new BlockManualProcessor(Material.CRAFTING_TABLE, "crafting_progression", OCSoundData.craftingSound, OCParticleData.craftParticle)),
     SMELTING(new BlockAutomaticProcessor(Material.FURNACE, "smelting_progression", OCSoundData.smeltingSound, OCParticleData.smeltingParticle)),
     WASHING(new BlockManualProcessor(Material.WATER_CAULDRON, "washing_progression", OCSoundData.washingSound, OCParticleData.washingParticle)),
+    FORGING(new BlockManualProcessor(Material.ANVIL, "forging_progression", OCSoundData.forgingSound, OCParticleData.forgingParticle)),
+    ENCHANTING(new BlockAutomaticProcessor(Material.ENCHANTING_TABLE, "enchanting_progression", OCSoundData.enchantingSound, OCParticleData.enchantingParticle)),
     COUNTER(new BlockCounter(Material.RED_BED));
 
     private final OCBlock ocBlock;
