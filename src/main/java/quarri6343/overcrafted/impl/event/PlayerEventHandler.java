@@ -4,9 +4,12 @@ import it.unimi.dsi.fastutil.Pair;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.hanging.HangingBreakEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
@@ -308,19 +311,20 @@ public class PlayerEventHandler implements Listener {
 
     @org.bukkit.event.EventHandler
     public void onPlayerDamageEntity(EntityDamageByEntityEvent event){
-        blockEntityDamage(event);
+        blockItemFrameDamage(event);
     }
 
     /**
-     * ゲーム中アイテムフレーム内のアイテム取り出しを含むエンティティへの干渉を阻止する
+     * ゲーム中アイテムフレーム内のアイテム取り出しを阻止する
      * @param event
      */
-    private void blockEntityDamage(EntityDamageByEntityEvent event){
+    private void blockItemFrameDamage(EntityDamageByEntityEvent event){
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE
                 || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
             return;
 
-        event.setCancelled(true);
+        if(event.getEntity().getType() == EntityType.ITEM_FRAME || event.getEntity().getType() == EntityType.GLOW_ITEM_FRAME)
+            event.setCancelled(true);
     }
 
     @org.bukkit.event.EventHandler
@@ -338,5 +342,24 @@ public class PlayerEventHandler implements Listener {
 
         event.getPlayer().sendActionBar(Component.text("ゲーム中はブロックを破壊できません！"));
         event.setCancelled(true);
+    }
+
+    @org.bukkit.event.EventHandler
+    public void onEntityDeath(EntityDeathEvent event){
+        stopNonPlayerEntityDropItems(event);
+    }
+
+    /**
+     * ゲーム中プレイヤー以外のエンティティがアイテムをドロップすることを阻止する
+     */
+    private void stopNonPlayerEntityDropItems(EntityDeathEvent event){
+        if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE
+                || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
+            return;
+        
+        if(event.getEntity().getType() == EntityType.PLAYER)
+            return;
+        
+        event.getDrops().clear();
     }
 }

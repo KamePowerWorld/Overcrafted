@@ -1,6 +1,7 @@
 package quarri6343.overcrafted.core.object;
 
 import lombok.Data;
+import quarri6343.overcrafted.api.IStageEvent;
 import quarri6343.overcrafted.api.item.ISubmittableOCItem;
 import quarri6343.overcrafted.api.item.ISupplier;
 
@@ -41,4 +42,9 @@ public class OCStage {
      * このステージのハイスコア
      */
     private int highScore = 0;
+
+    /**
+     * このステージで起こるイベント
+     */
+    private final IStageEvent event;
 }

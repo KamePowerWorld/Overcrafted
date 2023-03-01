@@ -66,6 +66,7 @@ public class OCLogic {
             gameInactiveRunnable.cancel();
         gameWorld = gameMaster.getWorld();
         gameStatus = GameStatus.BEGINNING;
+        getData().getSelectedStage().get().getEvent().onStart(gameMaster.getWorld());
         gameBeginRunnable = new GameBeginTask(this::onGameBegin).runTaskTimer(Overcrafted.getInstance(), 0, 1);
     }
 
@@ -122,6 +123,8 @@ public class OCLogic {
         } else {
             displayGameFailureTitle();
         }
+
+        getData().getSelectedStage().get().getEvent().onEnd();
 
         gameStatus = GameStatus.ENDING;
         if (hasResultScene)

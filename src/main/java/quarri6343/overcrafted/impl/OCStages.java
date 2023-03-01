@@ -3,6 +3,7 @@ package quarri6343.overcrafted.impl;
 import quarri6343.overcrafted.api.item.ISubmittableOCItem;
 import quarri6343.overcrafted.api.item.ISupplier;
 import quarri6343.overcrafted.core.object.OCStage;
+import quarri6343.overcrafted.core.stageevent.ZombieSpawnEvent;
 import quarri6343.overcrafted.impl.item.OCItems;
 
 import java.util.Arrays;
@@ -22,7 +23,7 @@ public enum OCStages {
      */
     TUTORIAL1(new OCStage("チュートリアル1", 600, false,
             List.of((ISubmittableOCItem) OCItems.DISH_FURNACE.get()),
-            List.of((ISupplier) OCItems.COBBLESTONE.get()))),
+            List.of((ISupplier) OCItems.COBBLESTONE.get()), null)),
 
     /**
      * ・チュートリアル2
@@ -33,7 +34,7 @@ public enum OCStages {
      */
     TUTORIAL2(new OCStage("チュートリアル2", 600, true,
             Arrays.asList((ISubmittableOCItem) OCItems.DISH_IRON_INGOT.get(), (ISubmittableOCItem) OCItems.DISH_FURNACE.get()),
-            Arrays.asList((ISupplier) OCItems.IRON_ORE.get(), (ISupplier) OCItems.COBBLESTONE.get()))),
+            Arrays.asList((ISupplier) OCItems.IRON_ORE.get(), (ISupplier) OCItems.COBBLESTONE.get()), null)),
 
     /**
      * ・ステージ1
@@ -42,7 +43,7 @@ public enum OCStages {
      */
     STAGE1(new OCStage("ステージ1", 210, true,
             Arrays.asList((ISubmittableOCItem) OCItems.DISH_TORCH.get(), (ISubmittableOCItem) OCItems.DISH_IRON_INGOT.get(), (ISubmittableOCItem) OCItems.DISH_FURNACE.get()),
-            Arrays.asList((ISupplier) OCItems.IRON_ORE.get(), (ISupplier) OCItems.COBBLESTONE.get(), (ISupplier) OCItems.WOOD.get()))),
+            Arrays.asList((ISupplier) OCItems.IRON_ORE.get(), (ISupplier) OCItems.COBBLESTONE.get(), (ISupplier) OCItems.WOOD.get()), null)),
 
     /**
      * ・ステージ2
@@ -53,7 +54,7 @@ public enum OCStages {
      */
     STAGE2(new OCStage("ステージ2", 240, true,
             Arrays.asList((ISubmittableOCItem) OCItems.DISH_IRON_SWORD.get(), (ISubmittableOCItem) OCItems.DISH_TORCH.get(), (ISubmittableOCItem) OCItems.DISH_IRON_INGOT.get()),
-            Arrays.asList((ISupplier) OCItems.IRON_ORE.get(), (ISupplier) OCItems.COBBLESTONE.get(), (ISupplier) OCItems.WOOD.get()))),
+            Arrays.asList((ISupplier) OCItems.IRON_ORE.get(), (ISupplier) OCItems.COBBLESTONE.get(), (ISupplier) OCItems.WOOD.get()), new ZombieSpawnEvent())),
 
     /**
      * ・ステージ3
@@ -63,7 +64,7 @@ public enum OCStages {
      */
     STAGE3(new OCStage("ステージ3", 240, true,
             Arrays.asList((ISubmittableOCItem) OCItems.DISH_GOLDEN_APPLE.get(), (ISubmittableOCItem) OCItems.DISH_APPLE.get(), (ISubmittableOCItem) OCItems.DISH_IRON_INGOT.get()),
-            Arrays.asList((ISupplier) OCItems.LEAVES.get(), (ISupplier) OCItems.GOLD_ORE.get(), (ISupplier) OCItems.IRON_ORE.get()))),
+            Arrays.asList((ISupplier) OCItems.LEAVES.get(), (ISupplier) OCItems.GOLD_ORE.get(), (ISupplier) OCItems.IRON_ORE.get()), null)),
 
     /**
      * ・ステージ4
@@ -72,7 +73,7 @@ public enum OCStages {
      */
     STAGE4(new OCStage("ステージ4", 240, true,
             Arrays.asList((ISubmittableOCItem) OCItems.DISH_NETHER_STAR.get(), (ISubmittableOCItem) OCItems.DISH_TORCH.get(), (ISubmittableOCItem) OCItems.DISH_IRON_SWORD.get()),
-            Arrays.asList((ISupplier) OCItems.SOUL_SAND.get(), (ISupplier) OCItems.WITHER_SKULL.get(), (ISupplier) OCItems.WOOD.get(), (ISupplier) OCItems.IRON_ORE.get()))),
+            Arrays.asList((ISupplier) OCItems.SOUL_SAND.get(), (ISupplier) OCItems.WITHER_SKULL.get(), (ISupplier) OCItems.WOOD.get(), (ISupplier) OCItems.IRON_ORE.get()), null)),
 
     /**
      * ・ファイナルステージ
@@ -83,7 +84,7 @@ public enum OCStages {
            Arrays.asList((ISubmittableOCItem) OCItems.DISH_NETHER_STAR.get(), (ISubmittableOCItem) OCItems.DISH_GOLDEN_APPLE.get(),(ISubmittableOCItem) OCItems.DISH_APPLE.get(),
                    (ISubmittableOCItem) OCItems.DISH_IRON_SWORD.get(), (ISubmittableOCItem) OCItems.DISH_TORCH.get(),(ISubmittableOCItem) OCItems.DISH_IRON_INGOT.get(),(ISubmittableOCItem) OCItems.DISH_FURNACE.get()),
             Arrays.asList((ISupplier) OCItems.SOUL_SAND.get(), (ISupplier) OCItems.WITHER_SKULL.get(), (ISupplier) OCItems.WOOD.get(),(ISupplier) OCItems.LEAVES.get(), (ISupplier) OCItems.GOLD_ORE.get(),
-                    (ISupplier) OCItems.WOOD.get(), (ISupplier) OCItems.IRON_ORE.get())));
+                    (ISupplier) OCItems.WOOD.get(), (ISupplier) OCItems.IRON_ORE.get()), new ZombieSpawnEvent()));
     
     private final OCStage stage;
 

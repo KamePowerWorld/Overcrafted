@@ -59,6 +59,11 @@ public class UIAdminSelectStage {
             lores.add(Component.text("皿洗い: ")
                     .color(NamedTextColor.YELLOW).decoration(TextDecoration.ITALIC, false)
                     .append(Component.text(OCStages.values()[i].get().isEnableDishGettingDirty() ? "あり" : "なし").color(NamedTextColor.WHITE)));
+
+            lores.add(Component.text("イベント: ")
+                    .color(NamedTextColor.YELLOW).decoration(TextDecoration.ITALIC, false)
+                    .append(Component.text(OCStages.values()[i].get().getEvent() != null ?
+                            OCStages.values()[i].get().getEvent().getEventName() : "なし").color(NamedTextColor.WHITE)));
             
             lores.add(Component.text("ハイスコア: ")
                     .color(NamedTextColor.RED).decoration(TextDecoration.ITALIC, false)

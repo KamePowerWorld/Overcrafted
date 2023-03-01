@@ -23,7 +23,7 @@ public enum OCBlocks {
     WASHING(new BlockManualProcessor(Material.WATER_CAULDRON, "washing_progression", OCSoundData.washingSound, OCParticleData.washingParticle)),
     FORGING(new BlockManualProcessor(Material.ANVIL, "forging_progression", OCSoundData.forgingSound, OCParticleData.forgingParticle)),
     ENCHANTING(new BlockAutomaticProcessor(Material.ENCHANTING_TABLE, "enchanting_progression", OCSoundData.enchantingSound, OCParticleData.enchantingParticle)),
-    COUNTER(new BlockCounter(Material.RED_BED));
+    COUNTER(new BlockCounter(Material.END_PORTAL_FRAME));
 
     private final OCBlock ocBlock;
 

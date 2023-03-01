@@ -47,6 +47,8 @@ public class GameActiveTask extends BukkitRunnable {
             getData().getTeams().clearExcessiveItemsFromAllTeam();
         }
 
+        getData().getSelectedStage().get().getEvent().onTick(count);
+
         triggerSneakEvent();
     }
 
