@@ -11,7 +11,6 @@ import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.api.IStageEvent;
 import quarri6343.overcrafted.api.object.IOCTeam;
 import quarri6343.overcrafted.core.data.OCVariableData;
-import quarri6343.overcrafted.core.data.constant.OCCommonData;
 import quarri6343.overcrafted.core.data.constant.OCSoundData;
 
 import java.util.ArrayList;
@@ -44,9 +43,7 @@ public class PlayerPosSwapEvent implements IStageEvent {
 
         for (int i = 1; i <= 5; i++) {
             if((count + 20 * i) % frequency == 0){
-                int finalI = i;
                 Bukkit.getOnlinePlayers().forEach(player -> {
-                    player.showTitle(Title.title(Component.text(finalI), Component.empty()));
                     player.playSound(OCSoundData.countDownSound);
                 });
                 return;
@@ -54,7 +51,6 @@ public class PlayerPosSwapEvent implements IStageEvent {
         }
         
         if(count % frequency == 0){
-            Bukkit.getOnlinePlayers().forEach(Player::hideTitle);
             for (int i = 0; i < getData().getTeams().getTeamsLength(); i++) {
                 IOCTeam team = getData().getTeams().getTeam(i);
 

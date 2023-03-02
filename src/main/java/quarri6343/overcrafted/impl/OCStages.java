@@ -4,6 +4,7 @@ import quarri6343.overcrafted.api.item.ISubmittableOCItem;
 import quarri6343.overcrafted.api.item.ISupplier;
 import quarri6343.overcrafted.core.object.OCStage;
 import quarri6343.overcrafted.core.stageevent.PlayerPosSwapEvent;
+import quarri6343.overcrafted.core.stageevent.WindEvent;
 import quarri6343.overcrafted.core.stageevent.ZombieSpawnEvent;
 import quarri6343.overcrafted.impl.item.OCItems;
 
@@ -74,7 +75,7 @@ public enum OCStages {
      */
     STAGE4(new OCStage("ステージ4", 240, true,
             Arrays.asList((ISubmittableOCItem) OCItems.DISH_NETHER_STAR.get(), (ISubmittableOCItem) OCItems.DISH_TORCH.get(), (ISubmittableOCItem) OCItems.DISH_IRON_SWORD.get()),
-            Arrays.asList((ISupplier) OCItems.SOUL_SAND.get(), (ISupplier) OCItems.WITHER_SKULL.get(), (ISupplier) OCItems.WOOD.get(), (ISupplier) OCItems.IRON_ORE.get()), null)),
+            Arrays.asList((ISupplier) OCItems.SOUL_SAND.get(), (ISupplier) OCItems.WITHER_SKULL.get(), (ISupplier) OCItems.WOOD.get(), (ISupplier) OCItems.IRON_ORE.get()), new WindEvent())),
 
     /**
      * ・ファイナルステージ

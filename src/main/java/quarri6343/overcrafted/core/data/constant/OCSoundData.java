@@ -73,10 +73,15 @@ public class OCSoundData {
     /**
      * 金床で叩いている時の音
      */
-    public static final Sound forgingSound = Sound.sound(Key.key("block.anvil.use"), Sound.Source.BLOCK, 1f, 1f);
+    public static final Sound forgingSound = Sound.sound(Key.key("block.anvil.use"), Sound.Source.BLOCK, 0.25f, 1f);
 
     /**
      * エンチャントしている時の音
      */
-    public static final Sound enchantingSound = Sound.sound(Key.key("block.enchantment_table.use"), Sound.Source.BLOCK, 1f, 1f);
+    public static final Sound enchantingSound = Sound.sound(Key.key("block.enchantment_table.use"), Sound.Source.BLOCK, 0.25f, 1f);
+
+    /**
+     * 風の音
+     */
+    public static final Sound windSound = Sound.sound(Key.key("entity.horse.breathe"), Sound.Source.BLOCK, 1f, 1f);
 }
