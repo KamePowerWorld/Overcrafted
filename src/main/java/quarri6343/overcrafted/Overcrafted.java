@@ -5,6 +5,7 @@ import quarri6343.overcrafted.core.handler.Config;
 import quarri6343.overcrafted.core.data.OCVariableData;
 import quarri6343.overcrafted.core.handler.PlaceItemHandler;
 import quarri6343.overcrafted.impl.event.*;
+import quarri6343.overcrafted.impl.task.AutomaticProcessingRunnable;
 import quarri6343.overcrafted.impl.task.game.GameEndTask;
 import quarri6343.overcrafted.core.OCLogic;
 import quarri6343.overcrafted.impl.command.*;
@@ -65,6 +66,7 @@ public final class Overcrafted extends JavaPlugin {
 
         OverCraftedUtil.forceInit(GameEndTask.class);
         OverCraftedUtil.forceInit(PlaceItemHandler.class);
+        OverCraftedUtil.forceInit(AutomaticProcessingRunnable.class);
     }
 
     @Override

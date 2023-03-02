@@ -6,6 +6,7 @@ import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
+import org.bukkit.Difficulty;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
@@ -65,6 +66,7 @@ public class OCLogic {
         if (gameInactiveRunnable != null)
             gameInactiveRunnable.cancel();
         gameWorld = gameMaster.getWorld();
+        gameWorld.setDifficulty(Difficulty.PEACEFUL);
         gameStatus = GameStatus.BEGINNING;
         getData().getSelectedStage().get().getEvent().onStart(gameMaster.getWorld());
         gameBeginRunnable = new GameBeginTask(this::onGameBegin).runTaskTimer(Overcrafted.getInstance(), 0, 1);

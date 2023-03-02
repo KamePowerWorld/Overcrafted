@@ -19,7 +19,7 @@ public class OCStage {
     private final String name;
 
     /**
-     * ステージの制限時間
+     * ステージの制限時間(秒)
      */
     private final int time;
 

@@ -3,6 +3,7 @@ package quarri6343.overcrafted.impl;
 import quarri6343.overcrafted.api.item.ISubmittableOCItem;
 import quarri6343.overcrafted.api.item.ISupplier;
 import quarri6343.overcrafted.core.object.OCStage;
+import quarri6343.overcrafted.core.stageevent.PlayerPosSwapEvent;
 import quarri6343.overcrafted.core.stageevent.ZombieSpawnEvent;
 import quarri6343.overcrafted.impl.item.OCItems;
 
@@ -64,7 +65,7 @@ public enum OCStages {
      */
     STAGE3(new OCStage("ステージ3", 240, true,
             Arrays.asList((ISubmittableOCItem) OCItems.DISH_GOLDEN_APPLE.get(), (ISubmittableOCItem) OCItems.DISH_APPLE.get(), (ISubmittableOCItem) OCItems.DISH_IRON_INGOT.get()),
-            Arrays.asList((ISupplier) OCItems.LEAVES.get(), (ISupplier) OCItems.GOLD_ORE.get(), (ISupplier) OCItems.IRON_ORE.get()), null)),
+            Arrays.asList((ISupplier) OCItems.LEAVES.get(), (ISupplier) OCItems.GOLD_ORE.get(), (ISupplier) OCItems.IRON_ORE.get()), new PlayerPosSwapEvent())),
 
     /**
      * ・ステージ4

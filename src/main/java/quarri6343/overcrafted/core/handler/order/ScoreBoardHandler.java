@@ -140,6 +140,7 @@ public class ScoreBoardHandler {
             return;
 
         objective.unregister();
+        objective = null;
         currentScoreString.clear();
     }
 
