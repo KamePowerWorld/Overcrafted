@@ -26,6 +26,7 @@ import quarri6343.overcrafted.core.handler.OrderHandler;
 import java.util.List;
 
 import static quarri6343.overcrafted.core.data.constant.OCCommonData.gameResultSceneLength;
+import static quarri6343.overcrafted.core.data.constant.OCCommonData.maxDishesNumber;
 
 /**
  * ゲームの進行を司るクラス
@@ -68,7 +69,8 @@ public class OCLogic {
         gameWorld = gameMaster.getWorld();
         gameWorld.setDifficulty(Difficulty.PEACEFUL);
         gameStatus = GameStatus.BEGINNING;
-        getData().getSelectedStage().get().getEvent().onStart(gameMaster.getWorld());
+        if(getData().getSelectedStage().get().getEvent() != null)
+            getData().getSelectedStage().get().getEvent().onStart(gameMaster.getWorld());
         gameBeginRunnable = new GameBeginTask(this::onGameBegin).runTaskTimer(Overcrafted.getInstance(), 0, 1);
     }
 
@@ -126,7 +128,8 @@ public class OCLogic {
             displayGameFailureTitle();
         }
 
-        getData().getSelectedStage().get().getEvent().onEnd();
+        if(getData().getSelectedStage().get().getEvent() != null)
+            getData().getSelectedStage().get().getEvent().onEnd();
 
         gameStatus = GameStatus.ENDING;
         if (hasResultScene)
