@@ -6,7 +6,9 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
+import org.bukkit.entity.ItemFrame;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.core.OCLogic;
@@ -41,22 +43,38 @@ public class PlaceItemHandler {
         if(itemStack == null)
             return false;
 
-        if(block.getRelative(BlockFace.UP).getType() != Material.AIR){
-            return false;
+        if(block.getRelative(BlockFace.UP).getType() == Material.AIR){
+            Location location = block.getLocation();
+            location.add(0.5, 1.1, 0.5);
+            Item item = block.getWorld().dropItem(location, itemStack);
+            item.teleport(location);
+            item.setVelocity(new Vector().zero());
+            item.setCanPlayerPickup(false);
+            item.setCanMobPickup(false);
+            item.setGravity(false);
+
+            placedItemMap.put(block, itemStack);
+
+            return true;
+        }
+
+        //水中に対応
+        if(block.getRelative(BlockFace.UP).getType() == Material.WATER){
+            Location location = block.getLocation();
+            location.add(0.5, 1.1, 0.5);
+            ItemFrame itemFrame = location.getWorld().spawn(location, ItemFrame.class);
+            itemFrame.setFacingDirection(BlockFace.UP);
+            itemFrame.setFixed(true);
+            itemFrame.setVisible(false);
+            itemFrame.setItem(itemStack);
+            itemFrame.setCustomNameVisible(false);
+
+            placedItemMap.put(block, itemStack);
+
+            return true;
         }
         
-        Location location = block.getLocation();
-        location.add(0.5, 1.1, 0.5);
-        Item item = block.getWorld().dropItem(location, itemStack);
-        item.teleport(location);
-        item.setVelocity(new Vector().zero());
-        item.setCanPlayerPickup(false);
-        item.setCanMobPickup(false);
-        item.setGravity(false);
-
-        placedItemMap.put(block, itemStack);
-
-        return true;
+        return false;
     }
 
     public static ItemStack getItem(Block block) {
@@ -75,8 +93,8 @@ public class PlaceItemHandler {
 
         Location location = block.getLocation();
         location.add(0.5, 1.1, 0.5);
-        location.getNearbyEntities(0.01, 0.01, 0.01).forEach(entity -> {
-            if (entity.getType() == EntityType.DROPPED_ITEM) entity.remove();
+        location.getNearbyEntities(0.1, 0.1, 0.1).forEach(entity -> {
+            if (entity.getType() == EntityType.DROPPED_ITEM || entity.getType() == EntityType.ITEM_FRAME) entity.remove();
         });
         placedItemMap.remove(block);
         return itemStack;
