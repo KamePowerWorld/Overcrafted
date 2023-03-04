@@ -82,7 +82,7 @@ public class DishPile implements IDishPile {
             return;
         }
 
-        Collection<ItemFrame> itemFrames = location.getWorld().getNearbyEntitiesByType(ItemFrame.class, location, 2);
+        Collection<ItemFrame> itemFrames = location.getWorld().getNearbyEntitiesByType(ItemFrame.class, location, 0.4f);
         itemFrames.forEach(Entity::remove);
     }
     
