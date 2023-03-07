@@ -4,12 +4,9 @@ import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import quarri6343.overcrafted.Overcrafted;
-import quarri6343.overcrafted.api.object.IDishPile;
 import quarri6343.overcrafted.core.data.OCVariableData;
 import quarri6343.overcrafted.api.object.IOCTeam;
-import quarri6343.overcrafted.core.object.DishPile;
 import quarri6343.overcrafted.impl.OCStages;
-import quarri6343.overcrafted.impl.item.StackedDish;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.File;
@@ -30,10 +27,18 @@ public class Config {
     private static final String teamDirtyDishPileStr = "team.dirtyDishPile.";
     private static final String highScoreStr = "highScore.";
     private static final String teamStageStr = ".stage.";
+    private static final String craftingTimeStr = "craftingTime";
+    private static final String cookingTimeStr = "cookingTime";
+    private static final String burnTimeStr = "burnTime";
+    private static final String tipMultiplierStr = "tipsMultiplier";
     
     public Config() {
     }
 
+    private static OCVariableData getData() {
+        return Overcrafted.getInstance().getData();
+    }
+    
     /**
      * コンフィグファイル内のデータをデータクラスにコピーする
      */
@@ -88,6 +93,26 @@ public class Config {
         for (int i = 0; i < OCStages.values().length; i++) {
             OCStages.values()[i].get().setHighScore(config.getInt(highScoreStr + i));
         }
+
+        int craftingTime = config.getInt(craftingTimeStr);
+        if(craftingTime != 0){
+            getData().getCraftingTime().set(craftingTime);
+        }
+
+        int cookingTime = config.getInt(cookingTimeStr);
+        if(cookingTime != 0){
+            getData().getCookingTime().set(cookingTime);
+        }
+
+        int burnTime = config.getInt(burnTimeStr);
+        if(burnTime != 0){
+            getData().getBurnTime().set(burnTime);
+        }
+
+        int tipMultiplierValue = config.getInt(tipMultiplierStr);
+        if(burnTime != 0){
+            getData().getTipMultiplier().set((float) tipMultiplierValue / 10);
+        }
     }
 
     /**
@@ -138,6 +163,11 @@ public class Config {
         for (int i = 0; i < OCStages.values().length; i++) {
             config.set(highScoreStr + i, OCStages.values()[i].get().getHighScore());
         }
+        
+        config.set(craftingTimeStr, getData().getCraftingTime().get());
+        config.set(cookingTimeStr, getData().getCookingTime().get());
+        config.set(burnTimeStr, getData().getBurnTime().get());
+        config.set(tipMultiplierStr, (int)(getData().getTipMultiplier().get() * 10));
     }
 
     /**

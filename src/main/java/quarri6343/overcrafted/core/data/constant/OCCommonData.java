@@ -43,27 +43,7 @@ public class OCCommonData {
     public static final int blockEventTriggerRange = 2;
 
     /**
-     * 人力で行うクラフトにかかる時間(tick)
-     */
-    public static final int craftingTime = 60;
-
-    /**
-     * 時間をかけるクラフトにかかる時間(tick)
-     */
-    public static final int cookingTime = 200;
-
-    /**
-     * 時間をかけるクラフトの成果物が燃えるまでの時間(tick)
-     */
-    public static final int burnTime = 200;
-
-    /**
      * ゴミ箱に皿を捨てた時それが再び皿置き場に戻るまでの時間
      */
     public static final int dishReturnLag = 100;
-
-    /**
-     * 連続して適切な注文を納品されることで追加されるスコアの倍率
-     */
-    public static final float tipMultiplierValue = 0.1f;
 }

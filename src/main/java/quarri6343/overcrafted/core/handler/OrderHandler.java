@@ -91,11 +91,11 @@ public class OrderHandler {
             if (orders.get(i).equals(submittable)) {
                 if(i== 0){
                     float tipsMultiplier = tipsMultiplierMap.get(team);
-                    tipsMultiplier += OCCommonData.tipMultiplierValue;
+                    tipsMultiplier += getData().getTipMultiplier().get();
                     tipsMultiplierMap.put(team, tipsMultiplier);
                     ScoreBoardHandler.addScore(team, (int)(orders.get(i).getScore() * tipsMultiplier));
                     for (int j = 0; j < team.getPlayersSize(); j++) {
-                        team.getPlayer(j).sendActionBar(Component.text("チップによるスコア上昇:" + Math.round(tipsMultiplier) + "倍"));
+                        team.getPlayer(j).sendActionBar(Component.text("チップによるスコア上昇:" + (float)Math.round(tipsMultiplier * 10) / 10 + "倍"));
                     }
                 }
                 else{

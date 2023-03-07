@@ -11,10 +11,12 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.api.block.IBlockProcessor;
 import quarri6343.overcrafted.api.item.IBurntOCItem;
 import quarri6343.overcrafted.api.item.IOCItem;
 import quarri6343.overcrafted.api.item.IProcessedOCItem;
+import quarri6343.overcrafted.core.data.OCVariableData;
 import quarri6343.overcrafted.core.handler.PlaceItemHandler;
 import quarri6343.overcrafted.core.data.constant.OCCommonData;
 import quarri6343.overcrafted.core.data.constant.OCParticleData;
@@ -52,6 +54,10 @@ public class AutomaticProcessingRunnable extends BukkitRunnable {
         }
     }
 
+    private static OCVariableData getData() {
+        return Overcrafted.getInstance().getData();
+    }
+
     @Override
     public void run() {
         Location location = block.getLocation();
@@ -75,12 +81,12 @@ public class AutomaticProcessingRunnable extends BukkitRunnable {
             armorStand.setCustomNameVisible(true);
         }
 
-        if (progression < OCCommonData.cookingTime) {
+        if (progression < getData().getCookingTime().get()) {
             normalProcessing(armorStand);
-        } else if (progression == OCCommonData.cookingTime) {
+        } else if (progression == getData().getCookingTime().get()) {
             normalProcessing(armorStand);
             finishProcessing();
-        } else if (progression < OCCommonData.cookingTime + OCCommonData.burnTime) {
+        } else if (progression < getData().getCookingTime().get() + getData().getBurnTime().get()) {
             burntProcessing(armorStand);
         } else {
             finishBurntProcessing(armorStand);
@@ -88,7 +94,7 @@ public class AutomaticProcessingRunnable extends BukkitRunnable {
     }
 
     private void normalProcessing(ArmorStand armorStand) {
-        int filledPercent = progression / (OCCommonData.cookingTime / 10);
+        int filledPercent = progression / (getData().getCookingTime().get() / 10);
         for (OCResourcePackData.ProgressBarFont font : OCResourcePackData.ProgressBarFont.values()) {
             if (font.getFilledPercentage() == filledPercent) {
                 armorStand.customName(Component.text(font.get_char()).font(OCResourcePackData.progressBarFontName));
@@ -123,19 +129,19 @@ public class AutomaticProcessingRunnable extends BukkitRunnable {
     }
 
     private void burntProcessing(ArmorStand armorStand) {
-        if(progression < OCCommonData.cookingTime + (OCCommonData.burnTime / 5)){
+        if(progression < getData().getCookingTime().get() + (getData().getBurnTime().get() / 5)){
             armorStand.customName(Component.text(OCResourcePackData.ProgressBarFont._10.get_char()).font(OCResourcePackData.progressBarFontName));
         }
-        else if(progression < OCCommonData.cookingTime + (OCCommonData.burnTime / 5) * 2){
+        else if(progression < getData().getCookingTime().get() + (getData().getBurnTime().get() / 5) * 2){
             armorStand.customName(Component.text(OCResourcePackData.ProgressBarFont._overheat1.get_char()).font(OCResourcePackData.progressBarFontName));
         }
-        else if(progression < OCCommonData.cookingTime + (OCCommonData.burnTime / 5) * 3){
+        else if(progression < getData().getCookingTime().get() + (getData().getBurnTime().get() / 5) * 3){
             armorStand.customName(Component.text(OCResourcePackData.ProgressBarFont._overheat2.get_char()).font(OCResourcePackData.progressBarFontName));
         }
-        else if(progression < OCCommonData.cookingTime + (OCCommonData.burnTime / 5) * 4){
+        else if(progression < getData().getCookingTime().get() + (getData().getBurnTime().get() / 5) * 4){
             armorStand.customName(Component.text(OCResourcePackData.ProgressBarFont._overheat3.get_char()).font(OCResourcePackData.progressBarFontName));
         }
-        else if(progression < OCCommonData.cookingTime + OCCommonData.burnTime){
+        else if(progression < getData().getCookingTime().get() + getData().getBurnTime().get()){
             armorStand.customName(Component.text(OCResourcePackData.ProgressBarFont._overheat4.get_char()).font(OCResourcePackData.progressBarFontName));
         }
         
@@ -148,8 +154,8 @@ public class AutomaticProcessingRunnable extends BukkitRunnable {
     }
     
     private void playAlertSound(ArmorStand armorStand){
-        int remainingTime = OCCommonData.cookingTime + OCCommonData.burnTime - progression;
-        float remainingPercentage = (float) remainingTime / (float) OCCommonData.burnTime;
+        int remainingTime = getData().getCookingTime().get() + getData().getBurnTime().get() - progression;
+        float remainingPercentage = (float) remainingTime / (float) getData().getBurnTime().get();
         if(remainingPercentage <= 0.8 && remainingPercentage > 0.4){
             if(remainingTime % 10 == 0)
                 armorStand.getWorld().playSound(OCSoundData.overcraftAlertSound, armorStand.getLocation().getX(), armorStand.getLocation().getY(), armorStand.getLocation().getZ());

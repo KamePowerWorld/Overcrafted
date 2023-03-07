@@ -14,14 +14,15 @@ public class UIAdminMenu {
     public static void openUI(Player player) {
         PaginatedGui gui = Gui.paginated()
                 .title(Component.text("管理メニュー").color(NamedTextColor.GRAY))
-                .rows(3)
-                .pageSize(27)
+                .rows(4)
+                .pageSize(36)
                 .disableAllInteractions()
                 .create();
 
         AdminMenuRow1.addElements(gui, player);
         AdminMenuRow2.addElements(gui, player);
         AdminMenuRow3.addElements(gui, player);
+        AdminMenuRow4.addElements(gui, player);
 
         gui.open(player);
     }
