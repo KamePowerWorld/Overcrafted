@@ -8,6 +8,7 @@ import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
 import org.bukkit.World;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
@@ -89,7 +90,10 @@ public class OCLogic {
 
             team.getCleanDishPiles().get(getData().getSelectedStage().ordinal()).setUp();
         }
-        Bukkit.getOnlinePlayers().forEach(player -> player.showTitle(Title.title(Component.text(Overcrafted.getInstance().getData().getSelectedStage().get().getName()).color(NamedTextColor.YELLOW), Component.empty())));
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            player.showTitle(Title.title(Component.text(Overcrafted.getInstance().getData().getSelectedStage().get().getName()).color(NamedTextColor.YELLOW), Component.empty()));
+            player.getNearbyEntities(20,20,20).forEach(entity -> {if(entity instanceof Item) entity.remove();});
+        });
         OrderHandler.generateRandomOrders();
 
         gameStatus = GameStatus.ACTIVE;

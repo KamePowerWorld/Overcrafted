@@ -8,6 +8,7 @@ import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.core.object.RangedFloat;
 import quarri6343.overcrafted.core.object.RangedInt;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -16,48 +17,56 @@ import java.util.List;
 public class UINumberConfiguration {
 
     public static void openUI(Player player, RangedInt field) {
-        new AnvilGUI.Builder().onComplete((player1, s) -> onNumberInputted(player, s, field)).text("number").title("数値設定").plugin(Overcrafted.getInstance()).open(player);
+        new AnvilGUI.Builder().onClick((slot, snapshot) -> onNumberInputted(slot, snapshot, field)).text("number").title("数値設定").plugin(Overcrafted.getInstance()).open(player);
     }
 
     public static void openUI(Player player, RangedFloat field) {
-        new AnvilGUI.Builder().onComplete((player1, s) -> onNumberInputted(player, s, field)).text("number").title("数値設定").plugin(Overcrafted.getInstance()).open(player);
+        new AnvilGUI.Builder().onClick((slot, snapshot) -> onNumberInputted(slot, snapshot, field)).text("number").title("数値設定").plugin(Overcrafted.getInstance()).open(player);
     }
 
-    private static List<AnvilGUI.ResponseAction> onNumberInputted(Player player, String text, RangedInt field) {
+    private static List<AnvilGUI.ResponseAction> onNumberInputted(int slot, AnvilGUI.StateSnapshot snapshot, RangedInt field) {
+        if(slot != AnvilGUI.Slot.OUTPUT) {
+            return Collections.emptyList();
+        }
+        
         int result;
         try {
-            result = Integer.parseInt(text);
+            result = Integer.parseInt(snapshot.getText());
         } catch (NumberFormatException e) {
-            player.sendMessage(Component.text("数字以外を入力しないでください").color(NamedTextColor.RED));
+            snapshot.getPlayer().sendMessage(Component.text("数字以外を入力しないでください").color(NamedTextColor.RED));
             return AnvilGUI.Response.close();
         }
 
         if (!field.isValid(result)) {
-            player.sendMessage("現実的な数を入力してください");
+            snapshot.getPlayer().sendMessage("現実的な数を入力してください");
             return AnvilGUI.Response.close();
         }
 
         field.set(result);
-        player.sendMessage(Component.text("数値を" + result + "に設定しました"));
+        snapshot.getPlayer().sendMessage(Component.text("数値を" + result + "に設定しました"));
         return AnvilGUI.Response.close();
     }
 
-    private static List<AnvilGUI.ResponseAction> onNumberInputted(Player player, String text, RangedFloat field) {
+    private static List<AnvilGUI.ResponseAction> onNumberInputted(int slot, AnvilGUI.StateSnapshot snapshot, RangedFloat field) {
+        if(slot != AnvilGUI.Slot.OUTPUT) {
+            return Collections.emptyList();
+        }
+        
         float result;
         try {
-            result = Float.parseFloat(text);
+            result = Float.parseFloat(snapshot.getText());
         } catch (NumberFormatException e) {
-            player.sendMessage(Component.text("数字以外を入力しないでください").color(NamedTextColor.RED));
+            snapshot.getPlayer().sendMessage(Component.text("数字以外を入力しないでください").color(NamedTextColor.RED));
             return AnvilGUI.Response.close();
         }
 
         if (!field.isValid(result)) {
-            player.sendMessage("現実的な数を入力してください");
+            snapshot.getPlayer().sendMessage("現実的な数を入力してください");
             return AnvilGUI.Response.close();
         }
 
         field.set(result);
-        player.sendMessage(Component.text("数値を" + result + "に設定しました"));
+        snapshot.getPlayer().sendMessage(Component.text("数値を" + result + "に設定しました"));
         return AnvilGUI.Response.close();
     }
 }

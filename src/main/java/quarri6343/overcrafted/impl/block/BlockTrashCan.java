@@ -20,7 +20,7 @@ import quarri6343.overcrafted.impl.item.OCItems;
  */
 public class BlockTrashCan extends OCBlock implements IRightClickEventHandler {
     public BlockTrashCan() {
-        super(Material.DROPPER);
+        super(Material.OBSERVER);
     }
     
     private static OCVariableData getData() {

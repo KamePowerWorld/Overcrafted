@@ -9,6 +9,7 @@ import quarri6343.overcrafted.core.data.OCVariableData;
 import quarri6343.overcrafted.impl.OCStages;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -23,21 +24,25 @@ public class UICreateTeam {
      * チーム名入力フォームを開く
      */
     public static void openUI(Player player) {
-        new AnvilGUI.Builder().onComplete(UICreateTeam::onTeamNameInputted).text("name").title("チームの名前を入力").plugin(Overcrafted.getInstance()).open(player);
+        new AnvilGUI.Builder().onClick(UICreateTeam::onTeamNameInputted).text("name").title("チームの名前を入力").plugin(Overcrafted.getInstance()).open(player);
     }
 
     /**
      * チーム名が入力された時の挙動
      */
-    private static List<AnvilGUI.ResponseAction> onTeamNameInputted(Player player, String text) {
+    private static List<AnvilGUI.ResponseAction> onTeamNameInputted(int slot, AnvilGUI.StateSnapshot snapshot) {
+        if(slot != AnvilGUI.Slot.OUTPUT) {
+            return Collections.emptyList();
+        }
+
         OCVariableData data = Overcrafted.getInstance().getData();
-        if (data.getTeams().getTeamByName(text) != null) {
-            player.sendMessage(Component.text("その名前のチームは既に存在します").color(NamedTextColor.RED));
+        if (data.getTeams().getTeamByName(snapshot.getText()) != null) {
+            snapshot.getPlayer().sendMessage(Component.text("その名前のチームは既に存在します").color(NamedTextColor.RED));
             return AnvilGUI.Response.close();
         }
 
-        inputtedTeamName = text;
-        openColorUI(player);
+        inputtedTeamName = snapshot.getText();
+        openColorUI(snapshot.getPlayer());
         return AnvilGUI.Response.close();
     }
 
@@ -45,28 +50,32 @@ public class UICreateTeam {
      * チームカラー入力フォームを開く
      */
     private static void openColorUI(Player player) {
-        new AnvilGUI.Builder().onComplete(UICreateTeam::onTeamColorInputted).text("color").title("チームの色を入力。例：red").plugin(Overcrafted.getInstance()).open(player);
+        new AnvilGUI.Builder().onClick(UICreateTeam::onTeamColorInputted).text("color").title("チームの色を入力。例：red").plugin(Overcrafted.getInstance()).open(player);
     }
 
     /**
      * チームカラーが入力された時の挙動
      */
-    private static List<AnvilGUI.ResponseAction> onTeamColorInputted(Player player, String text) {
-        if (NamedTextColor.NAMES.value(text) == null) {
-            player.sendMessage(Component.text("チームカラーが不正です。redやgreenのように半角小文字で指定してください").color(NamedTextColor.RED));
+    private static List<AnvilGUI.ResponseAction> onTeamColorInputted(int slot, AnvilGUI.StateSnapshot snapshot) {
+        if(slot != AnvilGUI.Slot.OUTPUT) {
+            return Collections.emptyList();
+        }
+        
+        if (NamedTextColor.NAMES.value(snapshot.getText()) == null) {
+            snapshot.getPlayer().sendMessage(Component.text("チームカラーが不正です。redやgreenのように半角小文字で指定してください").color(NamedTextColor.RED));
             return AnvilGUI.Response.close();
         }
 
         OCVariableData data = Overcrafted.getInstance().getData();
-        if (data.getTeams().getTeamByColor(text) != null) {
-            player.sendMessage(Component.text("その色のチームは既に存在します").color(NamedTextColor.RED));
+        if (data.getTeams().getTeamByColor(snapshot.getText()) != null) {
+            snapshot.getPlayer().sendMessage(Component.text("その色のチームは既に存在します").color(NamedTextColor.RED));
             return AnvilGUI.Response.close();
         }
 
-        inputtedTeamColor = text;
+        inputtedTeamColor = snapshot.getText();
 
         data.getTeams().addTeam(inputtedTeamName, inputtedTeamColor);
-        player.sendMessage(Component.text("チーム「" + inputtedTeamName + "」を作成しました").color(NamedTextColor.NAMES.value(inputtedTeamColor)));
+        snapshot.getPlayer().sendMessage(Component.text("チーム「" + inputtedTeamName + "」を作成しました").color(NamedTextColor.NAMES.value(inputtedTeamColor)));
         return AnvilGUI.Response.close();
     }
 }

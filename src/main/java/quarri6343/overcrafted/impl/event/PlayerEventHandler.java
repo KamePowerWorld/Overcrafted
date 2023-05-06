@@ -11,6 +11,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.hanging.HangingBreakEvent;
+import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
 import quarri6343.overcrafted.Overcrafted;
@@ -361,5 +362,14 @@ public class PlayerEventHandler implements Listener {
             return;
         
         event.getDrops().clear();
+    }
+
+    @org.bukkit.event.EventHandler
+    public void onPlayerCraft(CraftItemEvent event) {
+        if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE
+                || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
+            return;
+        
+        event.setCancelled(true);
     }
 }

@@ -43,4 +43,25 @@ public class InventoryEventHandler implements Listener {
         event.setCancelled(true);
         event.getPlayer().sendActionBar(Component.text("ゲーム中はコンテナを開けません！"));
     }
+
+    @org.bukkit.event.EventHandler
+    public void onInventoryClick(InventoryClickEvent event) {
+        if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE
+                || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
+            return;
+        
+        //ban offhand click
+        if(event.getRawSlot() == 45){
+            event.setCancelled(true);
+        }
+    }
+
+    @org.bukkit.event.EventHandler
+    public void onInventoryDrag(InventoryDragEvent event) {
+        if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE
+                || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
+            return;
+        
+        event.setCancelled(true);
+    }
 }
