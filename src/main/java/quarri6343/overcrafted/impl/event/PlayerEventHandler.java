@@ -5,7 +5,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
-import org.bukkit.event.EventHandler;
+import org.bukkit.entity.ItemFrame;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -14,17 +14,19 @@ import org.bukkit.event.hanging.HangingBreakEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.api.IPlayerInteractEventHandler;
 import quarri6343.overcrafted.api.item.ICombinedOCItem;
 import quarri6343.overcrafted.api.item.IOCItem;
 import quarri6343.overcrafted.api.item.ISupplier;
-import quarri6343.overcrafted.core.handler.GlobalTeamHandler;
+import quarri6343.overcrafted.api.object.IOCTeam;
+import quarri6343.overcrafted.core.OCLogic;
 import quarri6343.overcrafted.core.data.OCVariableData;
 import quarri6343.overcrafted.core.data.constant.OCCommonData;
 import quarri6343.overcrafted.core.data.constant.OCResourcePackData;
-import quarri6343.overcrafted.api.object.IOCTeam;
-import quarri6343.overcrafted.core.OCLogic;
+import quarri6343.overcrafted.core.handler.GlobalTeamHandler;
+import quarri6343.overcrafted.impl.block.OCBlocks;
 import quarri6343.overcrafted.impl.item.OCItems;
 import quarri6343.overcrafted.utils.OverCraftedUtil;
 
@@ -230,6 +232,9 @@ public class PlayerEventHandler implements Listener {
         if(tryPickUpDish(event))
             return;
         
+        if(trySupplyItemToPlayer(event))
+            return;
+        
         blockEntityInteraction(event);
     }
 
@@ -293,6 +298,42 @@ public class PlayerEventHandler implements Listener {
             if (team.getDirtyDishPiles().get(getStageID()).removeDish())
                 event.getPlayer().setItemInHand(OCItems.DIRTY_DISH.get().getItemStack());
             return true;
+        }
+        
+        return false;
+    }
+
+    /**
+     * 額縁に載っている料理可能なアイテムをプレイヤーに渡す
+     */
+    private boolean trySupplyItemToPlayer(PlayerInteractEntityEvent event){
+        if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE
+                || getLogic().gameStatus == OCLogic.GameStatus.BEGINNING)
+            return false;
+
+        IOCTeam team = getData().getTeams().getTeamByPlayer(event.getPlayer());
+        if (team == null)
+            return false;
+
+        if(event.getRightClicked().getType() != EntityType.ITEM_FRAME){
+            return false;
+        }
+
+        if(!((event.getRightClicked()).getLocation().getBlock().getRelative(((ItemFrame) event.getRightClicked()).getAttachedFace()).getType()
+                == OCBlocks.SUPPLIER.get().getMaterial()))
+            return false;
+        
+        ItemStack itemInFrame = ((ItemFrame)event.getRightClicked()).getItem();
+        for (OCItems ocItem : OCItems.values()) {
+            if (!(ocItem.get() instanceof ISupplier)) {
+                continue;
+            }
+
+            if(ocItem.get().getMaterial() == itemInFrame.getType()){
+                ((ISupplier)ocItem.get()).onSupply(event.getPlayer());
+                event.setCancelled(true);
+                return true;
+            }
         }
         
         return false;
