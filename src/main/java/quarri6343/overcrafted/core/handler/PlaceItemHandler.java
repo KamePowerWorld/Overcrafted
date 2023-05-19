@@ -15,6 +15,7 @@ import quarri6343.overcrafted.core.OCLogic;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * 直接拾えないアイテムをワールドに設置、回収するハンドラ
@@ -26,6 +27,8 @@ public class PlaceItemHandler {
     private static OCLogic getLogic() {
         return Overcrafted.getInstance().getLogic();
     }
+    
+    private static final UUID placedItemTag = UUID.fromString("CB3F55D3-645C-4F38-A144-9C13A33DB5CF");
 
     /**
      * アイテムを設置する
@@ -52,6 +55,7 @@ public class PlaceItemHandler {
             item.setCanPlayerPickup(false);
             item.setCanMobPickup(false);
             item.setGravity(false);
+            item.setThrower(placedItemTag);
 
             placedItemMap.put(block, itemStack);
 
@@ -93,8 +97,8 @@ public class PlaceItemHandler {
 
         Location location = block.getLocation();
         location.add(0.5, 1.1, 0.5);
-        location.getNearbyEntities(0.1, 0.1, 0.1).forEach(entity -> {
-            if (entity.getType() == EntityType.DROPPED_ITEM || entity.getType() == EntityType.ITEM_FRAME) entity.remove();
+        location.getNearbyEntities(0.001, 0.001, 0.001).forEach(entity -> {
+            if ((entity.getType() == EntityType.DROPPED_ITEM && ((Item)entity).getThrower() != null && ((Item)entity).getThrower().equals(placedItemTag)) || entity.getType() == EntityType.ITEM_FRAME) entity.remove();
         });
         placedItemMap.remove(block);
         return itemStack;
