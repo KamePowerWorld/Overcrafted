@@ -8,7 +8,7 @@ public class OCResourcePackData {
     /**
      * リソースパックのurl
      */
-    public static final String packURL = "https://drive.google.com/uc?export=download&id=1_ryjm_tb5HVxHwi28Rp3TPk7QSMOSepr";
+    public static final String packURL = "https://github.com/KamePowerWorld/Overcrafted_Resourcepack/releases/download/v1.0.0/overcrafted_resource.zip";
 
     /**
      * ダウンロードしてきたリソースパックを補完するパス
