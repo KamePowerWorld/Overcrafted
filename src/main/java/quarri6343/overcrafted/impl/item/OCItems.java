@@ -61,14 +61,14 @@ public enum OCItems {
     DISH_STACKED_DIRTY_4(new StackedDish(Component.text("積まれた汚い皿4"), "dish_stacked_dirty_4", 9, 4, StackedDish.StackedDishType.DIRTY)),
     DISH_STACKED_DIRTY_5(new StackedDish(Component.text("積まれた汚い皿5"), "dish_stacked_dirty_5", 10, 5, StackedDish.StackedDishType.DIRTY)),
 
-    DISH_FURNACE(new SubmittableOCItem(Component.text("かまどの載った皿"), Material.PAPER, "dish_furnace", 3, DISH, FURNACE, 5, OCResourcePackData.MenuFont.FURNACE.get_char())),
+    DISH_FURNACE(new SubmittableOCItem(Component.text("かまどの載った皿"), Material.PAPER, "dish_furnace", 3, DISH, FURNACE, 3, OCResourcePackData.MenuFont.FURNACE.get_char())),
     DISH_IRON_INGOT(new SubmittableOCItem(Component.text("鉄インゴットの載った皿"), Material.PAPER, "dish_iron_ingot", 4, DISH, IRON_INGOT, 3, OCResourcePackData.MenuFont.IRON.get_char())),
     DISH_MINECART(new SubmittableOCItem(Component.text("トロッコの載った皿"), Material.PAPER, "dish_minecart", 5, DISH, MINECART, 15, OCResourcePackData.MenuFont.MINECART.get_char())),
     DISH_TORCH(new SubmittableOCItem(Component.text("松明の載った皿"), Material.PAPER, "dish_torch", 6, DISH, TORCH, 5, OCResourcePackData.MenuFont.TORCH.get_char())),
-    DISH_IRON_SWORD(new SubmittableOCItem(Component.text("鉄の剣の載った皿"), Material.PAPER, "dish_iron_sword", 14, DISH, IRON_SWORD, 5, OCResourcePackData.MenuFont.IRON_SWORD.get_char())),
-    DISH_GOLDEN_APPLE(new SubmittableOCItem(Component.text("金りんごの載った皿"), Material.PAPER, "dish_golden_apple", 13, DISH, GOLDEN_APPLE, 5, OCResourcePackData.MenuFont.GOLDEN_APPLE.get_char())),
-    DISH_APPLE(new SubmittableOCItem(Component.text("りんごの載った皿"), Material.PAPER, "dish_apple", 12, DISH, APPLE, 5, OCResourcePackData.MenuFont.APPLE.get_char())),
-    DISH_NETHER_STAR(new SubmittableOCItem(Component.text("ネザースターの載った皿"), Material.PAPER, "dish_nether_star", 15, DISH, NETHER_STAR, 5, OCResourcePackData.MenuFont.NETHER_STAR.get_char())),
+    DISH_IRON_SWORD(new SubmittableOCItem(Component.text("鉄の剣の載った皿"), Material.PAPER, "dish_iron_sword", 14, DISH, IRON_SWORD, 15, OCResourcePackData.MenuFont.IRON_SWORD.get_char())),
+    DISH_GOLDEN_APPLE(new SubmittableOCItem(Component.text("金りんごの載った皿"), Material.PAPER, "dish_golden_apple", 13, DISH, GOLDEN_APPLE, 15, OCResourcePackData.MenuFont.GOLDEN_APPLE.get_char())),
+    DISH_APPLE(new SubmittableOCItem(Component.text("りんごの載った皿"), Material.PAPER, "dish_apple", 12, DISH, APPLE, 3, OCResourcePackData.MenuFont.APPLE.get_char())),
+    DISH_NETHER_STAR(new SubmittableOCItem(Component.text("ネザースターの載った皿"), Material.PAPER, "dish_nether_star", 15, DISH, NETHER_STAR, 15, OCResourcePackData.MenuFont.NETHER_STAR.get_char())),
     
     ADMIN_MENU(new AdminMenu());
 
