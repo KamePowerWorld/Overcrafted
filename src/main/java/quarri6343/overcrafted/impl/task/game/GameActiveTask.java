@@ -114,6 +114,7 @@ public class GameActiveTask extends BukkitRunnable {
                     }
 
                     if(PlaceItemHandler.placeItem(droppedItem.getLocation().getBlock().getRelative(BlockFace.DOWN), ((Item)droppedItem).getItemStack())){
+                        ((BlockTable)blockBeneathItem).onPlace.forEach(blockConsumer -> blockConsumer.accept(droppedItem.getLocation().getBlock().getRelative(BlockFace.DOWN)));
                         droppedItem.remove();
                         
                         if(blockBeneathItem instanceof IBlockProcessor){

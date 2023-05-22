@@ -18,12 +18,16 @@ public enum OCBlocks {
     TRASHCAN(new BlockTrashCan()),
     SUPPLIER(new BlockSupplier()),
     TABLE(new BlockTable(Material.DARK_OAK_PLANKS)),
+    TABLE_2(new BlockTable(Material.DARK_OAK_STAIRS)),
+    TABLE_3(new BlockTable(Material.DARK_OAK_SLAB)),
+    
     CRAFTING(new BlockManualProcessor(Material.CRAFTING_TABLE, "crafting_progression", OCSoundData.craftingSound, OCParticleData.craftParticle)),
     SMELTING(new BlockAutomaticProcessor(Material.FURNACE, "smelting_progression", OCSoundData.smeltingSound, OCParticleData.smeltingParticle)),
     WASHING(new BlockManualProcessor(Material.WATER_CAULDRON, "washing_progression", OCSoundData.washingSound, OCParticleData.washingParticle)),
     FORGING(new BlockManualProcessor(Material.ANVIL, "forging_progression", OCSoundData.forgingSound, OCParticleData.forgingParticle)),
     ENCHANTING(new BlockAutomaticProcessor(Material.ENCHANTING_TABLE, "enchanting_progression", OCSoundData.enchantingSound, OCParticleData.enchantingParticle)),
-    COUNTER(new BlockCounter(Material.END_PORTAL_FRAME));
+    COUNTER(new BlockCounter(Material.END_PORTAL_FRAME)),
+    CONVEYOR(new BlockConveyor());
 
     private final OCBlock ocBlock;
 
