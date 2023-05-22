@@ -84,7 +84,9 @@ public class OCTeams implements IOCTeams {
     public void clearDishPile(int stageID) {
         for (int i = 0; i < getTeamsLength(); i++) {
             getTeam(i).getCleanDishPiles().get(stageID).destroy();
+            getTeam(i).getCleanDishPiles().get(stageID).reset();
             getTeam(i).getDirtyDishPiles().get(stageID).destroy();
+            getTeam(i).getDirtyDishPiles().get(stageID).reset();
         }
     }
     

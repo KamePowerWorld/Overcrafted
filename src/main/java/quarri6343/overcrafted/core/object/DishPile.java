@@ -76,6 +76,10 @@ public class DishPile implements IDishPile {
         dishPileEntity = itemFrame;
     }
     
+    public void reset(){
+        dishNumber = 0;
+    }
+    
     public void destroy() {
         if (location == null) {
             Overcrafted.getInstance().getLogger().severe("存在しない座標の皿置場は消せません！");

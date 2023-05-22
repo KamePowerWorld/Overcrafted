@@ -12,6 +12,8 @@ public interface IDishPile {
      * 皿置場を設置
      */
     public void place();
+    
+    public void reset();
 
     /**
      * 設置されている皿置場を消去
