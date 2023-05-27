@@ -16,9 +16,9 @@ public class OCSoundData {
     public static final Sound submitSound = Sound.sound(Key.key("entity.experience_orb.pickup"), Sound.Source.BLOCK, 1f, 1f);
 
     /**
-     * ゲームが始まるカウントダウンの音
+     * カウントダウンの音
      */
-    public static final Sound countDownSound = Sound.sound(Key.key("block.note_block.bass"), Sound.Source.BLOCK, 1f, 1f);
+    public static final Sound countDownSound = Sound.sound(Key.key("block.note_block.hat"), Sound.Source.BLOCK, 1f, 1f);
 
     /**
      * ゲームが始まった時の音
@@ -79,4 +79,9 @@ public class OCSoundData {
      * 風の音
      */
     public static final Sound windSound = Sound.sound(Key.key("entity.horse.breathe"), Sound.Source.BLOCK, 1f, 1f);
+
+    /**
+     * テレポートする時の音
+     */
+    public static final Sound teleportSound = Sound.sound(Key.key("entity.experience_orb.pickup"), Sound.Source.BLOCK, 1f, 1f);
 }

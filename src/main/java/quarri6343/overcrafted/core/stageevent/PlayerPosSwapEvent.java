@@ -86,6 +86,7 @@ public class PlayerPosSwapEvent implements IStageEvent {
                 int j = 0;
                 for (Map.Entry<Player, Player> playerPlayerEntry: playerPlayerMap.entrySet()){
                     playerPlayerEntry.getKey().teleport(swapLocation.get(j));
+                    playerPlayerEntry.getKey().playSound(OCSoundData.teleportSound);
                     j++;
                 }
             }
