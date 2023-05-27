@@ -12,6 +12,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 import quarri6343.overcrafted.Overcrafted;
 import quarri6343.overcrafted.core.OCLogic;
+import quarri6343.overcrafted.core.data.constant.OCCommonData;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,8 +28,6 @@ public class PlaceItemHandler {
     private static OCLogic getLogic() {
         return Overcrafted.getInstance().getLogic();
     }
-    
-    private static final UUID placedItemTag = UUID.fromString("CB3F55D3-645C-4F38-A144-9C13A33DB5CF");
 
     /**
      * アイテムを設置する
@@ -55,7 +54,7 @@ public class PlaceItemHandler {
             item.setCanPlayerPickup(false);
             item.setCanMobPickup(false);
             item.setGravity(false);
-            item.setThrower(placedItemTag);
+            item.setThrower(OCCommonData.placedItemTag);
 
             placedItemMap.put(block, itemStack);
 
@@ -98,7 +97,7 @@ public class PlaceItemHandler {
         Location location = block.getLocation();
         location.add(0.5, 1.1, 0.5);
         location.getNearbyEntities(0.001, 0.001, 0.001).forEach(entity -> {
-            if ((entity.getType() == EntityType.DROPPED_ITEM && ((Item)entity).getThrower() != null && ((Item)entity).getThrower().equals(placedItemTag)) || entity.getType() == EntityType.ITEM_FRAME) entity.remove();
+            if ((entity.getType() == EntityType.DROPPED_ITEM && ((Item)entity).getThrower() != null && ((Item)entity).getThrower().equals(OCCommonData.placedItemTag)) || entity.getType() == EntityType.ITEM_FRAME) entity.remove();
         });
         placedItemMap.remove(block);
         return itemStack;

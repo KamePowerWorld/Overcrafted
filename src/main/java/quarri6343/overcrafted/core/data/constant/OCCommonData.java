@@ -1,5 +1,7 @@
 package quarri6343.overcrafted.core.data.constant;
 
+import java.util.UUID;
+
 public class OCCommonData {
 
     /**
@@ -33,11 +35,6 @@ public class OCCommonData {
     public static final int ordersOnStart = 5;
 
     /**
-     * プレイヤーが投げたアイテムを他のプレイヤーが拾えるまでの時間(tick)
-     */
-    public static final int thrownItemsPickupDelay = 20;
-
-    /**
      * プレイヤーの近くのブロックがプレイヤーを検知してイベントを起こす範囲
      */
     public static final int blockEventTriggerRange = 2;
@@ -46,4 +43,9 @@ public class OCCommonData {
      * ゴミ箱に皿を捨てた時それが再び皿置き場に戻るまでの時間
      */
     public static final int dishReturnLag = 100;
+
+    /**
+     * システムによって机などに設置されたアイテムに付けられるタグ
+     */
+    public static final UUID placedItemTag = UUID.fromString("CB3F55D3-645C-4F38-A144-9C13A33DB5CF");
 }

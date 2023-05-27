@@ -2,6 +2,7 @@ package quarri6343.overcrafted.impl.event.interact;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.Overcrafted;
@@ -9,6 +10,7 @@ import quarri6343.overcrafted.api.IPlayerInteractEventHandler;
 import quarri6343.overcrafted.core.data.OCVariableData;
 import quarri6343.overcrafted.api.object.IOCTeam;
 import quarri6343.overcrafted.core.OCLogic;
+import quarri6343.overcrafted.core.data.constant.OCCommonData;
 import quarri6343.overcrafted.utils.OverCraftedUtil;
 
 /**
@@ -32,7 +34,8 @@ public class BlockPickUpEventHandler implements IPlayerInteractEventHandler {
     public void onPlayerInteract(PlayerInteractEvent event) {
         Entity entity = OverCraftedUtil.getNearestEntityInSight(event.getPlayer(), 1);
 
-        if(!(entity instanceof Item) || ((Item)entity).getPickupDelay() > 0 || !((Item)entity).canPlayerPickup())
+        if(!(entity instanceof Item) || (((Item)entity).getThrower() != null && ((Item)entity).getThrower().equals(OCCommonData.placedItemTag)) //置かれたアイテムは拾わない
+            || event.getAction().equals(Action.LEFT_CLICK_AIR) || event.getAction().equals(Action.LEFT_CLICK_BLOCK)) // 捨てられた瞬間のアイテムは拾わない
             return;
 
         if (getLogic().gameStatus == OCLogic.GameStatus.INACTIVE

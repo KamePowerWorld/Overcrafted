@@ -197,7 +197,7 @@ public class PlayerEventHandler implements Listener {
             Location pLoc = event.getPlayer().getEyeLocation();
             event.getItemDrop().setVelocity(pLoc.getDirection());
         }
-        event.getItemDrop().setPickupDelay(OCCommonData.thrownItemsPickupDelay);
+        event.getItemDrop().setCanPlayerPickup(false);
     }
 
     @org.bukkit.event.EventHandler

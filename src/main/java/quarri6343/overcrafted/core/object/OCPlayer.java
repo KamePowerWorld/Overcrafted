@@ -3,6 +3,7 @@ package quarri6343.overcrafted.core.object;
 import lombok.Getter;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import quarri6343.overcrafted.api.object.IOCPlayer;
@@ -43,7 +44,8 @@ public class OCPlayer implements IOCPlayer {
         if (mainHandItem != null && mainHandItem.getAmount() > 1) {
             try {
                 mainHandItem.setAmount(mainHandItem.getAmount() - 1);
-                entity.getWorld().dropItemNaturally(entity.getLocation(), mainHandItem);
+                Item item = entity.getWorld().dropItemNaturally(entity.getLocation(), mainHandItem);
+                item.setCanPlayerPickup(false);
             } finally {
                 mainHandItem.setAmount(1);
                 entity.getInventory().setItem(0, mainHandItem);
@@ -53,7 +55,8 @@ public class OCPlayer implements IOCPlayer {
         ItemStack offHandItem = entity.getInventory().getItemInOffHand();
         if (offHandItem.getAmount() > 0) {
             entity.getInventory().setItemInOffHand(null);
-            entity.getWorld().dropItemNaturally(entity.getLocation(), offHandItem);
+            Item item = entity.getWorld().dropItemNaturally(entity.getLocation(), offHandItem);
+            item.setCanPlayerPickup(false);
         }
     }
 
