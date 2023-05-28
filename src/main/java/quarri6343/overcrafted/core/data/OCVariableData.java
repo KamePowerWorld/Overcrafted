@@ -54,4 +54,10 @@ public class OCVariableData {
      */
     @Getter
     private final RangedFloat tipMultiplier = new RangedFloat(0.1f,0.1f,10);
+
+    /**
+     * ゲーム終了時にプレイヤーをロビーに飛ばすかどうか
+     */
+    @Getter @Setter
+    private boolean teleportPlayerWhenGameEnd = true;
 }

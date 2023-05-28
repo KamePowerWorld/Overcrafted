@@ -25,7 +25,8 @@ public class GameEndTask extends BukkitRunnable {
 
     @Override
     public void run() {
-        getData().getTeams().teleportTeamToLobby();
+        if(getData().isTeleportPlayerWhenGameEnd())
+            getData().getTeams().teleportTeamToLobby();
         getData().getTeams().clearDishPile(getData().getSelectedStage().ordinal());
         if(ScoreBoardHandler.getHighestScore() > getData().getSelectedStage().get().getHighScore())
             getData().getSelectedStage().get().setHighScore(ScoreBoardHandler.getHighestScore());

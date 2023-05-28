@@ -40,7 +40,7 @@ public enum OCStages {
      * ・ステージ3
      * 皿洗いのやり方
      */
-    STAGE1(new OCStage("ステージ3", 420, true,
+    STAGE1(new OCStage("ステージ3", 300, true,
             Arrays.asList((ISubmittableOCItem) OCItems.DISH_IRON_INGOT.get(), (ISubmittableOCItem) OCItems.DISH_FURNACE.get()),
             Arrays.asList((ISupplier) OCItems.IRON_ORE.get(), (ISupplier) OCItems.COBBLESTONE.get()), null)),
 
@@ -48,7 +48,7 @@ public enum OCStages {
      * ・ステージ4
      * (原木->木材->棒 + 原木->木炭)->松明、鉄インゴット、かまど
      */
-    STAGE2(new OCStage("ステージ4", 480, true,
+    STAGE2(new OCStage("ステージ4", 400, true,
             Arrays.asList((ISubmittableOCItem) OCItems.DISH_TORCH.get(), (ISubmittableOCItem) OCItems.DISH_IRON_INGOT.get(),(ISubmittableOCItem) OCItems.DISH_FURNACE.get()),
             Arrays.asList((ISupplier) OCItems.IRON_ORE.get(), (ISupplier) OCItems.COBBLESTONE.get(), (ISupplier) OCItems.WOOD.get()), null)),
 

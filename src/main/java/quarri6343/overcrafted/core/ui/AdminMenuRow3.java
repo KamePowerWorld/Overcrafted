@@ -54,6 +54,12 @@ public class AdminMenuRow3 {
         GuiItem setTipMultiplierButton = new GuiItem(setTipMultiplierItem,
                 AdminMenuRow3::onSetTipMultiplierButton);
         gui.setItem(24, setTipMultiplierButton);
+
+        ItemStack setTeleportToLobbyItem = new ItemCreator(Material.ENDER_PEARL).setName(Component.text("ゲーム終了時にプレイヤーをロビーに飛ばすかどうか"))
+                .setLore(Component.text("現在: " + (getData().isTeleportPlayerWhenGameEnd() ? "飛ばす" : "飛ばさない")).color(NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false)).create();
+        GuiItem setTeleportToLobbyButton = new GuiItem(setTeleportToLobbyItem,
+                AdminMenuRow3::onSetTeleportToLobbyButton);
+        gui.setItem(26, setTeleportToLobbyButton);
     }
 
     private static void onSetCraftingTimeButton(InventoryClickEvent event) {
@@ -90,5 +96,10 @@ public class AdminMenuRow3 {
         }
 
         UINumberConfiguration.openUI((Player) event.getWhoClicked(),getData().getTipMultiplier());
+    }
+
+    private static void onSetTeleportToLobbyButton(InventoryClickEvent event) {
+        getData().setTeleportPlayerWhenGameEnd(!getData().isTeleportPlayerWhenGameEnd());
+        UIAdminMenu.openUI((Player) event.getWhoClicked());
     }
 }
